@@ -136,6 +136,15 @@ CREATE TABLE "machines" (
 );
 
 -- CreateTable
+CREATE TABLE "molds" (
+    "id" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "molds_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "report_startup_fill" (
     "id" TEXT NOT NULL,
     "fk_startup" TEXT NOT NULL,
