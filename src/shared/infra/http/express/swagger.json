@@ -1,0 +1,1439 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SGQ api documentation",
+    "description": "API in Typescript for SGQ",
+    "contact": {
+      "name": "Tutilabs",
+      "email": "tutilabs.engineer@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/",
+      "description": "Default Route"
+    }
+  ],
+  "paths": {
+    "/sessions": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "sumary": "generate an authentication token",
+        "description": "This route will be responsible for generating an authentication token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "register": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "register": "0001",
+                  "password": "admin@0001"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "register or password are is incorrect"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "sumary": "Create a user",
+        "description": "This route will be responsible for registering a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "register": {
+                    "type": "string"
+                  },
+                  "fk_role": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "name": "William Maia dos Santos Dinardi",
+                  "email": "williammdinardi@gmail.com",
+                  "cpf": "99999999999",
+                  "register": "99999999",
+                  "fk_role": 1
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "sumary": "List all users",
+        "description": "This route will be responsible for listing all users",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/users"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "patch": {
+        "sumary": "Post edit",
+        "description": "This route will be responsible for changing an user availability",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "is_enabled": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "examples": {
+                "change_availability": {
+                  "value": {
+                    "id": "Enter a user id here!",
+                    "is_enabled": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status updated"
+          },
+          "400": {
+            "description": "'reason for error'"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "sumary": "Update a user",
+        "description": "This route will be responsible for update a user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/users"
+              },
+              "examples": {
+                "edit user": {
+                  "value": {
+                    "id": "",
+                    "name": "",
+                    "email": "",
+                    "cpf": "",
+                    "register": "",
+                    "fk_role": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "'Field' already exists"
+          },
+          "200": {
+            "description": "User updated"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "sumary": "Search for a user by id",
+        "description": "This route will be responsible for get a user by id",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user_id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User not found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "sumary": "Search for a user by id and delete",
+        "description": "This route will be responsible for delete a user by id",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user_id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User not found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/message"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/changePassword/{id}": {
+      "patch": {
+        "sumary": "Search for a user by id and change password",
+        "description": "This route will be responsible for get a user by id and change your password",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user_id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string"
+                  },
+                  "newPassword": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "change_password": {
+                  "value": {
+                    "currentPassword": "12345",
+                    "newPassword": "54321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "Password incorrect"
+          },
+          "200": {
+            "description": "Password Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/message"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "sumary": "List all roles",
+        "description": "This route will be responsible for listing all roles",
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/roles"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/variable/{code_product}": {
+      "get": {
+        "sumary": "List all variables in product",
+        "description": "this route lists all variables bound in the product",
+        "tags": [
+          "Variable"
+        ],
+        "parameters": [
+          {
+            "name": "code_product",
+            "in": "path",
+            "description": "code_product",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/variable/{id}": {
+      "delete": {
+        "tags": [
+          "Variable"
+        ],
+        "sumary": "Search for a variable by id and delete",
+        "description": "This route will be responsible for delete a variable by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id Variable",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/variable/": {
+      "post": {
+        "sumary": "List all variables in product",
+        "description": "this route lists all variables bound in the product",
+        "tags": [
+          "Variable"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody" : {
+          "content": {
+            "multipart/form-data" : { 
+              "schema": {
+                "type" : "object"
+                         },
+              "example": {
+              "cod_product" : "04.212.212001.01-00",
+              "description" : "teste82",
+              "max"  : 12,
+              "min"  : 12,
+              "cota" : 12,
+              "file" : "file.jpg"
+                
+            }
+          }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+            
+          },
+          "401": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "variable/status" : {
+      "patch" :{
+        "sumary": "Update in status of variable",
+        "description": "this route to update is_enabled variable",
+        "tags": [
+          "Variable"
+        ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : " string"
+                  },
+                  "state" : {
+                    "type" : "boolean"
+                  }
+                }
+              },
+              "example" : {
+                
+                  "id" : "fc3f960e-fb01-4534-b5f3-1ae8a44d099c",
+                  "state" : false
+                
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {"description": "updated" },
+          "404" : { "description":"Variable not found"}
+        }
+      }
+    },
+    "/attribute/":{
+      "post": {
+        "sumary": "",
+        "description": "",
+        "tags" : ["Attribute"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],    
+           "requestBody" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                  "$ref" :"#/components/schemas/attribute"
+                  },
+                  "example" : {
+                   "cod_product" : "23.458.543.00-21",
+                   "question": "Molde com postiço?"
+                
+               
+             }
+                }
+              }  
+             }
+            },
+            "responses" : {
+              "201" : {
+                "description" : "Created"
+              },
+              "404" : {
+                "description" : "Attribute not found"
+              },
+              "400" : {
+                "description" : "Param required"
+  
+              }
+
+            }
+      }
+    },
+    "/attribute/{code_product}":{
+      "get" : {
+         "sumary" : "",
+         "description" : "",
+         "tags" : [
+           "Attribute"
+         ],
+          "security" : [
+          {   "bearerAuth": []  }
+          ],
+          "parameters" : [
+             {
+               "name" : "code_product",
+                "in" : "path",
+                "description" : "Codigo do Produto",
+                "required": "true"
+              }
+          ],
+         "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/attribute"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/attribute/{id}" : {
+      "delete" : {
+        "sumary" : "",
+        "description" : "",
+        "tags" : [
+          "Attribute"
+        ],
+        "parameters" :[{
+          "name" : "id",
+          "in" : "path",
+          "description"  : " Id do Atributo",
+          "required" :"true"  
+          }],
+         "responses" : {
+           "200" : {
+             "description" : "Deleted"
+           },
+           "404" : {
+             "description" : "ID não encontrado"
+           }
+         } 
+      }
+    },
+    "/attribute/attention" :{
+      "patch" : {
+        "sumary" : "",
+        "description" : "",
+        "tags" : [
+          "Attribute"
+        ],
+          "requestBody" :{
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : " string"
+                    },
+                    "state" : {
+                      "type" : "boolean"
+                    }
+                  },
+                  "example" : {
+                    "id" : "id do atributo",
+                    "state" : false
+                  }
+                }
+              }
+            }
+          },
+         "responses" : {
+           "200" : {
+             "description" : "updated"
+           },
+           "404" : {
+             "description" : "ID não encontrado"
+           }
+         } 
+      
+      }
+    },
+    "/attribute/status" :{
+      "patch" : {
+        "sumary" : "",
+        "description" : "",
+        "tags" : [
+          "Attribute"
+        ],
+          "requestBody" :{
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "id" : {
+                      "type" : " string"
+                    },
+                    "state" : {
+                      "type" : "boolean"
+                    }
+                  },
+                  "example" : {
+                    "id" : "id do atributo",
+                    "state" : false
+                  }
+                }
+              }
+            }
+          },
+         "responses" : {
+           "200" : {
+             "description" : "updated"
+           },
+           "404" : {
+             "description" : "ID não encontrado"
+           }
+         } 
+      
+      }
+    },
+    "/metrology/history" :{
+      "get" : {
+          "sumary" : "",
+          "description" : "",
+          "tags" : [
+            "Metrology"
+          ],
+          "responses" : {
+                "200" : {
+                  "description" : "Success",
+                  "content" : {
+                     "application/json" : {
+                       "schema" : {
+                          "type" : "object",
+                          "properties" : {
+                           "id": {
+                             "type" : "string"
+                            },
+                           "fk_startup":  {
+                            "type" : "string"
+                           },
+                           "sendToMetrology": {
+                             "type" : "string"
+                            },
+                           "metrologyHistory":  {
+                             "type" : "object",
+                             "properties" : {
+                              "user" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "name": {
+                                    "type" :" string"
+                                  }
+                                }
+                              },
+                              "startDate":  {
+                                "type" : " string"
+                               },
+                              "endDate":  {
+                                "type" : " string"
+                               }
+                             }
+                         
+                             },
+                              "startup" : {
+                    "type" :" object",
+                    "properties" : {
+                      "id" :{
+                        "type" : "string"
+                      },
+                      "op" : {
+                        "type" : "object",
+                         "properties" : {
+                           "code_opp" : {
+                             "type" :"string"
+                           },
+                           "client" : {
+                             "type" :"string"
+                           },
+                           "code_client" : {
+                             "type" :"string"
+                           },
+                           "code_product" : {
+                             "type" : "string"
+                           },
+                           "desc_product" : {
+                             "type" : "string"
+                           }
+                         }
+                      } 
+                    }  
+                  }
+                           }
+                           
+                       }
+                     }
+                  }
+                }
+          }
+      }
+    },
+    "/metrology/solicitations":{
+      "get" : {
+       "sumary" : "",
+       "description" : "",
+       "tags" : ["Metrology"],
+        "security" : [
+           {"bearerAuth": [] }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+             "application/json" : {
+               "schema" : {
+                 "type" : "object",
+                 "properties" : {
+                   "id" : {
+                     "type" :" string"
+                   },
+                   "sendToMetrology" : {
+                     "type" :" string"
+                   },
+                   "startup" : {
+                    "type" :" object",
+                    "properties" : {
+                      "id" :{
+                        "type" : "string"
+                      },
+                      "op" : {
+                        "type" : "object",
+                         "properties" : {
+                           "code_opp" : {
+                             "type" :"string"
+                           },
+                           "client" : {
+                             "type" :"string"
+                           },
+                           "code_client" : {
+                             "type" :"string"
+                           },
+                           "code_product" : {
+                             "type" : "string"
+                           },
+                           "desc_product" : {
+                             "type" : "string"
+                           }
+                         }
+                      } 
+                    }  
+                  },
+                      "associatedUser" : {
+                        "type" : " object",
+                         "properties": {
+                          "user" : {
+                            "type" : "object",
+                            "properties" : {
+                              "name" : {
+                                "type" : "string"
+                              }
+                            }
+                          },
+                          "startDate" : {
+                            "type" : "string"
+                          }, 
+                          "endDate" : {
+                            "type" : "string"
+                          }
+                         }
+                      }   
+                 }
+               }
+             }
+            }
+          }
+        }
+       }
+    },   
+    "/metrology/{id}":{
+      "get" : {
+       "sumary" : "",
+       "description" : "",
+       "tags" : ["Metrology"],
+       "parameters" : [{   
+        
+        "name": "id",
+        "in": "path",
+        "description": "startup_id",
+        "required": true
+        
+        }],
+        "security" : [
+           {"bearerAuth": [] }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "content" : {
+             "application/json" : {
+               "schema" : {
+                 "type" : "object",
+                 "properties" : {
+                   "id" : {
+                     "type" :" string"
+                   },
+                   "sendToMetrology" : {
+                     "type" :" string"
+                   },
+                   "fk_startup" : {
+                     "type":" string"
+                   },
+                   "metrology" : {
+                     "type" : " string"
+                   },
+                   "cavity" : {
+                    "type" : " string"
+                  },"value" : {
+                    "type" : " string"
+                  }
+                  ,"variable" : {
+                    "type" : " object",
+                    "properties" : {
+                       "id" :  {
+                         "type" :" string"
+                       },
+                      "description" :{
+                        "type" :" string"
+                      },
+                      "cota" : {
+                        "type" : "number"
+                      },
+                      "max" : {
+                        "type" : "number"
+                      },
+                      "min" : {
+                        "type" : "number"
+                      }
+                    
+                     }
+                  }
+                   ,
+                   "startup" : {
+                    "type" :" object",
+                    "properties" : {
+                      "id" :{
+                        "type" : "string"
+                      },
+                      "op" : {
+                        "type" : "object",
+                         "properties" : {
+                           "code_opp" : {
+                             "type" :"string"
+                           },
+                           "client" : {
+                             "type" :"string"
+                           },
+                           "code_client" : {
+                             "type" :"string"
+                           },
+                           "code_product" : {
+                             "type" : "string"
+                           },
+                           "desc_product" : {
+                             "type" : "string"
+                           }
+                         }
+                      } 
+                    }  
+                  },
+                      "metrologyHistory" : {
+                        "type" : " object",
+                         "properties": {
+                           "id":{
+                             "type" :" string"
+                           },
+                          "user" : {
+                            "type" : "object",
+                            "properties" : {
+                              "name" : {
+                                "id":{
+                                  "type" :" string"
+                                },
+                                "type" : "string"
+                              }
+                            }
+                          },
+                          "startDate" : {
+                            "type" : "string"
+                          }, 
+                          "endDate" : {
+                            "type" : "string"
+                          }
+                         }
+                      }   
+                 }
+               }
+             }
+            }
+          }
+        }
+       }
+    },
+     
+    "/metrology/finish/{startup}":{
+      "patch" : {
+        "tags" : ["Metrology"],
+          "sumary" : "",
+          "description" : "",
+          "tags" : ["Metrology"],
+          "parameters" : [{   
+           
+           "name": "id",
+           "in": "path",
+           "description": "startup id",
+           "required": true
+           
+           }],
+          "security" : [
+          {"bearerAuth": [] }
+       ],
+       "requestBody" :{
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "user" : {
+                  "type" : " string"
+                }
+              },
+              "example" : {
+                "user" : "id do user"  
+              }
+            }
+          }
+        }
+      },
+      "responses" : {
+        "200" : {
+              "description" : "Metrology Finish"
+        },
+        "404" : {
+          "description" : "Startup Metrology not found or The startup metrology can only be finalized by the associated user or The Startup metrology has values that exceed the limits"
+        },
+  
+        "401" : {
+          "description" : "Startup does not have anyone joined or Startup metrology has already been performed by a user"
+        }
+      }
+      }
+    },
+    "/metrology/join/{startup}":{
+      "patch" : {
+        "tags" : ["Metrology"],
+          "sumary" : "",
+          "description" : "",
+          "tags" : ["Metrology"],
+          "parameters" : [{   
+           
+           "name": "id",
+           "in": "path",
+           "description": "startup id",
+           "required": true
+           
+           }],
+          "security" : [
+          {"bearerAuth": [] }
+       ],
+       "requestBody" :{
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "user" : {
+                  "type" : " string"
+                }
+              },
+              "example" : {
+                "user" : "id do user"  
+              }
+            }
+          }
+        }, 
+        "responses" : {
+          "200":{
+            "description" : "Metrology joined"
+          },
+          "404" : {
+            "description" : "Startup Metrology not found or Metrology History not created"
+          },
+          "401" : {
+            "description" : "Startup metrology has already been performed by a user or Metrology already has someone associated with this startup"
+          }
+
+        }
+      }
+      }
+    },
+    "/metrology/data/{startup}":{
+      "put" : {
+        "tags" : ["Metrology"],
+        "sumary" : "",
+        "description" : "",
+        "tags" : ["Metrology"],
+        "parameters" : [{   
+         
+         "name": "id",
+         "in": "path",
+         "description": "startup id",
+         "required": true
+         
+         }],
+        "security" : [
+        {"bearerAuth": [] }
+     ],
+     "requestBody" :{
+      "content" : {
+        "application/json" : {
+          "schema" : {
+            "type" : "object",
+            "properties" : {
+              "user" : {
+                "type" : " string"
+              },
+              "metrology" : {
+                "type" : "object",
+                 "properties" : {
+                  "id" : {
+                    "type" : "string"
+                  },
+                  "value" : {
+                    "type" : "number"
+                  }
+                 }
+              }
+            },
+            "example" : {
+              "user" : "id do user",
+              "metrology" : [
+                {
+                  "id" : "id",
+                  "value" : "16.6"
+                }
+              ]
+          
+            }
+          }
+        }
+      }
+    },
+    "responses" : {
+            "200" : {
+               "content" : {
+                 "application/json" : {
+                   "examples" : {
+                     "Updated" : {
+                       "value" : {
+                        "message": [
+                          {
+                            "variableSearch": "2",
+                            "variableResult": {
+                              "variable": {
+                                "id": "1",
+                                "description": "Molde com postiço ?",
+                                "cota": 13,
+                                "max": 14,
+                                "min": 12
+                              },
+                              "message": "metrology updated"
+                            }
+                          },
+                          {
+                            "variableSearch": "3",
+                            "variableResult": {
+                              "variable": {
+                                "id": "1",
+                                "description": "Molde com postiço ?",
+                                "cota": 13,
+                                "max": 14,
+                                "min": 12
+                              },
+                              "message": "metrology updated"
+                            }
+                          }
+                        ]
+                       }
+                     },
+                     "Updated and Error": {
+                      "value" : {
+                        "message": [
+                          {
+                            "variableSearch": "2",
+                            "variableResult": {
+                              "variable": {
+                                "id": "1",
+                                "description": "Molde com postiço ?",
+                                "cota": 13,
+                                "max": 14,
+                                "min": 12
+                              },
+                              "message": "metrology updated"
+                            }
+                          },
+                          {
+                            "variableSearch": "3",
+                            "variableResult": {
+                              "variable": {
+                                "id": "1",
+                                "description": "Molde com postiço ?",
+                                "cota": 13,
+                                "max": 14,
+                                "min": 12
+                              },
+                              "message": "doesn't meet the min or max"
+                            }
+                          }
+                        ]
+                      }
+                   }
+                 }
+               }
+            }
+    }
+   }
+  }
+    } 
+    ,"/defaultQuestions": {
+      "get": {
+        "sumary": "List all default questions",
+        "description": "this route lists all default questions",
+        "tags": [
+          "Startup"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/defaultQuestion"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "attribute" : {
+        "type" : "object",
+        "properties" : {
+        "cod_sap": {"type":" string" },
+        "cod_product": {"type":" string" },
+        "desc_product": {"type":" string" },
+        "cod_client": {"type":" string" },
+        "desc_client": {"type":"string" },
+        "question": {"type":" string" },
+        "attention": {"type":"boolean" },
+        "is_enabled": {"type":"boolean" },
+        "fk_product_ana": {"type":" string" }
+      }
+      },
+      "users": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "is_enabled": {
+            "type": "boolean"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "register": {
+            "type": "string"
+          },
+          "role": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "roles": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "variable": {
+        "type": "object",
+        "properties": {
+          "cod_sap": {
+            "type": "string"
+          },
+          "cod_product": {
+            "type": "string"
+          },
+          "desc_product": {
+            "type": "string"
+          },
+          "cod_client": {
+            "type": "string"
+          },
+          "desc_client": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cota": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "min": {
+            "type": "number"
+          },
+          "file": {
+            "type": "string"
+          }
+        }
+      },
+      "defaultQuestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "message": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+       "metrologyHistory" : {
+         "type" : "object",
+         "properties" : {
+          "id": {
+            "type" : "string"
+           },
+          "sendToMetrology": {
+            "type" : "string"
+           },
+          "fk_startup":  {
+            "type" : "string"
+           },
+          "metrologyHistory":  {
+            "type" : "object"
+           },
+          "startDate":  {
+            "type" : " string"
+           },
+          "endDate":  {
+            "type" : " string"
+           }
+          }
+         }
+       
+     
+  }
+}

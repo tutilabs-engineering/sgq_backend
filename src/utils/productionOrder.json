@@ -1,0 +1,196 @@
+{
+  "results": [
+    {
+      "DocEntry": 76037,
+      "DocNum": 47840,
+      "ItemCode": "04.212.212001.01-00",
+      "ProdName": "PROTETOR DE PERNA BEGE - KSSX", 
+      "Status": "Liberada",
+      "PlannedQty": "1335.000000",
+      "CmpltQty": "1250.000000",
+      "RjctQty": "89.000000",
+      "PostDate": "2022-02-03 00:00:00.000000000",
+      "DueDate": "2022-02-03 00:00:00.000000000",
+      "U_CodCliente": "64321KSS J300 FA",
+      "U_Cliente": "C00110",
+      "CardName": "MOTO HONDA DA AMAZONIA LTDA",
+      "U_EP_CIC": "60.000000",
+      "U_EP_Cav": "01",
+      "Itens": [
+          {
+              "DocEntry": 76037,
+              "LineNum": 3,
+              "ItemCode": "5.0.24.60.0786",
+              "description": "PP NATURAL CP442 - BRASKEM 95% + BPM 20128 ITAUBA BEIGE R(K3) YR-349R 5%",
+              "BaseQty": "0.361200",
+              "PlannedQty": "482.202000",
+              "IssuedQty": "262.231200",
+              "wareHouse": "2.03",
+              "TipoItem": "Item"
+          },
+          {
+              "DocEntry": 76037,
+              "LineNum": 4,
+              "ItemCode": "5.0.27.14.0184",
+              "description": "PP NATURAL CP442 - BRASKEM 95% + BPM 20128 ITAUBA BEIGE R(K3) YR-349R 5%",
+              "BaseQty": "-0.005000",
+              "PlannedQty": "-6.675000",
+              "IssuedQty": "-6.695000",
+              "wareHouse": "2.08",
+              "TipoItem": "Item"
+          },
+          {
+              "DocEntry": 76037,
+              "LineNum": 5,
+              "ItemCode": "5.0.28.01.0001",
+              "description": "BORRA DE MP DIVERSAS",
+              "BaseQty": "-0.033655",
+              "PlannedQty": "-44.930000",
+              "IssuedQty": "-44.930100",
+              "wareHouse": "2.08",
+              "TipoItem": "Item"
+          },
+          {
+              "DocEntry": 76037,
+              "LineNum": 6,
+              "ItemCode": "MD110106",
+              "description": "PROTETOR DE PERNA - KSSX (2355)",
+              "BaseQty": "1.000000",
+              "PlannedQty": "1335.000000",
+              "IssuedQty": "1339.000000",
+              "wareHouse": "2.03",
+              "TipoItem": "Recurso"
+          },
+          {
+              "DocEntry": 76037,
+              "LineNum": 7,
+              "ItemCode": "F1050/03",
+              "description": "F 1050/03 LS LGH1050M-ES 3500004461 2020",
+              "BaseQty": "1.000000",
+              "PlannedQty": "1335.000000",
+              "IssuedQty": "1339.000000",
+              "wareHouse": "2.03",
+              "TipoItem": "Recurso"
+          },
+          {
+              "DocEntry": 76037,
+              "LineNum": 8,
+              "ItemCode": "MOD001",
+              "description": "OPERADOR DE MAQUINA",
+              "BaseQty": "1.000000",
+              "PlannedQty": "1335.000000",
+              "IssuedQty": "1339.000000",
+              "wareHouse": "2.03",
+              "TipoItem": "Recurso"
+          },
+          {
+              "DocEntry": 76037,
+              "LineNum": 10,
+              "ItemCode": null,
+              "description": null,
+              "BaseQty": "0.000000",
+              "PlannedQty": "0.000000",
+              "IssuedQty": "0.000000",
+              "wareHouse": null,
+              "TipoItem": "Recurso"
+          }
+      ]
+    },
+    {
+      "DocEntry": 76097,
+      "DocNum": 47895,
+      "ItemCode": "03.110.110173.01-02",
+      "ProdName": "VISOR CENTRAL FAN - K2GA",
+      "Status": "Liberada",
+      "PlannedQty": "4000.000000",
+      "CmpltQty": "4144.000000",
+      "RjctQty": "151.000000",
+      "PostDate": "2022-01-29 00:00:00.000000000",
+      "DueDate": "2022-01-29 00:00:00.000000000",
+      "U_CodCliente": "61301K2G B201",
+      "U_Cliente": "C00110",
+      "CardName": "MOTO HONDA DA AMAZONIA LTDA",
+      "U_EP_CIC": "72.000000",
+      "U_EP_Cav": "02",
+      "Itens": [
+          {
+              "DocEntry": 76097,
+              "LineNum": 4,
+              "ItemCode": "5.0.24.60.0660",
+              "description": "PP NATURAL CP442 - BRASKEM 95%+PIG. GRAN. P/ PP PRETO MBP 1060 - COLORTECH 5%",
+              "BaseQty": "0.269280",
+              "PlannedQty": "1077.120000",
+              "IssuedQty": "1156.557600",
+              "wareHouse": "2.03",
+              "TipoItem": "Item"
+          },
+          {
+              "DocEntry": 76097,
+              "LineNum": 5,
+              "ItemCode": "5.0.27.14.0123",
+              "description": "PP NATURAL CP442 - BRASKEM 95%+PIG. GRAN. P/ PP PRETO MBP 1060 - COLORTECH 5%",
+              "BaseQty": "-0.015000",
+              "PlannedQty": "-60.000000",
+              "IssuedQty": "-64.425000",
+              "wareHouse": "2.08",
+              "TipoItem": "Item"
+          },
+          {
+              "DocEntry": 76097,
+              "LineNum": 6,
+              "ItemCode": "5.0.28.01.0001",
+              "description": "BORRA DE MP DIVERSAS",
+              "BaseQty": "-0.000001",
+              "PlannedQty": "-0.004000",
+              "IssuedQty": "-24.711100",
+              "wareHouse": "2.08",
+              "TipoItem": "Item"
+          },
+          {
+              "DocEntry": 76097,
+              "LineNum": 7,
+              "ItemCode": "F1000/01",
+              "description": "F 1000/01 Haitian MA 1000 201207100030482 2012",
+              "BaseQty": "1.000000",
+              "PlannedQty": "4000.000000",
+              "IssuedQty": "4295.000000",
+              "wareHouse": "2.03",
+              "TipoItem": "Recurso"
+          },
+          {
+              "DocEntry": 76097,
+              "LineNum": 8,
+              "ItemCode": "MOD001",
+              "description": "OPERADOR DE MAQUINA",
+              "BaseQty": "1.000000",
+              "PlannedQty": "4000.000000",
+              "IssuedQty": "4295.000000",
+              "wareHouse": "2.03",
+              "TipoItem": "Recurso"
+          },
+          {
+              "DocEntry": 76097,
+              "LineNum": 9,
+              "ItemCode": "MD110173",
+              "description": "VISOR CENTRAL FAN - K2GA",
+              "BaseQty": "1.000000",
+              "PlannedQty": "4000.000000",
+              "IssuedQty": "4295.000000",
+              "wareHouse": "2.03",
+              "TipoItem": "Recurso"
+          },
+          {
+              "DocEntry": 76097,
+              "LineNum": 11,
+              "ItemCode": null,
+              "description": null,
+              "BaseQty": "0.000000",
+              "PlannedQty": "0.000000",
+              "IssuedQty": "0.000000",
+              "wareHouse": null,
+              "TipoItem": "Recurso"
+          }
+      ]
+    }
+  ]
+}
