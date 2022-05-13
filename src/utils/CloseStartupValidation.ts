@@ -1,3 +1,4 @@
+import { MetrologyRepositoryInPrisma } from "@modules/metrology/repositories/implements/MetrologyRepositoryInPrisma";
 import { ReportStartupsInPrisma } from "../modules/startup/repositories/implementations/ReportStartupsInPrisma";
 
 export interface ICloseReportStartup {
@@ -13,15 +14,18 @@ interface ICloseReportStartupResponse {
 }
 
 const reportStartupsInPrisma = new ReportStartupsInPrisma();
+const metrologyRepositoryInPrisma = new MetrologyRepositoryInPrisma();
 
 export async function CloseStartupValidation({
   code_machine,
   code_mold,
 }: ICloseReportStartup): Promise<ICloseReportStartupResponse> {
+  // buscando todas as startups com essa máquina
   const startups = await reportStartupsInPrisma.findStartupsByMachine(
     code_machine,
   );
 
+  // verificando se máquina existe em algum startup
   if (!startups.length) {
     return {
       status: false,
@@ -31,35 +35,58 @@ export async function CloseStartupValidation({
   }
 
   let index = 0;
+  // contagem de startups encontradas
 
-  const validationResponse = startups.map((startup) => {
+  const validationResponse = startups.map(async (startup) => {
+    const metrology =
+      await metrologyRepositoryInPrisma.findMetrologyStatusByStartupId(
+        startup.id,
+      );
+
+    let metrologyFilled = true;
+
+    metrology.forEach((m) => {
+      if (m.metrology) {
+        metrologyFilled = false;
+      }
+    });
+
     if (startup.open) {
       if (!startup.filled) {
         // console.log("Last report Startup must be filled");
         return {
-          status: true,
-          message: "The last report startup must be filled",
-          needToClose: false,
-          data: startup.id,
+          status: true, // para enviar mensagem no body para o cliente
+          message: "The last report startup must be filled", // mensagem enviada ao cliente
+          needToClose: false, // para fechar startup
+          data: startup.id, // para identificar startup que precisa ser preenchida
         };
       }
-      if (startup.op.machine === code_machine) {
-        if (startup.op.product_mold === code_mold) {
-          // console.log("Same mold in machine");
+      if (metrologyFilled) {
+        if (startup.op.machine === code_machine) {
+          if (startup.op.product_mold === code_mold) {
+            // console.log("Same mold in machine");
+            return {
+              status: true,
+              message: "Same mold in machine",
+              data: startup.id,
+              needToClose: true,
+            };
+          }
+          // console.log("New mold in machine");
           return {
-            status: false,
-            message: "Same mold in machine",
-            needToClose: false,
+            status: true,
+            message: "New mold in machine",
+            data: startup.id,
+            needToClose: true,
           };
         }
-        // console.log("New mold in machine");
-        return {
-          status: true,
-          message: "New mold in machine",
-          data: startup.id,
-          needToClose: true,
-        };
       }
+      // console.log("retorno de metrologia");
+      return {
+        status: true,
+        message: "Metrology must be filled",
+        needToClose: false,
+      };
     }
     // console.log("The last report startup is already Closed");
     index += 1;
