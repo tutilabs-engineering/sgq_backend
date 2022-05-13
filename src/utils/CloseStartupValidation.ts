@@ -56,7 +56,7 @@ export async function CloseStartupValidation({
         // console.log("Last report Startup must be filled");
         return {
           status: true, // para enviar mensagem no body para o cliente
-          message: "The last report startup must be filled", // mensagem enviada ao cliente
+          message: "A ultima Startup precisa ser preenchida", // mensagem enviada ao cliente
           needToClose: false, // para fechar startup
           data: startup.id, // para identificar startup que precisa ser preenchida
         };
@@ -84,7 +84,7 @@ export async function CloseStartupValidation({
       // console.log("retorno de metrologia");
       return {
         status: true,
-        message: "Metrology must be filled",
+        message: "Metrologia precisa ser preenchida",
         needToClose: false,
       };
     }
