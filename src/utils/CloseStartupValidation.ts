@@ -56,7 +56,7 @@ export async function CloseStartupValidation({
         // console.log("Last report Startup must be filled");
         return {
           status: true, // para enviar mensagem no body para o cliente
-          message: "A ultima Startup precisa ser preenchida", // mensagem enviada ao cliente
+          message: "A ultima Startup precisa ser preenchida.", // mensagem enviada ao cliente
           needToClose: false, // para fechar startup
           data: startup.id, // para identificar startup que precisa ser preenchida
         };
@@ -67,7 +67,7 @@ export async function CloseStartupValidation({
             // console.log("Same mold in machine");
             return {
               status: true,
-              message: "Same mold in machine",
+              message: "Mesmo molde na máquina.",
               data: startup.id,
               needToClose: true,
             };
@@ -75,7 +75,7 @@ export async function CloseStartupValidation({
           // console.log("New mold in machine");
           return {
             status: true,
-            message: "New mold in machine",
+            message: "Novo molde na máquina.",
             data: startup.id,
             needToClose: true,
           };
@@ -84,7 +84,7 @@ export async function CloseStartupValidation({
       // console.log("retorno de metrologia");
       return {
         status: true,
-        message: "Metrologia precisa ser preenchida",
+        message: "A metrologia deve ser preenchida.",
         needToClose: false,
       };
     }
@@ -92,7 +92,7 @@ export async function CloseStartupValidation({
     index += 1;
     return {
       status: false,
-      message: "Last Report Startup is already Closed",
+      message: "A última Startup já está fechada.",
       needToClose: false,
     };
   });
