@@ -19,7 +19,7 @@ model User {
 
   id                  String             @id @default(uuid())
   name                String
-  email               String             @unique
+  email               String             
   register            String             @unique
   cpf                 String             @unique
   is_enabled          Boolean            @default(true)

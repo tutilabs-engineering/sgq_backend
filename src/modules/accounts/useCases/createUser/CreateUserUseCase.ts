@@ -31,7 +31,6 @@ class CreateUserUseCase {
     fk_office_hour,
   }: IRequest): Promise<void> {
     const {
-      EmailValidations,
       CpfValidations,
       RegisterValidations,
       NameValidations,
@@ -40,7 +39,6 @@ class CreateUserUseCase {
       OfficeHourValidations,
     } = UserValidations();
 
-    const emailValidations = await EmailValidations(email);
     const cpfValidations = await CpfValidations(cpf);
     const registerValidations = await RegisterValidations(register);
     const nameValidations = await NameValidations(name);
@@ -50,9 +48,6 @@ class CreateUserUseCase {
 
     if (!nameValidations.status) {
       throw new AppError(nameValidations.message);
-    }
-    if (!emailValidations.status) {
-      throw new AppError(emailValidations.message);
     }
     if (!cpfValidations.status) {
       throw new AppError(cpfValidations.message);
