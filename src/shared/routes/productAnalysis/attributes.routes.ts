@@ -14,7 +14,7 @@ const changeAttentionAttributeController =
   new ChangeAttentionAttributeController();
 const changeStatusAttributeController = new ChangeStatusAttributeController();
 
-attributeRoutes.use(EnsureAuthenticated);
+// attributeRoutes.use(EnsureAuthenticated);
 attributeRoutes.post("/", createAttributeController.handle);
 attributeRoutes.get("/:code_product", listAttributeByProductController.handle);
 attributeRoutes.delete("/:id", deleteAttributeController.handle);
