@@ -5,6 +5,7 @@ import { idDefaultQuestions } from "@shared/database/seed/createDefaultQuestions
 interface IRequest {
   date_start: Date;
   date_end: Date;
+  workShift: number;
 }
 
 @injectable()
@@ -13,13 +14,39 @@ export class FilterQuestionsDisapprovedByDateUseCase {
     @inject("DashboardRepositoryInPrisma")
     private dashboardRepositoryInPrisma: IDashboardRepository,
   ) {}
-  async execute({ date_start, date_end }: IRequest) {
+  async execute({ date_start, date_end, workShift }: IRequest) {
+    let hourEnd = "";
+    let hourStart = "";
+
+    switch (workShift) {
+      case 1:
+        hourStart = "06:00:00";
+        hourEnd = "13:59:00";
+        break;
+
+      case 2:
+        hourStart = "14:00:00";
+        hourEnd = "21:59:00";
+        break;
+
+      case 3:
+        hourStart = "22:00:00";
+        hourEnd = "05:59:00";
+        break;
+
+      default:
+        hourStart = "00:00:00";
+        hourEnd = "24:00:00";
+        break;
+    }
     const cavidade =
       await this.dashboardRepositoryInPrisma.listDefaultQuestionsDisapprovedByDate(
         {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.cavidadeId,
+          hourEnd,
+          hourStart,
         },
       );
     const ciclo =
@@ -28,6 +55,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.cicloId,
+          hourEnd,
+          hourStart,
         },
       );
     const materiaPrima =
@@ -36,6 +65,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.materiaPrimaId,
+          hourEnd,
+          hourStart,
         },
       );
     const masters =
@@ -44,6 +75,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.mastersId,
+          hourEnd,
+          hourStart,
         },
       );
     const pesoMedioLiquido =
@@ -52,6 +85,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.pesoMedioLiquidoId,
+          hourEnd,
+          hourStart,
         },
       );
     const fichaInstrucaoDeTrabalho =
@@ -60,6 +95,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.fichaInstrucaoDeTrabalhoId,
+          hourEnd,
+          hourStart,
         },
       );
     const fichaTecnicaInjecao =
@@ -68,6 +105,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.fichaTecnicaInjecaoId,
+          hourEnd,
+          hourStart,
         },
       );
     const planoInspecaoQualidade =
@@ -76,6 +115,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.planoInspecaoQualidadeId,
+          hourEnd,
+          hourStart,
         },
       );
     const planoAtencao =
@@ -84,6 +125,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.planoAtencaoId,
+          hourEnd,
+          hourStart,
         },
       );
     const padraoHomologado =
@@ -92,6 +135,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.padraoHomologadoId,
+          hourEnd,
+          hourStart,
         },
       );
     const fluxoOperacao =
@@ -100,6 +145,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.fluxoOperacaoId,
+          hourEnd,
+          hourStart,
         },
       );
     const posticoDoMolde =
@@ -108,6 +155,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.posticoDoMoldeId,
+          hourEnd,
+          hourStart,
         },
       );
     const datadorMoldeAtualizado =
@@ -116,6 +165,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.datadorMoldeAtualizadoId,
+          hourEnd,
+          hourStart,
         },
       );
     const recursosMaoDeObra =
@@ -124,6 +175,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.recursosMaoDeObraId,
+          hourEnd,
+          hourStart,
         },
       );
     const embalagemConformeFit =
@@ -132,6 +185,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_end,
           date_start,
           id_default_question: idDefaultQuestions.embalagemConformeFitId,
+          hourEnd,
+          hourStart,
         },
       );
     const etiquetaEmbalagemDeAcordoProdutoCliente =
@@ -141,6 +196,8 @@ export class FilterQuestionsDisapprovedByDateUseCase {
           date_start,
           id_default_question:
             idDefaultQuestions.etiquetaEmbalagemDeAcordoProdutoClienteId,
+          hourEnd,
+          hourStart,
         },
       );
 

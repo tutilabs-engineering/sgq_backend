@@ -3,6 +3,7 @@ class MetrologySolicitation {
   sendToMetrology: Date;
   startup: {
     id: string;
+    code_startup: number;
     op: {
       code_product: string;
       desc_product: string;

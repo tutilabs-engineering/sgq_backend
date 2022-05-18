@@ -100,6 +100,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
         startup: {
           select: {
             id: true,
+            code_startup: true,
             op: {
               select: {
                 code_op: true,
@@ -188,6 +189,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
         startup: {
           select: {
             id: true,
+            code_startup: true,
             op: {
               select: {
                 code_op: true,
