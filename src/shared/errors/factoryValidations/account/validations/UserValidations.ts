@@ -6,24 +6,18 @@ import { FactoryOfUserValidations } from "../base/FactoryOfUserValidations";
 
 function UserValidations() {
   async function EmailValidations(email: string): Promise<IResponseValidation> {
-    const { IsEmail, EmailAlreadyExists } = FactoryOfUserValidations();
+    const { IsEmail } = FactoryOfUserValidations();
     const { IsEmpty } = FactoryOfGeneralValidations();
 
     const isEmail = await IsEmail(email);
-    const alreadyExits = await EmailAlreadyExists(email);
+
     const isEmpty = await IsEmpty(email);
 
-    if (isEmail && alreadyExits === false && isEmpty === false) {
-      return { status: true, message: "success" };
-    }
     if (isEmpty) {
       return { status: false, message: "Email is required" };
     }
     if (!isEmail) {
       return { status: false, message: "Invalid email params" };
-    }
-    if (alreadyExits) {
-      return { status: false, message: "Email Already Exists" };
     }
   }
 
