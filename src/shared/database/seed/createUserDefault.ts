@@ -16,6 +16,7 @@ async function CreateUserDefault(): Promise<void> {
         password: passwordHash,
         fk_role: 1,
         fk_unity: 1,
+        fk_office_hour: 4,
       },
     });
 

@@ -21,20 +21,19 @@ class ListStartupCountByStatusUseCase {
     const listOfClosed = [];
 
     listAllStartups.forEach((startup) => {
-      if (startup.open === false) {
-        if (startup.status.id === 1) {
-          approvedCount += 1;
-          listOfApproved.push(startup);
-        }
-        if (startup.status.id === 2) {
-          disapprovedCount += 1;
-          listOfDisapproved.push(startup);
-        }
-        if (startup.status.id === 3) {
-          conditionalCount += 1;
-          listOfConditional.push(startup);
-        }
+      if (startup.status.id === 1) {
+        approvedCount += 1;
+        listOfApproved.push(startup);
       }
+      if (startup.status.id === 2) {
+        disapprovedCount += 1;
+        listOfDisapproved.push(startup);
+      }
+      if (startup.status.id === 3) {
+        conditionalCount += 1;
+        listOfConditional.push(startup);
+      }
+
       if (startup.open === false) {
         closedCount += 1;
         listOfClosed.push(startup);
