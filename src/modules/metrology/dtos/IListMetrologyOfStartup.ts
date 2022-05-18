@@ -11,6 +11,7 @@ interface IListMetrologyOfStartup {
   };
   startup: {
     id: string;
+    code_startup: number;
     op: {
       code_op: number;
       client: string;

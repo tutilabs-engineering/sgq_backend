@@ -20,7 +20,33 @@ class ListDashBoardByFilterUseCase {
     code_product = "",
     code_client = "",
     day,
+    workShift,
   }: IListAllDataFilter): Promise<any> {
+    let hourEnd = "";
+    let hourStart = "";
+
+    switch (workShift) {
+      case 1:
+        hourStart = "06:00:00";
+        hourEnd = "13:59:00";
+        break;
+
+      case 2:
+        hourStart = "14:00:00";
+        hourEnd = "21:59:00";
+        break;
+
+      case 3:
+        hourStart = "22:00:00";
+        hourEnd = "05:59:00";
+        break;
+
+      default:
+        hourStart = "00:00:00";
+        hourEnd = "24:00:00";
+        break;
+    }
+
     const dayEnd = dayjs(day).add(6, "day").format("YYYY-MM-DD");
     const data =
       await this.dashboardRepositoryInPrisma.listAllDataFilterByStartup({
@@ -29,12 +55,16 @@ class ListDashBoardByFilterUseCase {
         code_client,
         day,
         dayEnd,
+        hourEnd,
+        hourStart,
       });
 
     const dataMetrology =
       await this.dashboardRepositoryInPrisma.listAllDataFilterByMetrology({
         day,
         dayEnd,
+        hourEnd,
+        hourStart,
       });
 
     const period = [];

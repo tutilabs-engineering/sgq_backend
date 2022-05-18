@@ -4,7 +4,7 @@ import { FilterQuestionsDisapprovedByDateUseCase } from "./FilterQuestionsDisapp
 
 class FilterQuestionsDisapprovedByDateController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { date_start, date_end } = request.body;
+    const { date_start, date_end, workShift } = request.body;
 
     const filterQuestionsDisapprovedByDateUseCase = container.resolve(
       FilterQuestionsDisapprovedByDateUseCase,
@@ -14,6 +14,7 @@ class FilterQuestionsDisapprovedByDateController {
       await filterQuestionsDisapprovedByDateUseCase.execute({
         date_end,
         date_start,
+        workShift,
       });
 
     return response.status(200).json(defaultQuestionsDisapproved);

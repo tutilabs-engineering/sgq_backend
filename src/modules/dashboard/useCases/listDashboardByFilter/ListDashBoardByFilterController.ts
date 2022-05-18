@@ -7,12 +7,13 @@ class ListDashBoardByFilterController {
     const listDashBoardByFilterUseCase = container.resolve(
       ListDashBoardByFilterUseCase,
     );
-    const { machine, code_product, code_client, day } = request.body;
+    const { machine, code_product, code_client, day, workShift } = request.body;
     const list = await listDashBoardByFilterUseCase.execute({
       machine,
       code_product,
       code_client,
       day,
+      workShift,
     });
 
     return response.status(200).json({ list });

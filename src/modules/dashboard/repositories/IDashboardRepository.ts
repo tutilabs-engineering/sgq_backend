@@ -13,6 +13,8 @@ export interface IFilterByDateDefaultQuestionsDisapproved {
   date_start: Date;
   date_end: Date;
   id_default_question: string;
+  hourStart: string;
+  hourEnd: string;
 }
 
 interface IDashboardRepository {
