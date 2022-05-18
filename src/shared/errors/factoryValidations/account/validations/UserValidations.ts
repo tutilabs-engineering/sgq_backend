@@ -115,6 +115,27 @@ function UserValidations() {
     return { status: true, message: "success" };
   }
 
+  async function OfficeHourValidations(
+    fk_office_hour: number,
+  ): Promise<IResponseValidation> {
+    const { IsNumeric, IsEmpty } = FactoryOfGeneralValidations();
+
+    const isNumeric = await IsNumeric({
+      data: fk_office_hour.toString(),
+      nameField: "fk_office_hour",
+    });
+    const isEmpty = await IsEmpty(fk_office_hour.toString());
+
+    if (isEmpty) {
+      return { status: false, message: "fk_office_hour is required" };
+    }
+    if (!isNumeric.status) {
+      return { status: false, message: isNumeric.message };
+    }
+
+    return { status: true, message: "success" };
+  }
+
   async function NameValidations(name: string): Promise<IResponseValidation> {
     const { IsEmpty } = FactoryOfGeneralValidations();
     const { NameAlreadyExists } = FactoryOfUserValidations();
@@ -192,6 +213,7 @@ function UserValidations() {
     register,
     fk_role,
     fk_unity,
+    fk_office_hour,
   }: IUpdateFields): Promise<IResponseValidation> {
     const { IsEmpty, IsNumeric, IsByteLength } = FactoryOfGeneralValidations();
     const { IsEmail } = FactoryOfUserValidations();
@@ -224,6 +246,11 @@ function UserValidations() {
       nameField: "fk_unity",
       data: fk_unity.toString(),
     });
+    const isFkOfficeHourEmpty = await IsEmpty(fk_office_hour.toString());
+    const isNumericOfficeHour = await IsNumeric({
+      nameField: "fk_office_hour",
+      data: fk_office_hour.toString(),
+    });
 
     if (isIdEmpty) {
       return { status: false, message: "id is required" };
@@ -246,6 +273,9 @@ function UserValidations() {
     if (isFkUnityEmpty) {
       return { status: false, message: "fk_unity is required" };
     }
+    if (isFkOfficeHourEmpty) {
+      return { status: false, message: "fk_office_hour is required" };
+    }
     if (!isEmail) {
       return { status: false, message: "Invalid email params" };
     }
@@ -260,6 +290,9 @@ function UserValidations() {
     }
     if (!isNumericUnity.status) {
       return { status: false, message: isNumericUnity.message };
+    }
+    if (!isNumericOfficeHour.status) {
+      return { status: false, message: isNumericOfficeHour.message };
     }
     if (!isNumericRegister.status) {
       return { status: false, message: isNumericRegister.message };
@@ -320,6 +353,7 @@ function UserValidations() {
     UpdateUserFieldsValidations,
     CompareDataForUpdateValidations,
     UnityValidations,
+    OfficeHourValidations,
   };
 }
 

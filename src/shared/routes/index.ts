@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { authenticateRoutes } from "./accounts/authenticate.routes";
+import { officeHoursRoutes } from "./accounts/officeHours.routes";
 import { rolesRoutes } from "./accounts/roles.routes";
 import { unitsRoutes } from "./accounts/units.routes.routes";
 import { usersRoutes } from "./accounts/users.routes";
@@ -15,6 +16,7 @@ const router = Router();
 router.use(authenticateRoutes);
 router.use("/roles", rolesRoutes);
 router.use("/units", unitsRoutes);
+router.use("/officeHours", officeHoursRoutes);
 router.use("/users", usersRoutes);
 router.use("/variable", variableRoutes);
 router.use("/attribute", attributeRoutes);

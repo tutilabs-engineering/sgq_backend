@@ -11,6 +11,7 @@ interface IRequest {
   register: string;
   fk_role: number;
   fk_unity: number;
+  fk_office_hour: number;
 }
 
 @injectable()
@@ -28,6 +29,7 @@ class UpdateUseUseCase {
     register,
     fk_role,
     fk_unity,
+    fk_office_hour,
   }: IRequest): Promise<void> {
     const userUpdated = {
       id,
@@ -37,6 +39,7 @@ class UpdateUseUseCase {
       register,
       fk_role: parseInt(fk_role.toString(), 10),
       fk_unity: parseInt(fk_unity.toString(), 10),
+      fk_office_hour: parseInt(fk_office_hour.toString(), 10),
     };
 
     const { UpdateUserFieldsValidations, CompareDataForUpdateValidations } =

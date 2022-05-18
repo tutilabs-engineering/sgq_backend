@@ -43,7 +43,7 @@ model OfficeHour {
   id          Int    @id @default(autoincrement())
   description String
   users       User[]
-
+  
   @@map("office_hours")
 }
 
