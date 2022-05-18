@@ -33,8 +33,18 @@ model User {
   reportStartupCreate ReportStartup[]    @relation("user_that_create")
   reportStartupFill   ReportStartup[]    @relation("user_that_fill")
   unity               Unity?             @relation(fields: [fk_unity], references: [id])
+  fk_office_hour      Int
+  office_hour         OfficeHour         @relation(fields: [fk_office_hour], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("user")
+}
+
+model OfficeHour {
+  id          Int    @id @default(autoincrement())
+  description String
+  users       User[]
+  
+  @@map("office_hours")
 }
 
 model Role {
@@ -121,7 +131,7 @@ model ReportStartup {
   metrology           Metrology[]
   report_startup_fill ReportStartupFill[]
   report_startup_op   ReportStartupOp[]
-  
+
   default_questions_disapproved DefaultQuestionsDisapproved[]
   @@map("report_startup")
 }
@@ -136,37 +146,37 @@ model ReportStartupOp {
 }
 
 model Op {
-  code_op        Int             @id @unique
-  client         String
-  code_client    String
-  code_product   String
-  desc_product   String
-  machine        String
-  product_mold   String
-  cavity         String
-  cycle          String
-  quantity       String
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  components     Component[]
-  report_startup ReportStartup[]
+  code_op           Int               @id @unique
+  client            String
+  code_client       String
+  code_product      String
+  desc_product      String
+  machine           String
+  product_mold      String
+  cavity            String
+  cycle             String
+  quantity          String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  components        Component[]
+  report_startup    ReportStartup[]
   report_startup_op ReportStartupOp[]
 
   @@map("op")
 }
 
 model Machines {
-  id String @id @default(uuid())
+  id          String   @id @default(uuid())
   description String
-  created_at DateTime @default(now())
+  created_at  DateTime @default(now())
 
   @@map("machines")
 }
 
 model Mold {
-  id String @id @default(uuid())
+  id          String   @id @default(uuid())
   description String
-  created_at DateTime @default(now())
+  created_at  DateTime @default(now())
 
   @@map("molds")
 }
@@ -215,12 +225,12 @@ model DefaultQuestionsResponses {
 }
 
 model DefaultQuestionsDisapproved {
-  id String @id @default(uuid())
-  id_startup String 
-  startup ReportStartup @relation(fields: [id_startup], references: [id])
+  id                  String                        @id @default(uuid())
+  id_startup          String
+  startup             ReportStartup                 @relation(fields: [id_startup], references: [id])
   id_default_question String
-  default_question DefaultQuestionIdentification @relation(fields: [id_default_question], references: [id])
-  created_at DateTime @default(now())
+  default_question    DefaultQuestionIdentification @relation(fields: [id_default_question], references: [id])
+  created_at          DateTime                      @default(now())
 
   @@map("default_questions_disapproved")
 }

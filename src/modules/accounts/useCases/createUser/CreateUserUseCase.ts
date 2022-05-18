@@ -11,6 +11,7 @@ interface IRequest {
   register: string;
   fk_role: number;
   fk_unity: number;
+  fk_office_hour: number;
 }
 
 @injectable()
@@ -27,6 +28,7 @@ class CreateUserUseCase {
     register,
     fk_role,
     fk_unity,
+    fk_office_hour,
   }: IRequest): Promise<void> {
     const {
       EmailValidations,
@@ -35,6 +37,7 @@ class CreateUserUseCase {
       NameValidations,
       RoleValidations,
       UnityValidations,
+      OfficeHourValidations,
     } = UserValidations();
 
     const emailValidations = await EmailValidations(email);
@@ -43,6 +46,7 @@ class CreateUserUseCase {
     const nameValidations = await NameValidations(name);
     const roleValidations = await RoleValidations(fk_role);
     const unityValidations = await UnityValidations(fk_unity);
+    const officeHourValidations = await OfficeHourValidations(fk_office_hour);
 
     if (!nameValidations.status) {
       throw new AppError(nameValidations.message);
@@ -62,6 +66,12 @@ class CreateUserUseCase {
     if (!unityValidations.status) {
       throw new AppError(unityValidations.message, unityValidations.statusCode);
     }
+    if (!officeHourValidations.status) {
+      throw new AppError(
+        officeHourValidations.message,
+        officeHourValidations.statusCode,
+      );
+    }
 
     // const acceptName = name.normalize("NFD").replace(/[^a-zA-Zs]/, "");
 
@@ -77,6 +87,7 @@ class CreateUserUseCase {
       register,
       fk_role: parseInt(fk_role.toString(), 10),
       fk_unity: parseInt(fk_unity.toString(), 10),
+      fk_office_hour: parseInt(fk_office_hour.toString(), 10),
     };
 
     await this.usersRepositoryInPrisma.createUser(user);

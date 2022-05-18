@@ -1,6 +1,8 @@
+import { OfficeHoursRepositoryInPrisma } from "@modules/accounts/repositories/implementations/OfficeHoursRepositoryInPrisma";
 import { RolesRepositoryInPrisma } from "@modules/accounts/repositories/implementations/RolesRepositoryInPrisma";
 import { UnitsRepositoryInPrisma } from "@modules/accounts/repositories/implementations/UnitsRepositoryInPrisma";
 import { UsersRepositoryInPrisma } from "@modules/accounts/repositories/implementations/UsersRepositoryInPrisma";
+import { IOfficeHoursRepository } from "@modules/accounts/repositories/IOfficeHoursRepository";
 import { IRolesRepository } from "@modules/accounts/repositories/IRolesRepository";
 import { IUnitsRepository } from "@modules/accounts/repositories/IUnityRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
@@ -14,6 +16,11 @@ container.registerSingleton<IRolesRepository>(
 container.registerSingleton<IUnitsRepository>(
   "UnitsRepositoryInPrisma",
   UnitsRepositoryInPrisma,
+);
+
+container.registerSingleton<IOfficeHoursRepository>(
+  "OfficeHoursRepositoryInPrisma",
+  OfficeHoursRepositoryInPrisma,
 );
 
 container.registerSingleton<IUsersRepository>(

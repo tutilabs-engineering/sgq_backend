@@ -19,8 +19,17 @@ CREATE TABLE "user" (
     "fk_unity" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "fk_office_hour" INTEGER NOT NULL,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "office_hours" (
+    "id" SERIAL NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "office_hours_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -257,6 +266,9 @@ CREATE UNIQUE INDEX "specific_questions_responses_fk_report_startup_fill_key" ON
 
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_fk_unity_fkey" FOREIGN KEY ("fk_unity") REFERENCES "unity"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user" ADD CONSTRAINT "user_fk_office_hour_fkey" FOREIGN KEY ("fk_office_hour") REFERENCES "office_hours"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user" ADD CONSTRAINT "user_fk_role_fkey" FOREIGN KEY ("fk_role") REFERENCES "role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

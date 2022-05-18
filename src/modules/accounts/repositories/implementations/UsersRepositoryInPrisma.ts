@@ -39,6 +39,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
     cpf,
     fk_role,
     fk_unity,
+    fk_office_hour,
   }: IUpdateUserDTO): Promise<void> {
     await prismaAgent.user.update({
       where: { id },
@@ -49,6 +50,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
         cpf,
         fk_role,
         fk_unity,
+        fk_office_hour,
       },
     });
   }
@@ -72,6 +74,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
     register,
     fk_role,
     fk_unity,
+    fk_office_hour,
   }: ICreateUserDTO): Promise<void> {
     await prismaAgent.user.create({
       data: {
@@ -88,6 +91,11 @@ class UsersRepositoryInPrisma implements IUsersRepository {
         unity: {
           connect: {
             id: fk_unity,
+          },
+        },
+        office_hour: {
+          connect: {
+            id: fk_office_hour,
           },
         },
       },
@@ -115,6 +123,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
             name: true,
           },
         },
+        office_hour: true,
       },
     });
     return allUsers;
@@ -142,6 +151,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
             name: true,
           },
         },
+        office_hour: true,
       },
     });
     return user;

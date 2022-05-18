@@ -13,6 +13,10 @@ interface IListUserDTO {
     id: number;
     name: string;
   };
+  office_hour: {
+    id: number;
+    description: string;
+  };
 }
 
 export { IListUserDTO };
