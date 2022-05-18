@@ -123,6 +123,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
             name: true,
           },
         },
+        office_hour: true,
       },
     });
     return allUsers;
@@ -150,6 +151,7 @@ class UsersRepositoryInPrisma implements IUsersRepository {
             name: true,
           },
         },
+        office_hour: true,
       },
     });
     return user;
