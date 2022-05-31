@@ -59,6 +59,9 @@ class VariablesRepositoryInPrisma implements IVariablesRepository {
           cod_product: code,
         },
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
 
     return variables;

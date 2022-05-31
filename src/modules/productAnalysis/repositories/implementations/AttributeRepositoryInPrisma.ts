@@ -40,6 +40,9 @@ class AttributeRepositoryInPrisma implements IAttributeRepository {
           cod_product: code_product,
         },
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
     return response;
   }
