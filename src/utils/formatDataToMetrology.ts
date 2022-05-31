@@ -11,20 +11,20 @@ async function FormatDataMetrologyProvider({
   const variables = await variablesRepositoryInPrisma.listVariablesInProduct(
     code_product,
   );
+  const metrology: IMetrologyDTO[] = [];
 
   if (!variables) {
-    throw new AppError("Not found variables in this product", 404);
+    return metrology;
   }
 
   if (variables.length <= 0) {
-    throw new AppError("Does not exists variables in this product");
+    return metrology;
   }
 
   if (cavity <= 0 || !cavity) {
     throw new AppError("At least one cavity is required");
   }
 
-  const metrology: IMetrologyDTO[] = [];
   let i = 1;
 
   // eslint-disable-next-line array-callback-return
