@@ -15,6 +15,10 @@ export async function EnsureFills(
   const user = await usersRepositoryInPrisma.findById(id);
 
   if (
+    user.role.id === 1 ||
+    user.role.description === "admin" ||
+    user.role.id === 2 ||
+    user.role.description === "gestor" ||
     user.role.id === 3 ||
     user.role.description === "analista" ||
     user.role.id === 4 ||
