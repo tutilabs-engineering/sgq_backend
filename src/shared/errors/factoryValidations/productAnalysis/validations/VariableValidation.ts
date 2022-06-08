@@ -84,30 +84,23 @@ function VariableValidation() {
     max,
     min,
   }: Variable): Promise<IResponseValidation> {
-    const { IsEmpty, IsNumeric } = FactoryOfGeneralValidations();
+    const { IsEmpty } = FactoryOfGeneralValidations();
 
     const isEmptyDescription = await IsEmpty(description);
-
-    const isEmptyCota = await IsNumeric({
-      nameField: "cota",
-      data: String(cota),
-    });
-    const isEmptyMax = await IsNumeric({ nameField: "max", data: String(max) });
-    const isEmptyMin = await IsNumeric({ nameField: "min", data: String(min) });
 
     if (isEmptyDescription) {
       return { status: false, message: "Description is required" };
     }
-    if (!isEmptyCota.status) {
-      return { status: false, message: isEmptyCota.message };
-    }
+    // if (IsEmpty(String(cota))) {
+    //   return { status: false, message: "Cota is required" };
+    // }
 
-    if (!isEmptyMin.status) {
-      return { status: false, message: isEmptyMin.message };
-    }
-    if (!isEmptyMax.status) {
-      return { status: false, message: isEmptyMax.message };
-    }
+    // if (IsEmpty(String(max))) {
+    //   return { status: false, message: "Max is required" };
+    // }
+    // if (IsEmpty(String(min))) {
+    //   return { status: false, message: "Min is required" };
+    // }
 
     return { status: true };
   }
