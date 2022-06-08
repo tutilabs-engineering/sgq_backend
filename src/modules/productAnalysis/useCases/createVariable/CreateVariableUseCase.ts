@@ -55,9 +55,9 @@ class CreateVariableUseCase {
     const desc_product = sap_product.product.name_product;
     const cod_client = "XXX";
     const desc_client = "XXX";
-    const cotaRef = Number(cota);
-    const maxRef = Number(max);
-    const minRef = Number(min);
+    const cotaRef = Number(cota) || 0;
+    const maxRef = Number(max) || 0;
+    const minRef = Number(min) || 0;
     // [X] - Segundo passo verificando os dados do produto
     const productDataValidation = await ProductDataValidation({
       cod_client,

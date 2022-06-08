@@ -28,7 +28,7 @@ class FindMetrologyByStartupUseCase {
       code_op: listDB[0].startup.op.code_op,
       client: listDB[0].startup.op.client,
       code_client: listDB[0].startup.op.code_client,
-      code_product: listDB[0].startup.op.client,
+      code_product: listDB[0].startup.op.code_product,
       desc_product: listDB[0].startup.op.desc_product,
       cavity: listDB[0].startup.op.cavity,
       user: {
