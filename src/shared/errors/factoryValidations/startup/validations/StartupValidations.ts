@@ -163,13 +163,16 @@ function StartupValidations() {
 
     const verifyIfStartupIsAlreadyFilled =
       await reportStartupsInPrisma.findFillByReportStartupId(fk_startup);
-
     if (verifyIfStartupIsAlreadyFilled) {
-      return {
-        status: false,
-        message: "Startup is already filled",
-        statusCode: 406,
-      };
+      if (verifyIfStartupIsAlreadyFilled.startup) {
+        if (verifyIfStartupIsAlreadyFilled.startup.filled) {
+          return {
+            status: false,
+            message: "Startup is already filled",
+            statusCode: 406,
+          };
+        }
+      }
     }
 
     return { status: true };
@@ -217,65 +220,67 @@ function StartupValidations() {
 
     return { status: true };
   }
-
+  // Verificação de Questão Especificas
+  // Tirado devido a sempre pegar as Qeustões Especificas ativas enão da startup criada.
+  // Obs: Isso apos a imprementaçõ do Preenchimento temporario
   async function SpecificQuestionsValidations({
     specific_questions,
     code_product,
   }: IFillReportStartupToUseCaseDTO): Promise<IResponseValidationSpecificQuestion> {
-    if (!specific_questions) {
-      return { status: false, message: "specific_questions must be required" };
-    }
+    // if (!specific_questions) {
+    //   return { status: false, message: "specific_questions must be required" };
+    // }
 
-    const listOfSpecificQuestionsByProductCode =
-      await attributeRepositoryInPrisma.listAttributesInProduct(code_product);
+    // const listOfSpecificQuestionsByProductCode =
+    //   await attributeRepositoryInPrisma.listAttributesInProduct(code_product);
 
-    const specificQuestionsAvailable = [];
+    // const specificQuestionsAvailable = [];
 
-    listOfSpecificQuestionsByProductCode.forEach((questionEnabled) => {
-      if (questionEnabled.is_enabled) {
-        const verify = specificQuestionsAvailable.find(
-          (specificQuestionInList) =>
-            specificQuestionInList.id === questionEnabled.id,
-        );
-        if (!verify) {
-          specificQuestionsAvailable.push(questionEnabled);
-        }
-      }
-    });
+    // listOfSpecificQuestionsByProductCode.forEach((questionEnabled) => {
+    //   if (questionEnabled.is_enabled) {
+    //     const verify = specificQuestionsAvailable.find(
+    //       (specificQuestionInList) =>
+    //         specificQuestionInList.id === questionEnabled.id,
+    //     );
+    //     if (!verify) {
+    //       specificQuestionsAvailable.push(questionEnabled);
+    //     }
+    //   }
+    // });
 
-    if (!specificQuestionsAvailable.length) {
-      return {
-        status: true,
-        specificQuestions: specificQuestionsAvailable,
-      };
-    }
+    // if (!specificQuestionsAvailable.length) {
+    //   return {
+    //     status: true,
+    //     specificQuestions: specificQuestionsAvailable,
+    //   };
+    // }
 
-    const specificQuestionsFound = [];
+    // const specificQuestionsFound = [];
 
-    specificQuestionsAvailable.forEach((specificQuestionInDB) => {
-      specific_questions.forEach((specificQuestionSent) => {
-        if (
-          specificQuestionInDB.id === specificQuestionSent.fk_specific_question
-        ) {
-          const verify = specificQuestionsFound.find(
-            (question) => question.id === specificQuestionInDB.id,
-          );
-          if (!verify) {
-            specificQuestionsFound.push(specificQuestionInDB);
-          }
-        }
-      });
-    });
+    // specificQuestionsAvailable.forEach((specificQuestionInDB) => {
+    //   specific_questions.forEach((specificQuestionSent) => {
+    //     if (
+    //       specificQuestionInDB.id === specificQuestionSent.fk_specific_question
+    //     ) {
+    //       const verify = specificQuestionsFound.find(
+    //         (question) => question.id === specificQuestionInDB.id,
+    //       );
+    //       if (!verify) {
+    //         specificQuestionsFound.push(specificQuestionInDB);
+    //       }
+    //     }
+    //   });
+    // });
 
-    if (specificQuestionsFound.length !== specificQuestionsAvailable.length) {
-      const valueMissing =
-        specificQuestionsAvailable.length - specificQuestionsFound.length;
+    // if (specificQuestionsFound.length !== specificQuestionsAvailable.length) {
+    //   const valueMissing =
+    //     specificQuestionsAvailable.length - specificQuestionsFound.length;
 
-      return {
-        status: false,
-        message: `Must fill all specific questions, is missing ${valueMissing}`,
-      };
-    }
+    //   return {
+    //     status: false,
+    //     message: `Must fill all specific questions, is missing ${valueMissing}`,
+    //   };
+    // }
 
     return { status: true };
   }

@@ -93,11 +93,6 @@ class FillReportStartupUseCase {
       specificQuestions = null;
     }
 
-    const determineStatusReportStartup = await FinalResultOfStatus({
-      default_questions,
-      specific_questions: specificQuestions,
-    });
-
     let img_1: string;
     let img_2: string;
     let img_3: string;
@@ -132,7 +127,7 @@ class FillReportStartupUseCase {
     });
 
     const defaultQuestionsDisapproved = [];
-
+    // Contabilizando as peguntas Reprovadas das startups
     default_questions.forEach((question) => {
       if (Number(question.status) === 2) {
         defaultQuestionsDisapproved.push({
@@ -143,12 +138,56 @@ class FillReportStartupUseCase {
     });
 
     let open = true;
-
-    if (determineStatusReportStartup.status === 2) {
-      open = false;
-    }
+    let filled = false;
 
     const final_time = this.dateProvider.dateNow();
+    const verifyMetrology =
+      await this.metrologyRepositoryInPrisma.findMetrologyStatusByStartupId(
+        fk_startup,
+      );
+    // Se não existe metrologia o startup pode ser fechado direto
+    // Fechar Start-up
+    if (verifyMetrology.length <= 0) {
+      filled = true;
+    }
+    // Fechar Start-up
+    if (verifyMetrology.length > 0) {
+      if (!verifyMetrology[0].metrology) {
+        filled = true;
+      }
+    }
+    // Definir defult
+    let determineStatusReportStartup = {
+      status: 5,
+      description: "undefined",
+    };
+    // Verificar se o fechamento é positivo
+    if (filled) {
+      // Pego os dados da metrologia pra conferir o status das
+      const getDataMetrologyCheckStatus =
+        await this.metrologyRepositoryInPrisma.findByMetrologyAllVariables(
+          fk_startup,
+        );
+
+      // Verifico pra qual status vou camaminhar a Startup através Analise de perguntas
+      determineStatusReportStartup = await FinalResultOfStatus({
+        default_questions,
+        specific_questions: specificQuestions,
+        metrology: getDataMetrologyCheckStatus,
+      });
+
+      // Se o Start-Up
+      if (determineStatusReportStartup.status === 2) {
+        open = false;
+      }
+
+      // Verifico se existe perguntas reporvadas
+      await this.reportStartupsInPrisma.insertDefaultQuestionsDisapproved(
+        defaultQuestionsDisapproved,
+      );
+    }
+
+    await this.reportStartupsInPrisma.deleteFillReportStartup(fk_startup);
 
     await this.reportStartupsInPrisma.fillReportStartup({
       fk_startup,
@@ -161,11 +200,8 @@ class FillReportStartupUseCase {
       img_1,
       img_2,
       img_3,
+      filled,
     });
-
-    await this.reportStartupsInPrisma.insertDefaultQuestionsDisapproved(
-      defaultQuestionsDisapproved,
-    );
   }
 }
 

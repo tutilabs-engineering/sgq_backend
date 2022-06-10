@@ -19,19 +19,20 @@ class DeleteVariableUseCase {
         variableIdValidation.statusCode,
       );
     }
-    const variable = await this.variableRepositoryInPrisma.findByVariable(id);
-
-    if (variable.file !== "") {
-      fs.unlinkSync(`uploads/variables/${variable.file}`);
-    }
 
     try {
       await this.variableRepositoryInPrisma.deleteVariable(id);
+      const variable = await this.variableRepositoryInPrisma.findByVariable(id);
+
+      if (variable.file !== "") {
+        fs.unlinkSync(`uploads/variables/${variable.file}`);
+      }
     } catch {
-      throw new AppError(
-        "variable cannot be deleted because it is being used",
-        401,
-      );
+      await this.variableRepositoryInPrisma.updateStatus(id, false);
+      // throw new AppError(
+      //   "variable cannot be deleted because it is being used",
+      //   401,
+      // );
     }
   }
 }

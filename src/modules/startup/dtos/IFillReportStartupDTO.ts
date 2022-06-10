@@ -6,6 +6,8 @@
 //   status: string;
 // }
 
+import { IFindMetrologyByStartup } from "@modules/metrology/dtos/IFindMetrologyByStartup";
+
 interface IDataToFillDefaultQuestion {
   description: string;
   file: string;
@@ -26,6 +28,7 @@ interface IDefaultQuestionsDisapprovedDTO {
 }
 
 interface IFillReportStartupToDatabaseDTO {
+  idFillReportStartup?: string;
   default_questions: string;
   specific_questions?: string;
   fk_startup: string;
@@ -39,9 +42,11 @@ interface IFillReportStartupToDatabaseDTO {
     description: string;
   };
   open: boolean;
+  filled?: boolean;
 }
 
 interface IFillReportStartupToUseCaseDTO {
+  metrology?: IFindMetrologyByStartup[];
   default_questions?: IDataToFillDefaultQuestion[];
   specific_questions?: IDataToFillSpecificQuestion[];
   fk_startup?: string;

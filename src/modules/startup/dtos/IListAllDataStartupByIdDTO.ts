@@ -107,6 +107,7 @@ interface IListReportStartupByIdFormatted {
     is_enabled: boolean;
     fk_product_ana?: string;
   }[];
+
   // fk_user_create: string;
   // fk_user_filled: string;
   img_1: string;

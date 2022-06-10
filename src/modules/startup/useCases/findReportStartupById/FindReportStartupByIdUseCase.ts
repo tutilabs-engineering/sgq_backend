@@ -10,7 +10,7 @@ class FindReportStartupByIdUseCase {
     private reportStartupsInPrisma: IReportStartupRepository,
     @inject("AttributeRepositoryInPrisma")
     private attributeRepositoryInPrisma: IAttributeRepository,
-  ) {}
+  ) { }
   async execute(startup_id: string): Promise<IListReportStartupByIdFormatted> {
     const reportStartup =
       await this.reportStartupsInPrisma.findAllDataStartupById(startup_id);
@@ -31,7 +31,8 @@ class FindReportStartupByIdUseCase {
       }
     });
 
-    if (!reportStartup.filled) {
+    // Se as o status do preenchimento for falso ele retorna apenas informações basicas do startup
+    if (!reportStartupFill) {
       const reportStartupFormatted: IListReportStartupByIdFormatted = {
         id: reportStartup.id,
         code_startup: reportStartup.code_startup,

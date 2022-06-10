@@ -12,6 +12,7 @@ import { IListAllStartupsDTO } from "../dtos/IListAllStartupsDTO";
 import { ITakeProductCodeDTO } from "../dtos/ITakeProductCodeDTO";
 import { ReportStartup } from "../entities/ReportStartup";
 import { ReportStartupFill } from "../entities/ReportStartupFill";
+import { ReportStartupFillState } from "../entities/ReportStartupFillState";
 
 interface IReportStartupRepository {
   create(
@@ -29,8 +30,11 @@ interface IReportStartupRepository {
     final_time,
     statusReportStartup,
     open,
+    filled,
   }: IFillReportStartupToDatabaseDTO): Promise<void>;
-  findFillByReportStartupId(startup_id: string): Promise<ReportStartupFill>;
+  findFillByReportStartupId(
+    startup_id: string,
+  ): Promise<ReportStartupFillState>;
   findAllDataStartupById(
     startup_id: string,
   ): Promise<IListAllDataStartupByIdDTO>;
@@ -44,6 +48,7 @@ interface IReportStartupRepository {
   insertDefaultQuestionsDisapproved(
     default_questions_disapproved: IDefaultQuestionsDisapprovedDTO[],
   ): Promise<void>;
+  deleteFillReportStartup(idFillReportStartup: string): Promise<void>;
 }
 
 export { IReportStartupRepository };

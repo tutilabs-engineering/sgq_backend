@@ -25,8 +25,10 @@ export async function CloseStartupValidation({
     code_machine,
   );
 
+  console.log("startupsss", startups);
+
   // verificando se máquina existe em algum startup
-  if (!startups.length) {
+  if (startups.length <= 0) {
     return {
       status: false,
       message: "The machine is not registered in any report startup",
@@ -38,18 +40,18 @@ export async function CloseStartupValidation({
   // contagem de startups encontradas
 
   const validationResponse = startups.map(async (startup) => {
-    const metrology =
-      await metrologyRepositoryInPrisma.findMetrologyStatusByStartupId(
-        startup.id,
-      );
+    // const metrology =
+    //   await metrologyRepositoryInPrisma.findMetrologyStatusByStartupId(
+    //     startup.id,
+    //   );
 
-    let metrologyFilled = true;
+    // let metrologyFilled = true;
 
-    metrology.forEach((m) => {
-      if (m.metrology) {
-        metrologyFilled = false;
-      }
-    });
+    // metrology.forEach((m) => {
+    //   if (m.metrology) {
+    //     metrologyFilled = false;
+    //   }
+    // });
 
     if (startup.open) {
       if (!startup.filled) {
@@ -61,32 +63,34 @@ export async function CloseStartupValidation({
           data: startup.id, // para identificar startup que precisa ser preenchida
         };
       }
-      if (metrologyFilled) {
-        if (startup.op.machine === code_machine) {
-          if (startup.op.product_mold === code_mold) {
-            // console.log("Same mold in machine");
-            return {
-              status: true,
-              message: "Mesmo molde na máquina.",
-              data: startup.id,
-              needToClose: true,
-            };
-          }
-          // console.log("New mold in machine");
+      // if (metrologyFilled) {
+      // eslint-disable-next-line eqeqeq
+      if (startup.op.machine == code_machine) {
+        // eslint-disable-next-line eqeqeq
+        if (startup.op.product_mold == code_mold) {
+          // console.log("Same mold in machine");
           return {
             status: true,
-            message: "Novo molde na máquina.",
+            message: "Mesmo molde na máquina.",
             data: startup.id,
             needToClose: true,
           };
         }
+        // console.log("New mold in machine");
+        return {
+          status: true,
+          message: "Novo molde na máquina.",
+          data: startup.id,
+          needToClose: true,
+        };
       }
+      // }
       // console.log("retorno de metrologia");
-      return {
-        status: true,
-        message: "A metrologia deve ser preenchida.",
-        needToClose: false,
-      };
+      // return {
+      //   status: true,
+      //   message: "A metrologia deve ser preenchida.",
+      //   needToClose: false,
+      // };
     }
     // console.log("The last report startup is already Closed");
     index += 1;
@@ -97,9 +101,14 @@ export async function CloseStartupValidation({
     };
   });
 
-  if (validationResponse.length === 1) {
-    return validationResponse[0];
-  }
+  console.log("aqui");
+  console.log(validationResponse);
+  console.log("saiu");
 
-  return validationResponse[index];
+  // if (validationResponse.length === 1) {
+  //   return validationResponse[0];
+  // }
+
+  // return validationResponse[index];
+  return validationResponse[0];
 }

@@ -1,3 +1,5 @@
+import { IFindMetrologyByStartup } from "@modules/metrology/dtos/IFindMetrologyByStartup";
+import { Metrology } from "@modules/metrology/entities/Metrology";
 import { IFillReportStartupToUseCaseDTO } from "@modules/startup/dtos/IFillReportStartupDTO";
 
 interface IResponse {
@@ -51,15 +53,37 @@ function DetermineReportStartupStatus() {
     return { status: 2, description: "disapproved" };
   }
 
+  async function determineStatusVariablesByMetrology({
+    metrology,
+  }: IFillReportStartupToUseCaseDTO): Promise<IResponse> {
+    let verifyStatus: IResponse = { status: 1, description: "approved" };
+    if (!metrology) {
+      return verifyStatus;
+    }
+
+    await Promise.all(
+      // eslint-disable-next-line array-callback-return
+      metrology.map((item) => {
+        if (item.value > item.variable.max || item.value < item.variable.min) {
+          verifyStatus = { status: 2, description: "disapproved" };
+        }
+      }),
+    );
+
+    return verifyStatus;
+  }
+
   return {
     determineStatusDefaultQuestions,
     determineStatusSpecificQuestions,
+    determineStatusVariablesByMetrology,
   };
 }
 
 async function FinalResultOfStatus({
   default_questions,
   specific_questions,
+  metrology,
 }: IFillReportStartupToUseCaseDTO): Promise<IResponse> {
   const resultDefaultQuestions =
     await DetermineReportStartupStatus().determineStatusDefaultQuestions({
@@ -71,25 +95,30 @@ async function FinalResultOfStatus({
       specific_questions,
     });
 
+  const resultVariablesByMetrology =
+    await DetermineReportStartupStatus().determineStatusVariablesByMetrology({
+      metrology,
+    });
+
   if (
+    resultDefaultQuestions.status === 2 ||
+    resultSpecificQuestions.status === 2 ||
+    resultVariablesByMetrology.status === 2
+  ) {
+    return { status: 2, description: "disapproved" };
+ // eslint-disable-next-line no-else-return
+  } else if (
     resultDefaultQuestions.status === 1 &&
-    resultSpecificQuestions.status === 1
+    resultSpecificQuestions.status === 1 &&
+    resultVariablesByMetrology.status === 1
   ) {
     return { status: 1, description: "approved" };
-  }
-  if (
+  } else if (
     resultDefaultQuestions.status === 3 ||
     resultSpecificQuestions.status === 3
   ) {
     return { status: 3, description: "approved with condition" };
   }
-  if (
-    resultDefaultQuestions.status === 2 ||
-    resultSpecificQuestions.status === 2
-  ) {
-    return { status: 2, description: "disapproved" };
-  }
-
   return { status: 0, description: "error" };
 }
 
