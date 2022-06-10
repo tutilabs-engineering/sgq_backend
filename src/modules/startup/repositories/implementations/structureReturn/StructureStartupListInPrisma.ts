@@ -32,6 +32,22 @@ const StructureStartupListInPrisma = {
         },
       },
     },
+    filled: true,
+    metrology: {
+      select: {
+        id: true,
+        cavity: true,
+        metrology: true,
+        fk_startup: true,
+        value: true,
+        variable: true,
+      },
+    },
+    report_startup_fill: {
+      select: {
+        id: true,
+      },
+    },
   },
 };
 

@@ -1,3 +1,5 @@
+import { Metrology } from "@modules/metrology/entities/Metrology";
+
 interface IOpData {
   code_op: number;
   code_product: string;
@@ -30,6 +32,10 @@ interface IListAllStartupsDTO {
   day: Date;
   start_time: Date;
   userThatCreate: IUser;
+  metrology: Metrology[];
+  report_startup_fill: {
+    id?: string;
+  }[];
 }
 
 export { IListAllStartupsDTO };

@@ -18,7 +18,9 @@ class DeleteAttributeUseCase {
         attributeIdValidation.statusCode,
       );
     }
-    await this.attributeRepositoryInPrisma.deleteAttribute(id);
+    // Não posso deletar pq o pablo botou dentro de um JSON no banco :O
+    // await this.attributeRepositoryInPrisma.deleteAttribute(id);
+    await this.attributeRepositoryInPrisma.updateStatus(id, false);
   }
 }
 

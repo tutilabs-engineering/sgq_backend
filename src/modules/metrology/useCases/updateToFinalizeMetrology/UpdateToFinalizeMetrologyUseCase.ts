@@ -55,15 +55,16 @@ class UpdateToFinalizeMetrologyUseCase {
       );
     }
     // Verify if Startup has values that exceed the limits of variables
-    allMetrology.map((item) => {
-      if (item.value < item.variable.min || item.value > item.variable.max) {
-        throw new AppError(
-          "The Startup metrology has values that exceed the limits",
-          401,
-        );
-      }
-      return null;
-    });
+    // Desativado verificação de limite de metrologia
+    // allMetrology.map((item) => {
+    //   if (item.value < item.variable.min || item.value > item.variable.max) {
+    //     throw new AppError(
+    //       "The Startup metrology has values that exceed the limits",
+    //       401,
+    //     );
+    //   }
+    //   return null;
+    // });
 
     const { id } = allMetrology[0].metrologyHistory;
     await this.metrologyHistoryRepositoryInPrisma.finish(id);
