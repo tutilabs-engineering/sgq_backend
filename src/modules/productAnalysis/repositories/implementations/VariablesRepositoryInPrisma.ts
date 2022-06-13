@@ -58,6 +58,7 @@ class VariablesRepositoryInPrisma implements IVariablesRepository {
         product_ana: {
           cod_product: code,
         },
+        is_enabled: true,
       },
       orderBy: {
         createdAt: "asc",

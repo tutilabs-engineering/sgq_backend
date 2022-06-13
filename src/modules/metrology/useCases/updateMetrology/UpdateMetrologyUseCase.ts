@@ -71,31 +71,32 @@ class UpdateMetrologyUseCase {
 
         let msg: object;
         if (metrology) {
-          if (
-            element.value <= metrology.variable.max &&
-            element.value >= metrology.variable.min
-          ) {
-            this.metrologyRepositoryInPrisma.updateMetrology(
-              element.value,
-              element.id,
-            );
+          // Verificação de valores ok
+          // if (
+          //   element.value <= metrology.variable.max &&
+          //   element.value >= metrology.variable.min
+          // ) {
+          this.metrologyRepositoryInPrisma.updateMetrology(
+            element.value,
+            element.id,
+          );
 
-            msg = {
-              variable: metrology.variable,
-              message: "metrology updated",
-              status_code: 200,
-            };
-          } else {
-            msg = {
-              variable: metrology.variable,
-              message: "doesn't meet the min or max",
-              status_code: 401,
-            };
-            // throw new AppError(
-            //   `variable '${metrology.variable.description}' doesn't meet the min or max`,
-            //   401,
-            // );
-          }
+          msg = {
+            variable: metrology.variable,
+            message: "metrology updated",
+            status_code: 200,
+          };
+          // } else {
+          //   msg = {
+          //     variable: metrology.variable,
+          //     message: "doesn't meet the min or max",
+          //     status_code: 401,
+          //   };
+          //   // throw new AppError(
+          //   //   `variable '${metrology.variable.description}' doesn't meet the min or max`,
+          //   //   401,
+          //   // );
+          // }
         } else {
           throw new AppError(
             `variable ${element.id} not exist in startup metrology`,

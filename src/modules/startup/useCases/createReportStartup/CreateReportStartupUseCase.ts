@@ -88,10 +88,11 @@ class CreateReportStartupUseCase {
       code_machine: machine,
       code_mold: product_mold,
     });
-
+    // A ultima Startup precisa ser preenchida
     if (startupCloseValidation.status && !startupCloseValidation.needToClose) {
       throw new AppError(startupCloseValidation.message);
     }
+    // Fechar as Startup com essa maquina
     if (startupCloseValidation.status && startupCloseValidation.needToClose) {
       await this.reportStartupsInPrisma.closeReportStartup(
         startupCloseValidation.data,

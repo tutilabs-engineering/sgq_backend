@@ -13,6 +13,8 @@ import { IListAllStartupsDTO } from "@modules/startup/dtos/IListAllStartupsDTO";
 import { ITakeProductCodeDTO } from "@modules/startup/dtos/ITakeProductCodeDTO";
 import { ReportStartup } from "@modules/startup/entities/ReportStartup";
 import { ReportStartupFill } from "@modules/startup/entities/ReportStartupFill";
+import { ReportStartupFillState } from "@modules/startup/entities/ReportStartupFillState";
+import { prisma } from "@prisma/client";
 // import { stringify } from "uuid";
 import { prismaAgent } from "../../../../shared/database/prismaAgent";
 import { IReportStartupRepository } from "../IReportStartupRepository";
@@ -44,6 +46,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
         op: {
           machine: code_machine,
         },
+        open: true,
       },
       select: {
         id: true,
@@ -192,8 +195,16 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
   }
   async findFillByReportStartupId(
     startup_id: string,
-  ): Promise<ReportStartupFill> {
+  ): Promise<ReportStartupFillState> {
     const dataStartup = await prismaAgent.reportStartupFill.findFirst({
+      select: {
+        id: true,
+        startup: {
+          select: {
+            filled: true,
+          },
+        },
+      },
       where: { fk_startup: startup_id },
     });
 
@@ -218,6 +229,36 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       },
     });
   }
+  async deleteFillReportStartup(fk_startup: string): Promise<void> {
+    const fillReportStartup = await prismaAgent.reportStartupFill.findFirst({
+      select: {
+        id: true,
+      },
+      where: {
+        fk_startup,
+      },
+    });
+    if (fillReportStartup) {
+      // Default Questions
+      await prismaAgent.defaultQuestionsResponses.deleteMany({
+        where: {
+          fk_report_startup_fill: fillReportStartup.id,
+        },
+      });
+      // Specific Questions
+      await prismaAgent.specificQuestionsResponses.deleteMany({
+        where: {
+          fk_report_startup_fill: fillReportStartup.id,
+        },
+      });
+
+      await prismaAgent.reportStartupFill.delete({
+        where: {
+          id: fillReportStartup.id,
+        },
+      });
+    }
+  }
 
   async fillReportStartup({
     fk_startup,
@@ -230,6 +271,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     img_1,
     img_2,
     img_3,
+    filled,
   }: IFillReportStartupToDatabaseDTO): Promise<void> {
     await prismaAgent.reportStartupFill
       .create({
@@ -258,21 +300,21 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
             img_1,
             img_2,
             img_3,
-            filled: true,
+            filled,
           },
         });
       })
       .catch((error) => {
         return error;
       });
-
-    if (statusReportStartup.status === 2) {
-      await prismaAgent.metrology.deleteMany({
-        where: {
-          fk_startup,
-        },
-      });
-    }
+    //  Apagar Metrologia ao reprovar
+    // if (statusReportStartup.status === 2) {
+    //   await prismaAgent.metrology.deleteMany({
+    //     where: {
+    //       fk_startup,
+    //     },
+    //   });
+    // }
   }
 
   async create(
@@ -339,7 +381,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     return startupCreated;
   }
 
-  async findAll(): Promise<IListAllStartupsDTO[]> {
+  async findAll(): Promise<any> {
     const allStartups = await prismaAgent.reportStartup.findMany(
       StructureStartupListInPrisma,
     );
