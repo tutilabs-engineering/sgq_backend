@@ -142,7 +142,31 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
           },
         },
         status: true,
-        metrology: true,
+        metrology: {
+          select: {
+            id: true,
+            cavity: true,
+            value: true,
+            metrology: true,
+            sendToMetrology: true,
+            fk_startup: true,
+            fk_variable: true,
+            variable: true,
+            metrologyHistory: {
+              select: {
+                id: true,
+                startDate: true,
+                endDate: true,
+                fk_user: true,
+                user: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         op: {
           include: {
             components: true,
