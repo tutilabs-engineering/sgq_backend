@@ -1,3 +1,6 @@
+import { MetrologyHistory } from "@modules/metrology/entities/MetrologyHistory";
+import { Variable } from "@modules/productAnalysis/entities/Variable";
+
 interface IListAllDataStartupByIdDTO {
   id: string;
   code_startup: number;
@@ -46,7 +49,8 @@ interface IListAllDataStartupByIdDTO {
     sendToMetrology: Date;
     fk_startup: string;
     fk_variable: string;
-    fk_metrologyHistory: string;
+    variable: Variable;
+    metrologyHistory: MetrologyHistory;
   }[];
   op: {
     code_op: number;
@@ -148,7 +152,19 @@ interface IListReportStartupByIdFormatted {
     id: number;
     description: string;
   };
+
   metrology: {
+    id: string;
+    cavity: number;
+    value: number;
+    metrology: boolean;
+    sendToMetrology: Date;
+    fk_startup: string;
+    fk_variable: string;
+    variable: Variable;
+    metrologyHistory: MetrologyHistory;
+  }[];
+  metrology_items: {
     id: string;
     cavity: number;
     value: number;
