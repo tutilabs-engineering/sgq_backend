@@ -48,6 +48,9 @@ const StructureStartupListInPrisma = {
         id: true,
       },
     },
+    orderBy: {
+      code_startup: "asc",
+    },
   },
 };
 
