@@ -41,6 +41,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
             cota: true,
             max: true,
             min: true,
+            file: true,
           },
         },
         startup: {
