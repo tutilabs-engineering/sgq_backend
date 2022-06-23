@@ -10,6 +10,7 @@ interface IFindMetrologyByStartup {
     cota: number;
     max: number;
     min: number;
+    file?: string;
   };
   startup: {
     id: string;
