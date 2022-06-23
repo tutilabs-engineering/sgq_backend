@@ -49,6 +49,9 @@ const StructureStartupListInPrisma = {
       },
     },
   },
+  orderBy: {
+    createdAt: "asc",
+  },
 };
 
 export { StructureStartupListInPrisma };
