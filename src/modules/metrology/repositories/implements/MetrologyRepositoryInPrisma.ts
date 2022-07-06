@@ -21,7 +21,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
         fk_startup: startup_id,
       },
       orderBy: {
-        sendToMetrology: "asc",
+        sendToMetrology: "desc",
       },
     });
 
@@ -121,7 +121,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
         metrology: false,
       },
       orderBy: {
-        sendToMetrology: "asc",
+        sendToMetrology: "desc",
       },
     });
     return list;
@@ -213,7 +213,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
         metrology: true,
       },
       orderBy: {
-        sendToMetrology: "asc",
+        sendToMetrology: "desc",
       },
     });
 
