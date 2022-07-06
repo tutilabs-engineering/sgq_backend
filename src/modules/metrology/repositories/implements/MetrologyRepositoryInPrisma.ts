@@ -20,6 +20,9 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
       where: {
         fk_startup: startup_id,
       },
+      orderBy: {
+        sendToMetrology: "asc",
+      },
     });
 
     return metrology;
@@ -117,6 +120,9 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
       where: {
         metrology: false,
       },
+      orderBy: {
+        sendToMetrology: "asc",
+      },
     });
     return list;
   }
@@ -205,6 +211,9 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
       },
       where: {
         metrology: true,
+      },
+      orderBy: {
+        sendToMetrology: "asc",
       },
     });
 
