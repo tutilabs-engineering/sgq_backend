@@ -31,6 +31,34 @@ class FindReportStartupByIdUseCase {
       }
     });
 
+    const metrology_items = [];
+
+    const separate_variables = [];
+    reportStartup.metrology.map((item) => {
+      if (!separate_variables.includes(item.variable.description)) {
+        separate_variables.push(item.variable.description);
+      }
+    });
+
+    separate_variables.forEach((variable) => {
+      // eslint-disable-next-line consistent-return
+      const listMetrologyByVariable = reportStartup.metrology.map((item) => {
+        if (item.variable.description === variable) {
+          return {
+            metrology_id: item.id,
+            position_cavity: item.cavity,
+            value: item.value,
+            variable_desc: item.variable.description,
+            variable: item.variable,
+          };
+        }
+      });
+      metrology_items.push({
+        variable,
+        items: listMetrologyByVariable,
+      });
+    });
+
     // Se as o status do preenchimento for falso ele retorna apenas informações basicas do startup
     if (!reportStartupFill) {
       const reportStartupFormatted: IListReportStartupByIdFormatted = {
@@ -65,6 +93,7 @@ class FindReportStartupByIdUseCase {
           created_at: op.createdAt,
           updatedAt: op.updatedAt,
         },
+        metrology_items,
         metrology: reportStartup.metrology,
         userWhoCreate: reportStartup.userThatCreate,
         userWhoFill: reportStartup.userThatFill,
@@ -137,6 +166,7 @@ class FindReportStartupByIdUseCase {
         created_at: op.createdAt,
         updatedAt: op.updatedAt,
       },
+      metrology_items,
       metrology: reportStartup.metrology,
       userWhoCreate: reportStartup.userThatCreate,
       userWhoFill: reportStartup.userThatFill,
