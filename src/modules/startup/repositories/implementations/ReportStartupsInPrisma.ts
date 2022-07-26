@@ -388,6 +388,45 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
 
     return allStartups;
   }
+
+  async findAllFilterByCount(
+    // eslint-disable-next-line default-param-last
+    start_time: Date,
+    end_time: Date,
+  ): Promise<any> {
+    const allStartups = await prismaAgent.reportStartup.findMany({
+      select: {
+        id: true,
+        code_startup: true,
+        open: true,
+        day: true,
+        start_time: true,
+        status: {
+          select: {
+            id: true,
+            description: true,
+          },
+        },
+      },
+      where: {
+        filled: true,
+        AND: [
+          {
+            start_time: {
+              gte: new Date(start_time),
+            },
+          },
+          {
+            start_time: {
+              lte: new Date(end_time),
+            },
+          },
+        ],
+      },
+    });
+
+    return allStartups;
+  }
 }
 
 export { ReportStartupsInPrisma };

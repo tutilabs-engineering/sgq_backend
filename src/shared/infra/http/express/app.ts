@@ -44,7 +44,6 @@ export function App(): IApp {
       });
     },
   );
-
   const start = () => {
     app.listen(port, () => {
       console.log(`Server is running in http://localhost:${port}`);

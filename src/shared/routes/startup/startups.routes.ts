@@ -8,6 +8,7 @@ import { listDefaultQuestionsController } from "@modules/startup/useCases/listDe
 import { listMachinesController } from "@modules/startup/useCases/listMachines/ListMachinesController";
 import { listMoldsController } from "@modules/startup/useCases/listMolds/ListMoldsController";
 import { listStartupCountByStatusController } from "@modules/startup/useCases/listStartupCountByStatus/ListStartupCountByStatusController";
+import { listStartupFilterCountController } from "@modules/startup/useCases/listStartupFilterCount/ListStartupFilterCountController";
 import { Router } from "express";
 // import { ListDefaultQuestionByStartupId } from "firstTest/listDefaultQuestions";
 import multer from "multer";
@@ -21,7 +22,7 @@ const questionsUploads = multer(
   uploadConfig.upload("../uploads/startup/questionsUploads"),
 );
 
-startupsRoutes.use(EnsureAuthenticated);
+// startupsRoutes.use(EnsureAuthenticated);
 startupsRoutes.get("/dataOp/:code_op", (request, response) => {
   return findDataByCodeOpController().handle(request, response);
 });
@@ -38,6 +39,10 @@ startupsRoutes.post(
 startupsRoutes.get(
   "/management/count",
   listStartupCountByStatusController.handle,
+);
+startupsRoutes.get(
+  "/management/count_filter",
+  listStartupFilterCountController.handle,
 );
 startupsRoutes.post("/addOp/:id_startup", insertOpInStartupController.handle);
 startupsRoutes.get("/machines/list", listMachinesController.handle);
