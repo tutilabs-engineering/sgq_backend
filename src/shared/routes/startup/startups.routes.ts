@@ -40,7 +40,7 @@ startupsRoutes.get(
   "/management/count",
   listStartupCountByStatusController.handle,
 );
-startupsRoutes.get(
+startupsRoutes.post(
   "/management/count_filter",
   listStartupFilterCountController.handle,
 );
