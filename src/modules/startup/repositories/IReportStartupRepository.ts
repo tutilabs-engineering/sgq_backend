@@ -21,6 +21,7 @@ interface IReportStartupRepository {
   ): Promise<ReportStartup>;
   findStartupByCodeOp(code_op: number): Promise<ReportStartup>;
   findAll(): Promise<IListAllStartupsDTO[]>;
+  findAllFilterByCount(start_time: Date, end_time: Date): Promise<any>;
   findReportStartupById(startup_id: string): Promise<IReportStartupByIdDTO>;
   fillReportStartup({
     fk_startup,
