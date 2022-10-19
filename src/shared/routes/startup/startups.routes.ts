@@ -22,7 +22,7 @@ const questionsUploads = multer(
   uploadConfig.upload("../uploads/startup/questionsUploads"),
 );
 
-// startupsRoutes.use(EnsureAuthenticated);
+ startupsRoutes.use(EnsureAuthenticated);
 startupsRoutes.get("/dataOp/:code_op", (request, response) => {
   return findDataByCodeOpController().handle(request, response);
 });
