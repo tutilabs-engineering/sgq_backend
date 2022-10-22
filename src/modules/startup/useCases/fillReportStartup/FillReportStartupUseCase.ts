@@ -3,7 +3,9 @@ import { IFillReportStartupToUseCaseDTO } from "@modules/startup/dtos/IFillRepor
 import { IReportStartupRepository } from "@modules/startup/repositories/IReportStartupRepository";
 import { FinalResultOfStatus } from "@utils/determineReportStartupStatus";
 import { injectable, inject } from "tsyringe";
+import { FinalResultReportStartupDisapproved } from "utils/determineReportStartupDisapproved";
 import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider";
+import { IMailProvider } from "@shared/container/providers/mailProvider/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 import { StartupValidations } from "@shared/errors/factoryValidations/startup/validations/StartupValidations";
 
@@ -16,6 +18,8 @@ class FillReportStartupUseCase {
     private dateProvider: IDateProvider,
     @inject("MetrologyRepositoryInPrisma")
     private metrologyRepositoryInPrisma: IMetrologyRepository,
+    @inject("MailProvider")
+    private mailProvider: IMailProvider,
   ) {}
 
   async execute({
@@ -202,6 +206,16 @@ class FillReportStartupUseCase {
       img_3,
       filled,
     });
+
+    if (determineStatusReportStartup.status === 2) {
+      const data =
+        await this.reportStartupsInPrisma.findStartupReprovedAndClosed(
+          fk_startup,
+        );
+      if (data) {
+        await FinalResultReportStartupDisapproved(data, this.mailProvider);
+      }
+    }
   }
 }
 

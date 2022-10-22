@@ -1,3 +1,4 @@
+import { IListReportStartupDTO } from "@modules/metrology/dtos/IListReportStartupDTO";
 import { IMetrologyDTO } from "@modules/metrology/dtos/IMetrologyDTO";
 import { ICreateStartupDTO } from "../dtos/ICreateStartupDTO";
 import {
@@ -50,6 +51,7 @@ interface IReportStartupRepository {
     default_questions_disapproved: IDefaultQuestionsDisapprovedDTO[],
   ): Promise<void>;
   deleteFillReportStartup(idFillReportStartup: string): Promise<void>;
+  findStartupReprovedAndClosed(id: string): Promise<IListReportStartupDTO>;
 }
 
 export { IReportStartupRepository };

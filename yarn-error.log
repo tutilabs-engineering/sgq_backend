@@ -1,29 +1,29 @@
 Arguments: 
-  /usr/bin/node /usr/bin/yarn add @prisma/cliet
+  C:\Program Files\nodejs\node.exe C:\Users\henrique.santos\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add Handlebars
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+  C:\Users\henrique.santos\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\henrique.santos\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Python39\Scripts;C:\Program Files\Python39;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\Kaspersky Lab\Kaspersky Endpoint Security for Windows;C:\Program Files (x86)\Kaspersky Lab\Endpoint Agent;C:\Program Files\dotnet;C:\Program Files\Git\cmd;C:\Program Files\erl10.7\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files (x86)\Elixir\bin;C:\Windows\system32\config\systemprofile\.mix\escripts;C:\Program Files\nodejs;C:\Program Files\Go\bin;C:\Users\henrique.santos\AppData\Local\Programs\Python\Launcher;C:\Users\henrique.santos\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2021.3\bin;C:\Users\henrique.santos\AppData\Roaming\npm;C:\Users\henrique.santos\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\henrique.santos\go\bin;C:\Users\henrique.santos\AppData\Local\atom\bin;C:\Program Files (x86)\Nmap;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
-  1.22.18
+  1.22.17
 
 Node version: 
-  16.15.0
+  16.13.2
 
 Platform: 
-  linux x64
+  win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@prisma%2fcliet: Not found
-      at Request.params.callback [as _callback] (/usr/lib/node_modules/yarn/lib/cli.js:66138:18)
-      at Request.self.callback (/usr/lib/node_modules/yarn/lib/cli.js:140883:22)
-      at Request.emit (node:events:527:28)
-      at Request.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:141855:10)
-      at Request.emit (node:events:527:28)
-      at IncomingMessage.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:141777:12)
-      at Object.onceWrapper (node:events:641:28)
-      at IncomingMessage.emit (node:events:539:35)
-      at endReadableNT (node:internal/streams/readable:1345:12)
+  Error: https://registry.yarnpkg.com/Handlebars: Not found
+      at Request.params.callback [as _callback] (C:\Users\henrique.santos\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:67029:18)
+      at Request.self.callback (C:\Users\henrique.santos\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
+      at Request.emit (node:events:390:28)
+      at Request.<anonymous> (C:\Users\henrique.santos\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141855:10)
+      at Request.emit (node:events:390:28)
+      at IncomingMessage.<anonymous> (C:\Users\henrique.santos\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141777:12)
+      at Object.onceWrapper (node:events:509:28)
+      at IncomingMessage.emit (node:events:402:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
       at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
@@ -39,12 +39,13 @@ npm manifest:
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "@prisma/client": "^3.9.2",
+      "@prisma/client": "^3.13.0",
       "@types/axios": "^0.14.0",
       "@types/cors": "^2.8.12",
       "@types/express": "^4.17.13",
       "@types/mime-types": "^2.1.1",
       "@types/multer": "^1.4.7",
+      "@types/nodemailer": "^6.4.6",
       "@types/typescript": "^2.0.0",
       "axios": "^0.26.1",
       "cors": "^2.8.5",
@@ -52,6 +53,7 @@ npm manifest:
       "express": "^4.17.2",
       "mime-types": "^2.1.35",
       "multer": "^1.4.4",
+      "nodemailer": "^6.8.0",
       "openssl": "^2.0.0",
       "prisma": "^3.13.0",
       "swagger-ui-express": "^4.3.0",
@@ -146,21 +148,21 @@ Lockfile:
       "@nodelib/fs.scandir" "2.1.5"
       fastq "^1.6.0"
   
-  "@prisma/client@^3.9.2":
-    version "3.9.2"
-    resolved "https://registry.npmjs.org/@prisma/client/-/client-3.9.2.tgz"
-    integrity sha512-VlEIYVMyfFZHbVBOlunPl47gmP/Z0zzPjPj8I7uKEIaABqrUy50ru3XS0aZd8GFvevVwt7p91xxkUjNjrWhKAQ==
+  "@prisma/client@^3.13.0":
+    version "3.14.0"
+    resolved "https://registry.npmjs.org/@prisma/client/-/client-3.14.0.tgz"
+    integrity sha512-atb41UpgTR1MCst0VIbiHTMw8lmXnwUvE1KyUCAkq08+wJyjRE78Due+nSf+7uwqQn+fBFYVmoojtinhlLOSaA==
     dependencies:
-      "@prisma/engines-version" "3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009"
+      "@prisma/engines-version" "3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a"
   
-  "@prisma/engines-version@3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009":
-    version "3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009"
-    resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-3.9.0-58.bcc2ff906db47790ee902e7bbc76d7ffb1893009.tgz"
-    integrity sha512-5Dh+qTDhpPR66w6NNAnPs+/W/Qt4r1DSd+qhfPFcDThUK4uxoZKGlPb2IYQn5LL+18aIGnmteDf7BnVMmvBNSQ==
+  "@prisma/engines-version@3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a":
+    version "3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a"
+    resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-3.14.0-36.2b0c12756921c891fec4f68d9444e18c7d5d4a6a.tgz"
+    integrity sha512-D+yHzq4a2r2Rrd0ZOW/mTZbgDIkUkD8ofKgusEI1xPiZz60Daks+UM7Me2ty5FzH3p/TgyhBpRrfIHx+ha20RQ==
   
   "@prisma/engines@3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b":
     version "3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b"
-    resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b.tgz#d3a457cec4ef7a3b3412c45b1f2eac68c974474b"
+    resolved "https://registry.npmjs.org/@prisma/engines/-/engines-3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b.tgz"
     integrity sha512-Ip9CcCeUocH61eXu4BUGpvl5KleQyhcUVLpWCv+0ZmDv44bFaDpREqjGHHdRupvPN/ugB6gTlD9b9ewdj02yVA==
   
   "@types/axios@^0.14.0":
@@ -259,6 +261,13 @@ Lockfile:
     version "17.0.9"
     resolved "https://registry.npmjs.org/@types/node/-/node-17.0.9.tgz"
     integrity sha512-5dNBXu/FOER+EXnyah7rn8xlNrfMOQb/qXnw4NQgLkCygKBKhdmF/CA5oXVOKZLBEahw8s2WP9LxIcN/oDDRgQ==
+  
+  "@types/nodemailer@^6.4.6":
+    version "6.4.6"
+    resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.4.6.tgz#ce21b4b474a08f672f182e15982b7945dde1f288"
+    integrity sha512-pD6fL5GQtUKvD2WnPmg5bC2e8kWCAPDwMPmHe/ohQbW+Dy0EcHgZ2oCSuPlWNqk74LS5BVMig1SymQbFMPPK3w==
+    dependencies:
+      "@types/node" "*"
   
   "@types/qs@*":
     version "6.9.7"
@@ -1704,6 +1713,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.2.tgz"
     integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
   
+  nodemailer@^6.8.0:
+    version "6.8.0"
+    resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.8.0.tgz#804bcc5256ee5523bc914506ee59f8de8f0b1cd5"
+    integrity sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==
+  
   normalize-path@^3.0.0, normalize-path@~3.0.0:
     version "3.0.0"
     resolved "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz"
@@ -1868,7 +1882,7 @@ Lockfile:
   
   prisma@^3.13.0:
     version "3.13.0"
-    resolved "https://registry.yarnpkg.com/prisma/-/prisma-3.13.0.tgz#b11edd5631222ff1bf1d5324732d47801386aa8c"
+    resolved "https://registry.npmjs.org/prisma/-/prisma-3.13.0.tgz"
     integrity sha512-oO1auBnBtieGdiN+57IgsA9Vr7Sy4HkILi1KSaUG4mpKfEbnkTGnLOxAqjLed+K2nsG/GtE1tJBtB7JxN1a78Q==
     dependencies:
       "@prisma/engines" "3.13.0-17.efdf9b1183dddfd4258cd181a72125755215ab7b"
@@ -2238,7 +2252,7 @@ Lockfile:
   
   ts-pattern@^4.0.1:
     version "4.0.2"
-    resolved "https://registry.yarnpkg.com/ts-pattern/-/ts-pattern-4.0.2.tgz#b36afdb2de1ec0224539dcb7cea3a57c41453b9f"
+    resolved "https://registry.npmjs.org/ts-pattern/-/ts-pattern-4.0.2.tgz"
     integrity sha512-eHqR/7A6fcw05vCOfnL6RwgGJbVi9G/YHTdYdjYmElhDdJ1SMn7pWs+6+YuxygaFwQS/g+cIDlu+UD8IVpur1A==
   
   tsconfig-paths@^3.12.0, tsconfig-paths@^3.9.0:

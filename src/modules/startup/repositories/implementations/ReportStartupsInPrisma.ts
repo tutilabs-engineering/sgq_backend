@@ -1,3 +1,4 @@
+import { IListReportStartupDTO } from "@modules/metrology/dtos/IListReportStartupDTO";
 import { IMetrologyDTO } from "@modules/metrology/dtos/IMetrologyDTO";
 import { ICreateStartupDTO } from "@modules/startup/dtos/ICreateStartupDTO";
 import {
@@ -450,6 +451,56 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     });
 
     return allStartups;
+  }
+
+  async findStartupReprovedAndClosed(
+    id: string,
+  ): Promise<IListReportStartupDTO> {
+    return prismaAgent.reportStartup.findFirst({
+      select: {
+        open: true,
+        code_startup: true,
+        op: {
+          select: {
+            client: true,
+            code_op: true,
+            code_product: true,
+            desc_product: true,
+            machine: true,
+            product_mold: true,
+          },
+        },
+        userThatFill: {
+          select: {
+            name: true,
+          },
+        },
+
+        start_time: true,
+        report_startup_fill: {
+          include: {
+            default_questions_responses: true,
+            specific_questions_responses: true,
+          },
+        },
+        metrology: {
+          select: {
+            id: true,
+            cavity: true,
+            variable: true,
+            value: true,
+            metrology: true,
+            sendToMetrology: true,
+          },
+        },
+      },
+      where: {
+        filled: true,
+        // open: true,
+        fk_status: 2,
+        id,
+      },
+    });
   }
 }
 
