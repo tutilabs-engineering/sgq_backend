@@ -7,6 +7,7 @@ import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
 import { AppError } from "@shared/errors/AppError";
+import rateLimiter from "@shared/middlewares/raterLimiter";
 import { router } from "@shared/routes";
 import swaggerFile from "./swagger.json";
 import "@shared/container";
@@ -18,6 +19,7 @@ interface IApp {
 export function App(): IApp {
   const app = express();
 
+  // app.use(rateLimiter);
   app.use(cors());
   app.use(express.json());
 

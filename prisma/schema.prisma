@@ -16,25 +16,24 @@ model Unity {
 }
 
 model User {
-
   id                  String             @id @default(uuid())
   name                String
-  email               String             
+  email               String
   register            String             @unique
   cpf                 String             @unique
   is_enabled          Boolean            @default(true)
   password            String
   fk_role             Int
   fk_unity            Int
-  role                Role               @relation(fields: [fk_role], references: [id])
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
+  fk_office_hour      Int
+  office_hour         OfficeHour         @relation(fields: [fk_office_hour], references: [id], onDelete: Cascade)
+  role                Role               @relation(fields: [fk_role], references: [id])
+  unity               Unity              @relation(fields: [fk_unity], references: [id])
   metrologyUser       MetrologyHistory[]
   reportStartupCreate ReportStartup[]    @relation("user_that_create")
   reportStartupFill   ReportStartup[]    @relation("user_that_fill")
-  unity               Unity?             @relation(fields: [fk_unity], references: [id])
-  fk_office_hour      Int
-  office_hour         OfficeHour         @relation(fields: [fk_office_hour], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("user")
 }
@@ -43,7 +42,7 @@ model OfficeHour {
   id          Int    @id @default(autoincrement())
   description String
   users       User[]
-  
+
   @@map("office_hours")
 }
 
@@ -63,12 +62,12 @@ model Metrology {
   value               Float
   metrology           Boolean           @default(true)
   sendToMetrology     DateTime          @default(now())
-  variable            ProductVariable   @relation(fields: [fk_variable], references: [id])
-  startup             ReportStartup     @relation(fields: [fk_startup], references: [id])
-  metrologyHistory    MetrologyHistory? @relation(fields: [fk_metrologyHistory], references: [id])
   fk_startup          String
   fk_variable         String
   fk_metrologyHistory String?
+  metrologyHistory    MetrologyHistory? @relation(fields: [fk_metrologyHistory], references: [id])
+  startup             ReportStartup     @relation(fields: [fk_startup], references: [id])
+  variable            ProductVariable   @relation(fields: [fk_variable], references: [id])
 
   @@map("metrology")
 }
@@ -76,16 +75,15 @@ model Metrology {
 model MetrologyHistory {
   id        String      @id @default(uuid())
   fk_user   String
-  user      User        @relation(fields: [fk_user], references: [id])
   startDate DateTime    @default(now())
   endDate   DateTime?
+  user      User        @relation(fields: [fk_user], references: [id])
   metrology Metrology[]
 
   @@map("metrologyHistory")
 }
 
 model Component {
-
   id          String   @id @default(uuid())
   item_number String?
   description String?
@@ -107,32 +105,31 @@ model StatusStartup {
 }
 
 model ReportStartup {
-
-  id                  String              @id @default(uuid())
-  code_startup        Int                 @default(autoincrement())
-  fk_op               Int
-  open                Boolean             @default(true)
-  fk_user_create      String
-  fk_user_filled      String?
-  fk_status           Int                 @default(5)
-  img_1               String?
-  img_2               String?
-  img_3               String?
-  day                 DateTime?
-  start_time          DateTime?
-  final_time          DateTime?
-  filled              Boolean             @default(false)
-  op                  Op                  @relation(fields: [fk_op], references: [code_op])
-  userThatCreate      User                @relation(name: "user_that_create", fields: [fk_user_create], references: [id])
-  userThatFill        User?               @relation(name: "user_that_fill", fields: [fk_user_filled], references: [id])
-  status              StatusStartup       @relation(fields: [fk_status], references: [id])
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  metrology           Metrology[]
-  report_startup_fill ReportStartupFill[]
-  report_startup_op   ReportStartupOp[]
-
+  id                            String                        @id @default(uuid())
+  code_startup                  Int                           @default(autoincrement())
+  fk_op                         Int
+  open                          Boolean                       @default(true)
+  fk_user_create                String
+  fk_user_filled                String?
+  fk_status                     Int                           @default(5)
+  img_1                         String?
+  img_2                         String?
+  img_3                         String?
+  day                           DateTime?
+  start_time                    DateTime?
+  final_time                    DateTime?
+  filled                        Boolean                       @default(false)
+  createdAt                     DateTime                      @default(now())
+  updatedAt                     DateTime                      @updatedAt
+  op                            Op                            @relation(fields: [fk_op], references: [code_op])
+  status                        StatusStartup                 @relation(fields: [fk_status], references: [id])
+  userThatCreate                User                          @relation("user_that_create", fields: [fk_user_create], references: [id])
+  userThatFill                  User?                         @relation("user_that_fill", fields: [fk_user_filled], references: [id])
   default_questions_disapproved DefaultQuestionsDisapproved[]
+  metrology                     Metrology[]
+  report_startup_fill           ReportStartupFill[]
+  report_startup_op             ReportStartupOp[]
+
   @@map("report_startup")
 }
 
@@ -146,7 +143,7 @@ model ReportStartupOp {
 }
 
 model Op {
-  code_op           Int               @id @unique
+  code_op           Int              @id @unique
   client            String
   code_client       String
   code_product      String
@@ -156,11 +153,11 @@ model Op {
   cavity            String
   cycle             String
   quantity          String
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
   components        Component[]
   report_startup    ReportStartup[]
-  report_startup_op ReportStartupOp[]
+  report_startup_op ReportStartupOp?
 
   @@map("op")
 }
@@ -184,10 +181,10 @@ model Mold {
 model ReportStartupFill {
   id                           String                      @id @default(uuid())
   fk_startup                   String
+  created_at                   DateTime                    @default(now())
   startup                      ReportStartup               @relation(fields: [fk_startup], references: [id])
   default_questions_responses  DefaultQuestionsResponses[] @relation("defaultQuestionsResponses")
   specific_questions_responses SpecificQuestionsResponses? @relation("specificQuestionsResponses")
-  created_at                   DateTime                    @default(now())
 
   @@map("report_startup_fill")
 }
@@ -196,20 +193,20 @@ model SpecificQuestionsResponses {
   id                     String            @id @default(uuid())
   fk_report_startup_fill String            @unique
   specific_questions     String?
-  report_startup_fill    ReportStartupFill @relation(name: "specificQuestionsResponses", fields: [fk_report_startup_fill], references: [id])
   created_at             DateTime          @default(now())
   updated_at             DateTime          @updatedAt
+  report_startup_fill    ReportStartupFill @relation("specificQuestionsResponses", fields: [fk_report_startup_fill], references: [id])
 
   @@map("specific_questions_responses")
 }
 
 model DefaultQuestionIdentification {
-  id          String   @id @default(uuid())
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  id                            String                        @id @default(uuid())
+  description                   String
+  createdAt                     DateTime                      @default(now())
+  updatedAt                     DateTime                      @updatedAt
   default_questions_disapproved DefaultQuestionsDisapproved[]
+
   @@map("defaultQuestionIdentification")
 }
 
@@ -217,9 +214,9 @@ model DefaultQuestionsResponses {
   id                     String            @id @default(uuid())
   fk_report_startup_fill String
   default_questions      String
-  report_startup_fill    ReportStartupFill @relation(name: "defaultQuestionsResponses", fields: [fk_report_startup_fill], references: [id])
   created_at             DateTime          @default(now())
   updated_at             DateTime          @updatedAt
+  report_startup_fill    ReportStartupFill @relation("defaultQuestionsResponses", fields: [fk_report_startup_fill], references: [id])
 
   @@map("default_questions_responses")
 }
@@ -227,10 +224,10 @@ model DefaultQuestionsResponses {
 model DefaultQuestionsDisapproved {
   id                  String                        @id @default(uuid())
   id_startup          String
-  startup             ReportStartup                 @relation(fields: [id_startup], references: [id])
   id_default_question String
-  default_question    DefaultQuestionIdentification @relation(fields: [id_default_question], references: [id])
   created_at          DateTime                      @default(now())
+  default_question    DefaultQuestionIdentification @relation(fields: [id_default_question], references: [id])
+  startup             ReportStartup                 @relation(fields: [id_startup], references: [id])
 
   @@map("default_questions_disapproved")
 }
@@ -250,22 +247,19 @@ model ProductAnalysis {
 }
 
 model ProductAttribute {
-
   id             String          @id @default(uuid())
   question       String
   attention      Boolean         @default(false)
   is_enabled     Boolean         @default(true)
-  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
   fk_product_ana String
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  // specificQuestion SpecificQuestion[]
+  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
 
   @@map("productAttribute")
 }
 
 model ProductVariable {
-
   id             String          @id @default(uuid())
   description    String
   cota           Float
@@ -273,10 +267,10 @@ model ProductVariable {
   min            Float
   file           String?
   is_enabled     Boolean         @default(true)
-  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
   fk_product_ana String
   createdAt      DateTime        @default(now())
   updateAt       DateTime        @updatedAt
+  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
   metrology      Metrology[]
 
   @@map("productVariable")

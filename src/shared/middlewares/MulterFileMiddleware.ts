@@ -6,11 +6,9 @@ import multer from "multer"; // Importaremos para realizar o upload
 import path from "path"; // Ajudara no aminho para guardar imagems
 
 class UploadFile {
-  private URL = `${__dirname}/../../../uploads/variables`;
+  private URL = `${__dirname}/../../uploads/variables`;
 
   private storage(): multer.StorageEngine {
-    console.log(this.URL);
-
     return multer.diskStorage({
       destination: (req, file, cb) => {
         if (!fs.existsSync(this.URL)) {
