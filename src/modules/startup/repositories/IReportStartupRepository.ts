@@ -21,7 +21,13 @@ interface IReportStartupRepository {
     metrology: IMetrologyDTO[],
   ): Promise<ReportStartup>;
   findStartupByCodeOp(code_op: number): Promise<ReportStartup>;
-  findAll(): Promise<IListAllStartupsDTO[]>;
+  findAll(
+    skip?: number,
+    take?: number,
+    fk_op?: number,
+    condition?: any,
+  ): Promise<IListAllStartupsDTO[]>;
+  findAllByStatus(skip?: number, take?: number, status?: number): Promise<any>;
   findAllFilterByCount(start_time: Date, end_time: Date): Promise<any>;
   findReportStartupById(startup_id: string): Promise<IReportStartupByIdDTO>;
   fillReportStartup({

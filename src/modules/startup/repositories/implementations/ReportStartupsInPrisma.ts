@@ -332,7 +332,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       .catch((error) => {
         return error;
       });
-    //  Apagar Metrologia ao reprovar
+    //  Apagar Metrologia ao reprovarfindAll
     // if (statusReportStartup.status === 2) {
     //   await prismaAgent.metrology.deleteMany({
     //     where: {
@@ -406,12 +406,225 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     return startupCreated;
   }
 
-  async findAll(): Promise<any> {
-    const allStartups = await prismaAgent.reportStartup.findMany(
-      StructureStartupListInPrisma,
-    );
+  async findAllByStatus(
+    skip?: number,
+    take?: number,
+    status?: number,
+  ): Promise<any> {
+    const allStartups = await prismaAgent.reportStartup.findMany({
+      select: {
+        id: true,
+        code_startup: true,
+        open: true,
+        day: true,
+        start_time: true,
+        status: {
+          select: {
+            id: true,
+            description: true,
+          },
+        },
+        op: {
+          select: {
+            code_op: true,
+            code_product: true,
+            code_client: true,
+            machine: true,
+          },
+        },
+        userThatCreate: {
+          select: {
+            name: true,
+            is_enabled: true,
+            register: true,
+            role: {
+              select: {
+                id: true,
+                description: true,
+              },
+            },
+          },
+        },
+        filled: true,
+        metrology: {
+          select: {
+            id: true,
+            cavity: true,
+            metrology: true,
+            fk_startup: true,
+            value: true,
+            variable: true,
+          },
+        },
+        report_startup_fill: {
+          select: {
+            id: true,
+          },
+        },
+      },
+      skip,
+      take,
+      where: {
+        fk_status: status,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-    return allStartups;
+    const all = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+      where: {
+        fk_status: status,
+      },
+    });
+
+    return {
+      all,
+      allStartups,
+    };
+  }
+
+  async findAll(
+    skip?: number,
+    take?: number,
+    fk_op?: number,
+    condition?: any,
+  ): Promise<any> {
+    const allStartups = await prismaAgent.reportStartup.findMany({
+      select: {
+        id: true,
+        code_startup: true,
+        open: true,
+        day: true,
+        start_time: true,
+        status: {
+          select: {
+            id: true,
+            description: true,
+          },
+        },
+        op: {
+          select: {
+            code_op: true,
+            code_product: true,
+            code_client: true,
+            machine: true,
+          },
+        },
+        userThatCreate: {
+          select: {
+            name: true,
+            is_enabled: true,
+            register: true,
+            role: {
+              select: {
+                id: true,
+                description: true,
+              },
+            },
+          },
+        },
+        filled: true,
+        metrology: {
+          select: {
+            id: true,
+            cavity: true,
+            metrology: true,
+            fk_startup: true,
+            value: true,
+            variable: true,
+          },
+        },
+        report_startup_fill: {
+          select: {
+            id: true,
+          },
+        },
+      },
+      skip,
+      take,
+      where: {
+        fk_op,
+        AND: condition,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const all = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+    });
+
+    const all_reproved = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+      where: {
+        fk_status: 2,
+      },
+    });
+
+    const all_approved_with_condition = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+      where: {
+        fk_status: 3,
+      },
+    });
+    const all_approved = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+      where: {
+        fk_status: 1,
+      },
+    });
+
+    const all_closed = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+      where: {
+        AND: {
+          open: false,
+          filled: true,
+        },
+      },
+    });
+
+    const all_open_startup = await prismaAgent.reportStartup.count({
+      select: {
+        _all: true,
+      },
+      where: {
+        OR: [
+          {
+            open: true,
+            filled: false,
+          },
+          {
+            open: true,
+            filled: true,
+          },
+        ],
+      },
+    });
+    return {
+      all,
+      all_open_startup,
+      all_closed,
+      all_reproved,
+      all_approved_with_condition,
+      all_approved,
+      allStartups,
+    };
   }
 
   async findAllFilterByCount(

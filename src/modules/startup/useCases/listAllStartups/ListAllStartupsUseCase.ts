@@ -9,10 +9,48 @@ class ListAllStartupsUseCase {
     @inject("ReportStartupsInPrisma")
     private reportStartupsInPrisma: IReportStartupRepository,
   ) {}
-  async execute(): Promise<IListAllStartupsDTO[]> {
+  async execute(
+    skip?: number,
+    take?: number,
+    fk_op?: number,
+    status?: number,
+  ): Promise<IListAllStartupsDTO[]> {
+    let condition: any = {
+      OR: [
+        {
+          open: true,
+          filled: false,
+        },
+        {
+          open: true,
+          filled: true,
+        },
+      ],
+    };
+    if (status === 1) {
+      condition = {
+        open: false,
+        filled: true,
+      };
+    }
+
     try {
-      const allStartups = await this.reportStartupsInPrisma.findAll();
-      return allStartups;
+      const data = await this.reportStartupsInPrisma.findAll(
+        skip,
+        take,
+        fk_op || undefined,
+        condition,
+      );
+
+      return {
+        all: data.all._all,
+        all_open_startup: data.all_open_startup._all,
+        all_reproved: data.all_reproved._all,
+        all_closed: data.all_closed._all,
+        all_approved_with_condition: data.all_approved_with_condition._all,
+        all_approved: data.all_approved._all,
+        list: data.allStartups,
+      };
     } catch (error) {
       throw new AppError(error);
     }

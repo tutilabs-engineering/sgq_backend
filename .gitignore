@@ -3,5 +3,6 @@ node_modules
 diagram.png
 .env
 coverage
+dist
 example.json
 test.json

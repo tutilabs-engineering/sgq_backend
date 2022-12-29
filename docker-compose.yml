@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+
+  app_sgq:
+   # depends_on:
+    #  - database_server_matriz_versatilidade
+    #  - rabbitmq_server
+    container_name: sgq_backend
+    build: .
+    command: bash -c "yarn && yarn build && node dist/shared/infra/http/express/server.js"
+    ports:
+    - 8300:8300
+    restart: always
+    environment:
+      - TZ=America/Manaus
+    volumes:
+    - .:/usr/app
+    networks:
+     - backend
+
+  redis_sgq:
+   container_name: redis_sgq
+   image: redis:alpine
+  #  command: redis-server --requirepass rediss --appendonly yes
+   ports:
+     - 6379:6379
+   networks:
+     - backend
+
+networks:
+  backend:
+      driver: bridge

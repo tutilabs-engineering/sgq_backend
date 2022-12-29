@@ -1,9 +1,9 @@
 import { IMetrologyRepository } from "@modules/metrology/repositories/IMetrologyRepository";
 import { IFillReportStartupToUseCaseDTO } from "@modules/startup/dtos/IFillReportStartupDTO";
 import { IReportStartupRepository } from "@modules/startup/repositories/IReportStartupRepository";
+import { FinalResultReportStartupDisapproved } from "@utils/determineReportStartupDisapproved";
 import { FinalResultOfStatus } from "@utils/determineReportStartupStatus";
 import { injectable, inject } from "tsyringe";
-import { FinalResultReportStartupDisapproved } from "utils/determineReportStartupDisapproved";
 import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider";
 import { IMailProvider } from "@shared/container/providers/mailProvider/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
