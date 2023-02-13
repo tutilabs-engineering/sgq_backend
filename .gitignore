@@ -1,0 +1,8 @@
+node_modules
+.vscode
+diagram.png
+.env
+coverage
+example.json
+test.json
+dist

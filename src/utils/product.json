@@ -1,0 +1,161 @@
+{
+
+  "results" : [
+    
+    {
+      "id_produto" : "6",
+      "codigo_produto": "03.110.110173.01-02",
+      "descricao": "VISOR CENTRAL FAN - K2GA",
+      "modelo": "LIO 3",
+      "materia": "PP NATURAL CP442 - BRASKEM 95%+PIG. GRAN. P/ PP PRETO MBP 1060 - COLORTECH 5%",
+      "cliente": "MOTO HONDA DA AMAZONIA LTDA"
+    },
+    {
+      "id_produto": "7",
+      "descricao": "GABINETE FRONTAL PC INJ BR LIO 3",
+      "codigo_produto": "04.212.212001.01-00",
+      "modelo": "LIO 3",
+      "materia": "PC V0 PRETO LUPOY ER1006FH - LG CHEM",
+      "cliente": "POSITIVO TECNOLOGIA S.A."
+  },
+  {
+      "id_produto": "8",
+      "descricao": "GABINETE TRASEIRO PC INJ BR LIO 3",
+      "codigo_produto": "04.212.212002.01-00",
+      "modelo": "LIO 3",
+      "materia": "PC V0 PRETO LUPOY ER1006FH - LG CHEM",
+      "cliente": "POSITIVO TECNOLOGIA S.A."
+  },
+  {
+      "id_produto": "9",
+      "descricao": "DECO PRETO PC INT BR LIO 3",
+      "codigo_produto": "04.212.212003.01-00",
+      "modelo": "LIO 3",
+      "materia": "PC V0 PRETO LUPOY ER1006FH - LG CHEM",
+      "cliente": "POSITIVO TECNOLOGIA S.A."
+  },
+  {
+      "id_produto": "10",
+      "descricao": "TAMPA BATERIA PRETA PC INJ BR LIO 3",
+      "codigo_produto": "04.212.212004.01-00",
+      "modelo": "LIO 3",
+      "materia": "PC V0 PRETO LUPOY ER1006FH - LG CHEM",
+      "cliente": "POSITIVO TECNOLOGIA S.A."
+  },
+  {
+      "id_produto": "11",
+      "descricao": "TAMPA IMPRESSORA PRETA PC INJ BR LIO 3",
+      "codigo_produto": "04.212.212005.01-00",
+      "modelo": "LIO 3",
+      "materia": "PC V0 PRETO LUPOY ER1006FH - LG CHEM",
+      "cliente": "POSITIVO TECNOLOGIA S.A."
+  },
+  {
+      "id_produto": "12",
+      "descricao": "TAMPA DA BASE 1110 - OM2",
+      "codigo_produto": "03.094.094023.02-00",
+      "modelo": "1110 - OM2",
+      "materia": "PC CRISTAL COMPOLOY-PCC CR002 I A3 - CP8203 - COMPOL",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "13",
+      "descricao": "BASE DOW1310(L) OE2/OE3 EM PC BRANCO SEM FIBRA",
+      "codigo_produto": "03.094.094029.01-00",
+      "modelo": "DOW1310(L) OE2/OE3",
+      "materia": "RESINA TERMOSPLASTICA EXTRUDADA COMPOSTA DE POLICARBONATO CP2071",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "14",
+      "descricao": "TAMPA DA BASE DOW1310(L) OE2 SEM PIERCE EM PC BRANCO SEM FIBRA",
+      "codigo_produto": "03.094.094030.01-00",
+      "modelo": "DOW1310(L) OE2",
+      "materia": "RESINA TERMOSPLASTICA EXTRUDADA COMPOSTA DE POLICARBONATO CP2071",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "15",
+      "descricao": "VISOR DOW1310(L) OE2 EM PC CRISTAL",
+      "codigo_produto": "03.094.094031.01-00",
+      "modelo": "DOW1310(L) OE2",
+      "materia": "PC CRISTAL COMPOLOY-PCC CR002 I A3 - CP8203 - COMPOL",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "16",
+      "descricao": "COBERTURA DO BLOCO MODELO DOW1310(L) OE2/OE3 BIFASICO EM PC BRANCO SEM FIBRA",
+      "codigo_produto": "03.094.094032.01-00",
+      "modelo": "DOW1310(L) OE2/OE3",
+      "materia": "RESINA TERMOSPLASTICA EXTRUDADA COMPOSTA DE POLICARBONATO CP2071",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "17",
+      "descricao": "VISOR DOW1310(L) OE3 EM PC CRISTAL",
+      "codigo_produto": "03.094.094033.01-00",
+      "modelo": "DOW1310(L) OE3",
+      "materia": "PC CRISTAL COMPOLOY-PCC CR002 I A3 - CP8203 - COMPOL",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "18",
+      "descricao": "BLOCO DE TERMINAIS DOW1310(L) OE2/OE3 TRIFÁSICO EM PC BRANCO SEM FIBRA  - MP WASION",
+      "codigo_produto": "03.094.094034.01-00",
+      "modelo": "DOW1310(L) OE2/OE3",
+      "materia": "RESINA TERMOSPLASTICA EXTRUDADA COMPOSTA DE POLICARBONATO CP2071",
+      "cliente": "WASION DA AMAZONIA INDUSTRIA DE INSTRUMENTOS ELETRONICOS S.A."
+  },
+  {
+      "id_produto": "19",
+      "descricao": "TAPULHO PLASTICO",
+      "codigo_produto": "03.121.121138.01-00",
+      "modelo": "XXXX",
+      "materia": "PP NATURAL CP442  - BRASKEM",
+      "cliente": "WHIRLPOOL ELETRODOMESTICOS S/A"
+  },
+  {
+      "id_produto": "20",
+      "descricao": "GABINETE FRONTAL D175BT WP 1.0  PRETO",
+      "codigo_produto": "03.131.131105.01-00",
+      "modelo": "D175BT",
+      "materia": "PC ABS PRETO C6200 - SABIC",
+      "cliente": "TRANSIRE FABRICAÇÃO DE COMP ELETRON"
+  },
+  {
+      "id_produto": "21",
+      "descricao": "MOUNTING PLATE STD",
+      "codigo_produto": "03.098.098143.01-00",
+      "modelo": "STD",
+      "materia": "ABS BRANCO HH-106 WT10403 - INEOS STYROLUTION",
+      "cliente": "VISTEON AMAZONAS LTDA"
+  },
+  {
+      "id_produto": "22",
+      "descricao": "REAR COVER STD",
+      "codigo_produto": "03.098.098144.01-00",
+      "modelo": "STD",
+      "materia": "PP PRETO HT940UB C12874 - BASEL",
+      "cliente": "VISTEON AMAZONAS LTDA"
+  },
+  {
+      "id_produto": "23",
+      "descricao": "MOUNTING PLATE SVC",
+      "codigo_produto": "03.098.098145.01-00",
+      "modelo": "SVC",
+      "materia": "ABS BRANCO HH-106 WT10403 - INEOS STYROLUTION",
+      "cliente": "VISTEON AMAZONAS LTDA"
+  },
+  {
+      "id_produto": "24",
+      "descricao": "REAR COVER SVC",
+      "codigo_produto": "03.098.098146.01-00",
+      "modelo": "SVC",
+      "materia": "PP PRETO HT940UB C12874 - BASEL",
+      "cliente": "VISTEON AMAZONAS LTDA"
+  }
+
+  ]
+
+
+}

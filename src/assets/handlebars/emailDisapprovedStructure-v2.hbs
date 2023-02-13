@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        * {
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    color: #636363;
+}
+
+table,
+th,
+td {
+    border: 1px solid #636363;
+    border-collapse: collapse;
+}
+
+.title {
+    height: 68.8px;
+    text-align: center;
+    font-size: 20.8px;
+}
+
+.title-date {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.subtitle {
+    height: 68.8px;
+    font-size: 16px;
+}
+
+.subtitle td {
+    font-weight: 600;
+    padding-left: 20px;
+}
+
+.content td {
+    padding: 20px;
+    border: none;
+}
+
+.content table {
+    border: 2px solid #EDEDED;
+    text-align: center;
+}
+
+.content table th {
+    border: none;
+    height: 28px;
+}
+
+.footer td {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.image {
+    float: right;
+    width: 167px;
+    height: 50px;
+}
+
+    </style>
+</head>
+
+<body>
+    <table border="1" width="100%">
+
+        <tr class="title">
+            <th colspan="2">SGQ</th>
+            <th colspan="2">Relatório de Startup Reprovado</th>
+            <th colspan="2" class="title-date"></th>
+        </tr>
+
+        <tr class="subtitle">
+            <td colspan="6">Startup</td>
+        </tr>
+
+        <tr class="content">
+            <td colspan="6" class="content-internal">
+                <table width="100%">
+                    <tr style="background-color: #EDEDED;">
+                        <th>Cód-Startup</th>
+                        <th>Ordem de Produção</th>
+                        <th>Produto</th>
+                        <th>Cliente</th>
+                        <th>Hora de Reprovaçao</th>
+                        <th>Máquina</th>
+                    </tr>
+                    <tr>
+                        <td>{{ startup}}</td>
+                        <td>{{ op }}</td>
+                        <td>{{ product  }}</td>
+                        <td>{{ client}}</td>
+                        <td>{{ hour_reproved}}</td>
+                        <td>{{ machine}}</td>
+                    </tr>
+
+
+                </table>
+            </td>
+        </tr>
+
+        <tr class="subtitle">
+            <td colspan="6">Detalhamento de Perguntas Padrões</td>
+        </tr>
+
+        <tr class="content">
+            <td colspan="6" class="content-internal">
+                <table width="100%">
+                    <tr style="background-color: #EDEDED;">
+                        <th>Descrição de Pergunta</th>
+                        <th style="color: #FF5349;">Motivo de reprovação</th>
+                    </tr>
+
+                  {{#each questionsDefaultReproved}}
+                  {{>questionsDefault questionsDefault=. }}
+                  {{/each}}
+
+
+                </table>
+            </td>
+        </tr>
+
+        <tr class="subtitle">
+            <td colspan="6">Detalhamento de Perguntas Específicas </td>
+        </tr>
+
+        <tr class="content">
+            <td colspan="6" class="content-internal">
+                <table width="100%">
+                    <tr style="background-color: #EDEDED;">
+                        <th>Descrição de Pergunta</th>
+                        <th style="color: #FF5349;">Motivo de reprovação</th>
+                    </tr>
+                      
+                  {{#each questionsSpecificReproved}}
+                  {{>questionsSpecific questionsSpecific=. }}
+                  {{/each}}
+
+
+                </table>
+            </td>
+        </tr>
+
+             <tr class="subtitle">
+            <td colspan="6">Detalhamento de Metrologia </td>
+        </tr>
+
+        <tr class="content">
+            <td colspan="6" class="content-internal">
+                <table width="100%">
+                    <tr style="background-color: #EDEDED;">
+                         <th>Descrição de Pergunta</th>
+                        <th>Maximo</th>
+                        <th style="color: #FF5349;">Valor</th>
+                        <th>Minimo</th>
+               
+                    </tr>
+                      
+                  {{#each metrologiaReproved}}
+                  {{>metrologia metrologia=. }}
+                  {{/each}}
+
+
+                </table>
+            </td>
+        </tr>
+
+    <tr class="footer">
+
+            <td colspan="" style="text-align:left">
+              <img  src="cid:unique@cid" >
+            </td>
+            
+            <td colspan="3" style="text-align:center"> Tutilabs e todas as marcas associadas são marcas da Tutiplast</td>
+
+            <td colspan="" style="text-align:right">
+                <img  src="cid:unique2@cid" >
+            </td>
+    </tr>
+
+
+    </table>
+</body>
+
+</html>

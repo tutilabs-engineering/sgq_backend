@@ -1,0 +1,280 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Unity {
+  id            Int             @id @default(autoincrement())
+  name          String
+  users         User[]
+  ReportStartup ReportStartup[]
+
+  @@map("unity")
+}
+
+model User {
+  id                  String             @id @default(uuid())
+  name                String
+  email               String
+  register            String             @unique
+  cpf                 String             @unique
+  is_enabled          Boolean            @default(true)
+  password            String
+  fk_role             Int
+  fk_unity            Int
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  fk_office_hour      Int
+  office_hour         OfficeHour         @relation(fields: [fk_office_hour], references: [id], onDelete: Cascade)
+  role                Role               @relation(fields: [fk_role], references: [id])
+  unity               Unity              @relation(fields: [fk_unity], references: [id])
+  metrologyUser       MetrologyHistory[]
+  reportStartupCreate ReportStartup[]    @relation("user_that_create")
+  reportStartupFill   ReportStartup[]    @relation("user_that_fill")
+
+  @@map("user")
+}
+
+model OfficeHour {
+  id          Int    @id @default(autoincrement())
+  description String
+  users       User[]
+
+  @@map("office_hours")
+}
+
+model Role {
+  id          Int      @id @default(autoincrement())
+  description String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User[]
+
+  @@map("role")
+}
+
+model Metrology {
+  id                  String            @id @default(uuid())
+  cavity              Int
+  value               Float
+  metrology           Boolean           @default(true)
+  sendToMetrology     DateTime          @default(now())
+  fk_startup          String
+  fk_variable         String
+  fk_metrologyHistory String?
+  metrologyHistory    MetrologyHistory? @relation(fields: [fk_metrologyHistory], references: [id])
+  startup             ReportStartup     @relation(fields: [fk_startup], references: [id])
+  variable            ProductVariable   @relation(fields: [fk_variable], references: [id])
+
+  @@map("metrology")
+}
+
+model MetrologyHistory {
+  id        String      @id @default(uuid())
+  fk_user   String
+  startDate DateTime    @default(now())
+  endDate   DateTime?
+  user      User        @relation(fields: [fk_user], references: [id])
+  metrology Metrology[]
+
+  @@map("metrologyHistory")
+}
+
+model Component {
+  id          String   @id @default(uuid())
+  item_number String?
+  description String?
+  um          String?
+  planned     String?
+  createdAt   DateTime @default(now())
+  fk_op       Int
+  op          Op       @relation(fields: [fk_op], references: [code_op])
+
+  @@map("component")
+}
+
+model StatusStartup {
+  id             Int             @id
+  description    String
+  report_startup ReportStartup[]
+
+  @@map("status_startup")
+}
+
+model ReportStartup {
+  id                            String                        @id @default(uuid())
+  code_startup                  Int                           @default(autoincrement())
+  fk_op                         Int
+  open                          Boolean                       @default(true)
+  fk_user_create                String
+  fk_user_filled                String?
+  fk_status                     Int                           @default(5)
+  img_1                         String?
+  img_2                         String?
+  img_3                         String?
+  day                           DateTime?
+  start_time                    DateTime?
+  final_time                    DateTime?
+  filled                        Boolean                       @default(false)
+  createdAt                     DateTime                      @default(now())
+  updatedAt                     DateTime                      @updatedAt
+  fk_unity                      Int?
+  unity                         Unity?                        @relation(fields: [fk_unity], references: [id])
+  op                            Op                            @relation(fields: [fk_op], references: [code_op])
+  status                        StatusStartup                 @relation(fields: [fk_status], references: [id])
+  userThatCreate                User                          @relation("user_that_create", fields: [fk_user_create], references: [id])
+  userThatFill                  User?                         @relation("user_that_fill", fields: [fk_user_filled], references: [id])
+  default_questions_disapproved DefaultQuestionsDisapproved[]
+  metrology                     Metrology[]
+  report_startup_fill           ReportStartupFill[]
+  report_startup_op             ReportStartupOp[]
+
+  @@map("report_startup")
+}
+
+model ReportStartupOp {
+  id_op             Int           @id
+  fk_report_startup String
+  report_startup    ReportStartup @relation(fields: [fk_report_startup], references: [id])
+  op                Op            @relation(fields: [id_op], references: [code_op])
+
+  @@map("report_startup_op")
+}
+
+model Op {
+  code_op           Int              @id @unique
+  client            String
+  code_client       String
+  code_product      String
+  desc_product      String
+  machine           String
+  product_mold      String
+  cavity            String
+  cycle             String
+  quantity          String
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  components        Component[]
+  report_startup    ReportStartup[]
+  report_startup_op ReportStartupOp?
+
+  @@map("op")
+}
+
+model Machines {
+  id          String   @id @default(uuid())
+  description String
+  created_at  DateTime @default(now())
+
+  @@map("machines")
+}
+
+model Mold {
+  id          String   @id @default(uuid())
+  description String
+  created_at  DateTime @default(now())
+
+  @@map("molds")
+}
+
+model ReportStartupFill {
+  id                           String                      @id @default(uuid())
+  fk_startup                   String
+  created_at                   DateTime                    @default(now())
+  startup                      ReportStartup               @relation(fields: [fk_startup], references: [id])
+  default_questions_responses  DefaultQuestionsResponses[] @relation("defaultQuestionsResponses")
+  specific_questions_responses SpecificQuestionsResponses? @relation("specificQuestionsResponses")
+
+  @@map("report_startup_fill")
+}
+
+model SpecificQuestionsResponses {
+  id                     String            @id @default(uuid())
+  fk_report_startup_fill String            @unique
+  specific_questions     String?
+  created_at             DateTime          @default(now())
+  updated_at             DateTime          @updatedAt
+  report_startup_fill    ReportStartupFill @relation("specificQuestionsResponses", fields: [fk_report_startup_fill], references: [id])
+
+  @@map("specific_questions_responses")
+}
+
+model DefaultQuestionIdentification {
+  id                            String                        @id @default(uuid())
+  description                   String
+  createdAt                     DateTime                      @default(now())
+  updatedAt                     DateTime                      @updatedAt
+  default_questions_disapproved DefaultQuestionsDisapproved[]
+
+  @@map("defaultQuestionIdentification")
+}
+
+model DefaultQuestionsResponses {
+  id                     String            @id @default(uuid())
+  fk_report_startup_fill String
+  default_questions      String
+  created_at             DateTime          @default(now())
+  updated_at             DateTime          @updatedAt
+  report_startup_fill    ReportStartupFill @relation("defaultQuestionsResponses", fields: [fk_report_startup_fill], references: [id])
+
+  @@map("default_questions_responses")
+}
+
+model DefaultQuestionsDisapproved {
+  id                  String                        @id @default(uuid())
+  id_startup          String
+  id_default_question String
+  created_at          DateTime                      @default(now())
+  default_question    DefaultQuestionIdentification @relation(fields: [id_default_question], references: [id])
+  startup             ReportStartup                 @relation(fields: [id_startup], references: [id])
+
+  @@map("default_questions_disapproved")
+}
+
+model ProductAnalysis {
+  id               String             @id @default(uuid())
+  cod_product      String
+  desc_product     String
+  cod_client       String
+  desc_client      String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  productAttribute ProductAttribute[]
+  productVariable  ProductVariable[]
+
+  @@map("productAnalysis")
+}
+
+model ProductAttribute {
+  id             String          @id @default(uuid())
+  question       String
+  attention      Boolean         @default(false)
+  is_enabled     Boolean         @default(true)
+  fk_product_ana String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
+
+  @@map("productAttribute")
+}
+
+model ProductVariable {
+  id             String          @id @default(uuid())
+  description    String
+  cota           Float
+  max            Float
+  min            Float
+  file           String?
+  is_enabled     Boolean         @default(true)
+  fk_product_ana String
+  createdAt      DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
+  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
+  metrology      Metrology[]
+
+  @@map("productVariable")
+}
