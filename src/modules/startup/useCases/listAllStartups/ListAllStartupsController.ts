@@ -11,6 +11,7 @@ class ListAllStartupsController {
       Number(take),
       Number(fk_op),
       Number(status),
+      request.user,
     );
     return response.status(200).json(allStartups);
   }

@@ -332,7 +332,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       .catch((error) => {
         return error;
       });
-    //  Apagar Metrologia ao reprovarfindAll
+    //  Apagar Metrologia ao reprovarfindAlcreatel
     // if (statusReportStartup.status === 2) {
     //   await prismaAgent.metrology.deleteMany({
     //     where: {
@@ -359,6 +359,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       },
       techniqueData: { cavity, cycle },
       components,
+      user,
     }: ICreateStartupDTO,
     metrology: IMetrologyDTO[],
   ): Promise<ReportStartup> {
@@ -366,6 +367,11 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       data: {
         day,
         start_time,
+        unity: {
+          connect: {
+            id: Number(user.unity.id)
+          }
+        },
         userThatCreate: {
           connect: {
             id: user_id,
@@ -492,6 +498,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     take?: number,
     fk_op?: number,
     condition?: any,
+    fk_unity?: number,
   ): Promise<any> {
     const allStartups = await prismaAgent.reportStartup.findMany({
       select: {
@@ -549,6 +556,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       where: {
         fk_op,
         AND: condition,
+        fk_unity,
       },
       orderBy: {
         createdAt: "desc",
@@ -558,6 +566,8 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     const all = await prismaAgent.reportStartup.count({
       select: {
         _all: true,
+      },where:{
+        fk_unity
       },
     });
 
@@ -567,7 +577,8 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       },
       where: {
         fk_status: 2,
-      },
+        fk_unity
+      }
     });
 
     const all_approved_with_condition = await prismaAgent.reportStartup.count({
@@ -576,6 +587,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       },
       where: {
         fk_status: 3,
+        fk_unity
       },
     });
     const all_approved = await prismaAgent.reportStartup.count({
@@ -584,6 +596,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       },
       where: {
         fk_status: 1,
+        fk_unity
       },
     });
 
@@ -592,6 +605,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
         _all: true,
       },
       where: {
+        fk_unity,
         AND: {
           open: false,
           filled: true,
@@ -604,6 +618,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
         _all: true,
       },
       where: {
+        fk_unity,
         OR: [
           {
             open: true,

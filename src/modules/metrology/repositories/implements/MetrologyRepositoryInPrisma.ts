@@ -83,7 +83,9 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
 
     return metrology;
   }
-  async listMetrologyHistoryOfStartup(): Promise<IListMetrologyHistory[]> {
+  async listMetrologyHistoryOfStartup(fk_unity: number): Promise<IListMetrologyHistory[]> {
+    // console.log({fk_unity});
+    
     const list = await prismaAgent.metrology.findMany({
       distinct: ["fk_startup"],
       select: {
@@ -105,6 +107,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
           select: {
             id: true,
             code_startup: true,
+            unity:true,
             op: {
               select: {
                 code_op: true,
@@ -119,6 +122,9 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
       },
       where: {
         metrology: false,
+        startup:{
+          fk_unity,
+        }
       },
       orderBy: {
         sendToMetrology: "desc",
@@ -175,7 +181,7 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
     return metrology;
   }
 
-  async listMetrologyOfStartup(): Promise<IListMetrologyOfStartup[]> {
+  async listMetrologyOfStartup(fk_unity: number): Promise<IListMetrologyOfStartup[]> {
     const list = await prismaAgent.metrology.findMany({
       distinct: ["fk_startup"],
       select: {
@@ -211,6 +217,9 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
       },
       where: {
         metrology: true,
+        startup:{
+          fk_unity,
+        }
       },
       orderBy: {
         sendToMetrology: "desc",

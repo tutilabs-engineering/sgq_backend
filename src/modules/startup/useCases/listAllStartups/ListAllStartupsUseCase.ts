@@ -14,6 +14,13 @@ class ListAllStartupsUseCase {
     take?: number,
     fk_op?: number,
     status?: number,
+    user?:{
+      id: string,
+      unity?:{
+        id: number,
+        name: string
+      }
+    }
   ): Promise<IListAllStartupsDTO[]> {
     let condition: any = {
       OR: [
@@ -40,6 +47,8 @@ class ListAllStartupsUseCase {
         take,
         fk_op || undefined,
         condition,
+        user.unity.id
+
       );
 
       return {

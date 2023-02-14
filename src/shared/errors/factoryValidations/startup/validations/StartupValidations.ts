@@ -33,6 +33,7 @@ function StartupValidations() {
       start_time,
       quantity,
     },
+    
     techniqueData: { cavity, cycle },
     components,
   }: ICreateStartupDTO): Promise<IResponseValidation> {

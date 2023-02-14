@@ -19,6 +19,13 @@ interface IReturnFormattedOnCreateStartup {
   status: number;
   createdAt: Date;
   updatedAt: Date;
+  user?:{
+    id: string,
+    unity?:{
+      id: number,
+      name: string
+    }
+  }
 }
 
 @injectable()
@@ -47,6 +54,7 @@ class CreateReportStartupUseCase {
       start_time,
       quantity,
     },
+    user,
     techniqueData: { cavity, cycle },
     components,
   }: ICreateStartupDTO): Promise<IReturnFormattedOnCreateStartup> {
@@ -71,6 +79,8 @@ class CreateReportStartupUseCase {
         cycle,
       },
       components,
+      user,
+
     };
 
     const validation = await CreateStartupValidations(newReportStartup);

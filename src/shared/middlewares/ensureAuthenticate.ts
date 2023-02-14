@@ -30,9 +30,10 @@ export async function EnsureAuthenticated(
     if (!user || !user.is_enabled) {
       return response.end();
     }
-
+  
     request.user = {
       id: sub,
+      unity: user.unity
     };
 
     next();

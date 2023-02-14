@@ -7,7 +7,7 @@ class ListMetrologySolicitationsController {
     const listMetrologyController = container.resolve(
       ListMetrologySolicitationsUseCase,
     );
-    const list = await listMetrologyController.execute();
+    const list = await listMetrologyController.execute({user: request.user});
     return response.status(200).json({ list });
   }
 }

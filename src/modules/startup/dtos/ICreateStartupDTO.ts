@@ -29,6 +29,13 @@ interface ICreateStartupDTO {
   header: IHeader;
   techniqueData: ITechniqueData;
   components: IComponents[];
+  user?:{
+    id: string,
+    unity?:{
+      id: number,
+      name: string
+    }
+  }
 }
 
 interface IDataToInsertOpInStartup {

@@ -46,6 +46,8 @@ class CreateReportStartupController {
         cycle,
       },
       components,
+      user: request.user,
+
     });
 
     return response

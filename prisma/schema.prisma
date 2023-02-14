@@ -8,9 +8,10 @@ datasource db {
 }
 
 model Unity {
-  id    Int    @id @default(autoincrement())
-  name  String
-  users User[]
+  id             Int             @id @default(autoincrement())
+  name           String
+  report_startup ReportStartup[] @relation("report_startupTounity")
+  users          User[]
 
   @@map("unity")
 }
@@ -121,8 +122,10 @@ model ReportStartup {
   filled                        Boolean                       @default(false)
   createdAt                     DateTime                      @default(now())
   updatedAt                     DateTime                      @updatedAt
+  fk_unity                      Int?
   op                            Op                            @relation(fields: [fk_op], references: [code_op])
   status                        StatusStartup                 @relation(fields: [fk_status], references: [id])
+  unity                         Unity?                        @relation("report_startupTounity", fields: [fk_unity], references: [id])
   userThatCreate                User                          @relation("user_that_create", fields: [fk_user_create], references: [id])
   userThatFill                  User?                         @relation("user_that_fill", fields: [fk_user_filled], references: [id])
   default_questions_disapproved DefaultQuestionsDisapproved[]

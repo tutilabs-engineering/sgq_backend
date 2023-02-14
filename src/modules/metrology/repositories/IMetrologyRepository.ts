@@ -6,8 +6,8 @@ import { IListMetrologyOfStartup } from "../dtos/IListMetrologyOfStartup";
 import { IStatusMetrologyDTO } from "../dtos/IStatusMetrologyDTO";
 
 interface IMetrologyRepository {
-  listMetrologyOfStartup(): Promise<IListMetrologyOfStartup[]>;
-  listMetrologyHistoryOfStartup(): Promise<IListMetrologyHistory[]>;
+  listMetrologyOfStartup(fk_unity: number): Promise<IListMetrologyOfStartup[]>;
+  listMetrologyHistoryOfStartup(fk_unity: number): Promise<IListMetrologyHistory[]>;
   findByMetrology(id: string): Promise<IFindMetrology>;
   findByMetrologyAllVariables(
     startup: string,
