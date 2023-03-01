@@ -9,7 +9,7 @@ services:
     build: .
     command: bash -c "yarn && yarn build && node dist/shared/infra/http/express/server.js"
     ports:
-    - 8300:8300
+    - 8200:8000
     restart: always
     environment:
       - TZ=America/Manaus
