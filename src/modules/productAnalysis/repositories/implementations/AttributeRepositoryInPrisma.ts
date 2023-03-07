@@ -57,6 +57,7 @@ class AttributeRepositoryInPrisma implements IAttributeRepository {
         product_ana: {
           cod_product: code_product,
         },
+        is_enabled: true
       },
     });
 

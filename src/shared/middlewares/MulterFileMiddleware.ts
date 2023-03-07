@@ -6,7 +6,8 @@ import multer from "multer"; // Importaremos para realizar o upload
 import path from "path"; // Ajudara no aminho para guardar imagems
 
 class UploadFile {
-  private URL = `${__dirname}/../../uploads/variables`;
+    
+  private URL = path.resolve(process.cwd(), 'uploads','variables');
 
   private storage(): multer.StorageEngine {
     return multer.diskStorage({
