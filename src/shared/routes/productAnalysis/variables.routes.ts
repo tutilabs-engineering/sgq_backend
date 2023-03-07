@@ -15,7 +15,7 @@ const deleteVariableController = new DeleteVariableController();
 const changeStatusVariableController = new ChangeStatusVariableController();
 const upload = multer(uploadFile.getConfig);
 
-variableRoutes.use(EnsureAuthenticated);
+// variableRoutes.use(EnsureAuthenticated);
 variableRoutes.post(
   "/",
   upload.single("file"),
