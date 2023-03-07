@@ -6,4 +6,8 @@ coverage
 dist
 example.json
 test.json
+<<<<<<< HEAD
 uploads
+=======
+uploads
+>>>>>>> 2601c82427461c08fea04b4b2b8633d3098397c1
