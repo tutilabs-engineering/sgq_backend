@@ -7,6 +7,7 @@ interface IListAllDataFilter {
   dayEnd?: string;
   hourStart?: string;
   hourEnd?: string;
+  dataQuery?: string
 }
 
 export { IListAllDataFilter };

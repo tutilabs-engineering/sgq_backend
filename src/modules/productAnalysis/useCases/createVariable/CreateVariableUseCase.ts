@@ -34,6 +34,15 @@ class CreateVariableUseCase {
     min,
     file,
   }: IRequest): Promise<void> {
+    console.log({
+      cod_product,
+      description,
+      cota,
+      max,
+      min,
+      file,
+    });
+    
     let fk_product_ana = "notFound";
     const {
       ProductDataValidation,
@@ -46,7 +55,8 @@ class CreateVariableUseCase {
     // const sap_product =
     //   await this.sapProductRepositoryInMemory.findBySAPProduct(cod_product);
     const sap_product = await FindProductByCodeInSAP(cod_product);
-
+ 
+    
     if (!sap_product.status) {
       throw new AppError("Product doesn't exists", 404);
     }

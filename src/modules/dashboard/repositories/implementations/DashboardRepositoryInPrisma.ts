@@ -49,6 +49,7 @@ class DashboardRepositoryInPrisma implements IDashboardRepository {
     dayEnd,
     hourStart,
     hourEnd,
+    dataQuery = ''
   }: IListAllDataFilter): Promise<any> {
     const data = await prismaAgent.$queryRawUnsafe(`
     select count(rs.code_startup) as QuantityStartup,
@@ -57,6 +58,7 @@ class DashboardRepositoryInPrisma implements IDashboardRepository {
     inner join op on op.code_op = rs.fk_op
     where rs.filled = true and op.machine like '%${machine}%' and op.code_product like '%${code_product}%' and op.code_client like '%${code_client}%' and rs.start_time >= '${day}' and rs.start_time <= '${dayEnd}'
     and cast(rs.start_time as time) BETWEEN '${hourStart}' and '${hourEnd}' 
+    ${dataQuery}
     group by to_char(rs.start_time,'yyyy-mm-dd 00:00:00')`);
 
     return data;
