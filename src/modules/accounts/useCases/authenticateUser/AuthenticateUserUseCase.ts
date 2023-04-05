@@ -43,7 +43,14 @@ class AuthenticateUserUseCase {
       throw new AppError("register or password incorrect");
     }
 
-    const token = sign({}, process.env.SECRET, {
+   const token = sign({
+      id: user.id,
+      name: user.name,
+      emai: user.email,
+      register: user.register,
+      fk_role: user.fk_role,
+      fk_unity: user.fk_unity,
+    }, process.env.SECRET, {
       subject: user.id,
       expiresIn: "1d",
     });
