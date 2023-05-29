@@ -18,6 +18,7 @@ class CreateReportStartupController {
         day,
         start_time,
         quantity,
+        nqa
       },
       techniqueData: { cavity, cycle },
       components,
@@ -40,6 +41,7 @@ class CreateReportStartupController {
         quantity,
         day,
         start_time,
+        nqa
       },
       techniqueData: {
         cavity,

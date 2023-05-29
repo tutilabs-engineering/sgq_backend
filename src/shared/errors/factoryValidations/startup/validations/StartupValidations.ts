@@ -32,6 +32,7 @@ function StartupValidations() {
       day,
       start_time,
       quantity,
+      nqa
     },
     
     techniqueData: { cavity, cycle },
@@ -43,6 +44,7 @@ function StartupValidations() {
     const verifyLastStartup = await reportStartupsInPrisma.findStartupByCodeOp(
       Number(code_op),
     );
+    const nqaIsEmpty = await IsEmpty(String(nqa))
     const codeOpIsEmpty = await IsEmpty(code_op);
     const userIdIsEmpty = await IsEmpty(user_id);
     const quantityIsEmpty = await IsEmpty(quantity);
@@ -76,6 +78,13 @@ function StartupValidations() {
             "Already exists a startup closed and approved with this code_op",
         };
       }
+    }
+
+    if(isNaN(nqa)){
+      return { status: false, message: "nqa must be a number" };
+    }
+    if(nqaIsEmpty || nqa == undefined ){
+      return { status: false, message: "nqa is required" };
     }
     if (codeOpIsEmpty) {
       return { status: false, message: "code_op is required" };

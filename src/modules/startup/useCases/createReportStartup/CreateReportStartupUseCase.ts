@@ -53,6 +53,7 @@ class CreateReportStartupUseCase {
       day,
       start_time,
       quantity,
+      nqa
     },
     user,
     techniqueData: { cavity, cycle },
@@ -73,6 +74,7 @@ class CreateReportStartupUseCase {
         quantity: quantity.toString(),
         day,
         start_time,
+        nqa
       },
       techniqueData: {
         cavity,
@@ -84,7 +86,6 @@ class CreateReportStartupUseCase {
     };
 
     const validation = await CreateStartupValidations(newReportStartup);
-
     if (!validation.status) {
       throw new AppError(validation.message, validation.statusCode);
     }
@@ -126,12 +127,12 @@ class CreateReportStartupUseCase {
     }
 
     const formattedData: IReturnFormattedOnCreateStartup = {
-      id: startupCreated.id,
-      fk_op: startupCreated.fk_op,
-      status: startupCreated.fk_status,
-      userIdWhoCreated: startupCreated.fk_user_create,
-      createdAt: startupCreated.createdAt,
-      updatedAt: startupCreated.updatedAt,
+      id:' startupCreated.id',
+      fk_op: 1,
+      status: 1,
+      userIdWhoCreated: 'startupCreated.fk_user_create',
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     return formattedData;
