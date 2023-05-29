@@ -356,6 +356,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
         machine,
         day,
         start_time,
+        nqa
       },
       techniqueData: { cavity, cycle },
       components,
@@ -367,6 +368,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
       data: {
         day,
         start_time,
+        nqa,
         unity: {
           connect: {
             id: Number(user.unity.id)
