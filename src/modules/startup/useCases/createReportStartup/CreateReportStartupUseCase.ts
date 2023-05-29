@@ -127,12 +127,12 @@ class CreateReportStartupUseCase {
     }
 
     const formattedData: IReturnFormattedOnCreateStartup = {
-      id:' startupCreated.id',
-      fk_op: 1,
-      status: 1,
-      userIdWhoCreated: 'startupCreated.fk_user_create',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      id: startupCreated.id,
+      fk_op: startupCreated.fk_op,
+      status: startupCreated.fk_status,
+      userIdWhoCreated: startupCreated.fk_user_create,
+      createdAt: startupCreated.createdAt,
+      updatedAt: startupCreated.updatedAt,
     };
 
     return formattedData;
