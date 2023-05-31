@@ -83,7 +83,7 @@ function StartupValidations() {
     if(isNaN(nqa)){
       return { status: false, message: "nqa must be a number" };
     }
-    if(nqaIsEmpty || nqa == undefined ){
+    if(nqaIsEmpty || nqa == undefined || nqa == 0 ){
       return { status: false, message: "nqa is required" };
     }
     if (codeOpIsEmpty) {
