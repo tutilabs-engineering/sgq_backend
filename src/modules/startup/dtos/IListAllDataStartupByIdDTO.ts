@@ -7,6 +7,8 @@ interface IListAllDataStartupByIdDTO {
   filled: boolean;
   fk_op: number;
   nqa: number;
+  level: string;
+  piq: string;
   open: boolean;
   fk_user_create: string;
   fk_user_filled: string;
@@ -106,6 +108,8 @@ interface IListReportStartupByIdFormatted {
   open: boolean;
   filled: boolean;
   nqa: number;
+  level: string;
+  piq: string;
   specific_questions_in_product?: {
     id?: string;
     question: string;

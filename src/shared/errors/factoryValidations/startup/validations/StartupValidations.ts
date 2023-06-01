@@ -32,7 +32,9 @@ function StartupValidations() {
       day,
       start_time,
       quantity,
-      nqa
+      nqa,
+      piq,
+      level
     },
     
     techniqueData: { cavity, cycle },
@@ -44,6 +46,8 @@ function StartupValidations() {
     const verifyLastStartup = await reportStartupsInPrisma.findStartupByCodeOp(
       Number(code_op),
     );
+    const piqIsEmpty = await IsEmpty(String(piq))
+    const levelIsEmpty = await IsEmpty(String(level))
     const nqaIsEmpty = await IsEmpty(String(nqa))
     const codeOpIsEmpty = await IsEmpty(code_op);
     const userIdIsEmpty = await IsEmpty(user_id);
@@ -79,7 +83,12 @@ function StartupValidations() {
         };
       }
     }
-
+    if(piqIsEmpty){
+      return { status: false, message: "piq is required" };
+    }
+    if(levelIsEmpty){
+      return { status: false, message: "level is required" };
+    }
     if(isNaN(nqa)){
       return { status: false, message: "nqa must be a number" };
     }

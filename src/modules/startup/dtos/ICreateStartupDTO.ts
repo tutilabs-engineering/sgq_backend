@@ -8,7 +8,9 @@ interface IHeader {
   quantity: string;
   day?: Date;
   start_time?: Date;
-  nqa: number
+  nqa: number;
+  level: string;
+  piq: string
 }
 
 interface ITechniqueData {

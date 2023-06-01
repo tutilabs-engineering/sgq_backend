@@ -53,7 +53,9 @@ class CreateReportStartupUseCase {
       day,
       start_time,
       quantity,
-      nqa
+      nqa,
+      level,
+      piq
     },
     user,
     techniqueData: { cavity, cycle },
@@ -74,7 +76,9 @@ class CreateReportStartupUseCase {
         quantity: quantity.toString(),
         day,
         start_time,
-        nqa
+        nqa,
+        piq,
+        level
       },
       techniqueData: {
         cavity,

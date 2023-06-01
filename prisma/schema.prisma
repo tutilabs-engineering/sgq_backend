@@ -124,6 +124,8 @@ model ReportStartup {
   updatedAt                     DateTime                      @updatedAt
   fk_unity                      Int?
   nqa                           Float?
+  level                         String?
+  piq                           String?
   op                            Op                            @relation(fields: [fk_op], references: [code_op])
   status                        StatusStartup                 @relation(fields: [fk_status], references: [id])
   unity                         Unity?                        @relation("report_startupTounity", fields: [fk_unity], references: [id])

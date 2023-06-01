@@ -67,7 +67,9 @@ class FindReportStartupByIdUseCase {
         code_op: reportStartup.fk_op,
         open: reportStartup.open,
         filled: reportStartup.filled,
+        piq: reportStartup.piq,
         nqa: reportStartup.nqa,
+        level: reportStartup.level,
         status: {
           id: reportStartup.status.id,
           description: reportStartup.status.description,
@@ -122,7 +124,9 @@ class FindReportStartupByIdUseCase {
       code_op: reportStartup.fk_op,
       open: reportStartup.open,
       filled: reportStartup.filled,
+      piq: reportStartup.piq,
       nqa: reportStartup.nqa,
+      level: reportStartup.level,
       status: {
         id: reportStartup.status.id,
         description: reportStartup.status.description,
