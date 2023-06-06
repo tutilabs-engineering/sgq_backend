@@ -2,7 +2,7 @@ class MetrologyHistory {
   id?: string;
   fk_user?: string;
   metrologyHistory?: {
-    user: {
+    user?: {
       name: string;
     };
     startDate: Date;

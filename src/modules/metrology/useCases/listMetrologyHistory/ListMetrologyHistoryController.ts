@@ -7,7 +7,8 @@ class ListMetrologyHistoryController {
     const listMetrologyHistoryUseCase = container.resolve(
       ListMetrologyHistoryUseCase,
     );
-    const list = await listMetrologyHistoryUseCase.execute({user: request.user});
+    const {skip = 0, limit = 10} = request.headers
+    const list = await listMetrologyHistoryUseCase.execute({user: request.user}, Number(skip),Number(limit));
     return response.status(200).json({ list });
   }
 }

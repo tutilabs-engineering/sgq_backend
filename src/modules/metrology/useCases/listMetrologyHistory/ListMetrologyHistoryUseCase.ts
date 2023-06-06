@@ -17,9 +17,9 @@ class ListMetrologyHistoryUseCase {
     private metrologyRepositoryInPrisma: IMetrologyRepository,
   ) {}
 
-  async execute({user}:IRequest): Promise<MetrologyHistory[]> {
+  async execute({user}:IRequest, skip: number, limit: number): Promise<MetrologyHistory[]> {
     const list =
-      await this.metrologyRepositoryInPrisma.listMetrologyHistoryOfStartup(user.unity.id);
+      await this.metrologyRepositoryInPrisma.listMetrologyHistoryOfStartup(user.unity.id, skip, limit);
     return list;
   }
 }

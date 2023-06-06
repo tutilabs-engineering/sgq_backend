@@ -7,7 +7,7 @@ import { IStatusMetrologyDTO } from "../dtos/IStatusMetrologyDTO";
 
 interface IMetrologyRepository {
   listMetrologyOfStartup(fk_unity: number): Promise<IListMetrologyOfStartup[]>;
-  listMetrologyHistoryOfStartup(fk_unity: number): Promise<IListMetrologyHistory[]>;
+  listMetrologyHistoryOfStartup(fk_unity: number, skip: number, limit: number): Promise<IListMetrologyHistory[]>;
   findByMetrology(id: string): Promise<IFindMetrology>;
   findByMetrologyAllVariables(
     startup: string,

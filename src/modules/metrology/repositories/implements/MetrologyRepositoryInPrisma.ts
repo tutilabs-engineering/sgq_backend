@@ -83,53 +83,10 @@ class MetrologyRepositoryInPrisma implements IMetrologyRepository {
 
     return metrology;
   }
-  async listMetrologyHistoryOfStartup(fk_unity: number): Promise<IListMetrologyHistory[]> {
+  async listMetrologyHistoryOfStartup(fk_unity: number, skip: number, limit: number): Promise<any> {
     // console.log({fk_unity});
-    
-    const list = await prismaAgent.metrology.findMany({
-      distinct: ["fk_startup"],
-      select: {
-        id: true,
-        fk_startup: true,
-        sendToMetrology: true,
-        metrologyHistory: {
-          select: {
-            user: {
-              select: {
-                name: true,
-              },
-            },
-            startDate: true,
-            endDate: true,
-          },
-        },
-        startup: {
-          select: {
-            id: true,
-            code_startup: true,
-            unity:true,
-            op: {
-              select: {
-                code_op: true,
-                client: true,
-                code_client: true,
-                code_product: true,
-                desc_product: true,
-              },
-            },
-          },
-        },
-      },
-      where: {
-        metrology: false,
-        startup:{
-          fk_unity,
-        }
-      },
-      orderBy: {
-        sendToMetrology: "desc",
-      },
-    });
+    const list = await prismaAgent.$queryRawUnsafe(`SELECT distinct(m.fk_startup), mh."startDate" ,mh."endDate", o.code_op , o.code_product , o.desc_product, to_timestamp(cast(m."sendToMetrology" as TEXT),
+    'YYYY-MM-DD HH24:MI:SS') as sendToMetrology FROM metrology m join "metrologyHistory" mh on mh.id = m."fk_metrologyHistory" join report_startup rs on rs.id = m.fk_startup join op o ON o.code_op = rs.fk_op where m.metrology = false and rs.fk_unity = ${fk_unity} order by sendToMetrology DESC LIMIT ${limit}  OFFSET ${skip}`)
     return list;
   }
 
