@@ -9,6 +9,7 @@ import { IMailProvider } from "@shared/container/providers/mailProvider/IMailPro
 import { AppError } from "@shared/errors/AppError";
 import { StartupValidations } from "@shared/errors/factoryValidations/startup/validations/StartupValidations";
 
+
 @injectable()
 class FillReportStartupUseCase {
   constructor(
@@ -205,7 +206,11 @@ class FillReportStartupUseCase {
       img_2,
       img_3,
       filled,
-    });
+    }).then(async ()=>{
+       if(determineStatusReportStartup.status === 1){
+     
+       }
+    })
 
     if (determineStatusReportStartup.status === 2) {
       const data =

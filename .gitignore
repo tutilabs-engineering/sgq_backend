@@ -6,4 +6,6 @@ coverage
 dist
 example.json
 test.json
-uploads
+uploads/*
+.uploads
+
