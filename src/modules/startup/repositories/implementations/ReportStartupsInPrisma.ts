@@ -505,6 +505,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     fk_op?: number,
     condition?: any,
     fk_unity?: number,
+    machine?: string
   ): Promise<any> {
     const allStartups = await prismaAgent.reportStartup.findMany({
       select: {
@@ -563,6 +564,9 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
         fk_op,
         AND: condition,
         fk_unity,
+        op:{
+          machine,
+        }
       },
       orderBy: {
         createdAt: "desc",

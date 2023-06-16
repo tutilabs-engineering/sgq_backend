@@ -27,6 +27,7 @@ interface IReportStartupRepository {
     fk_op?: number,
     condition?: any,
     fk_unity?: number,
+    machine?: string
   ): Promise<IListAllStartupsDTO[]>;
   findAllByStatus(skip?: number, take?: number, status?: number): Promise<any>;
   findAllFilterByCount(start_time: Date, end_time: Date): Promise<any>;

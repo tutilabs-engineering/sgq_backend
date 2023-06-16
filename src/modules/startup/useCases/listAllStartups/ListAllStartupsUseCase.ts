@@ -20,7 +20,8 @@ class ListAllStartupsUseCase {
         id: number,
         name: string
       }
-    }
+    },
+    machine?: string
   ): Promise<IListAllStartupsDTO[]> {
     let condition: any = {
       OR: [
@@ -47,8 +48,8 @@ class ListAllStartupsUseCase {
         take,
         fk_op || undefined,
         condition,
-        user.unity.id
-
+        user.unity.id,
+        machine,
       );
 
       return {
