@@ -565,7 +565,9 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
         AND: condition,
         fk_unity,
         op:{
-          machine,
+          machine:{
+            contains: machine
+          },
         }
       },
       orderBy: {
