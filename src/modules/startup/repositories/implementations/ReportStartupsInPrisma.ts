@@ -424,6 +424,7 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     status?: number,
     unity?: number,
   ): Promise<any> {
+    
     const allStartups = await prismaAgent.reportStartup.findMany({
       select: {
         id: true,

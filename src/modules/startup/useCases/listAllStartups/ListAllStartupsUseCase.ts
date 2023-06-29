@@ -41,7 +41,7 @@ class ListAllStartupsUseCase {
         filled: true,
       };
     }
-
+  
     try {
       const data = await this.reportStartupsInPrisma.findAll(
         skip,
@@ -51,6 +51,8 @@ class ListAllStartupsUseCase {
         user.unity.id,
         machine,
       );
+     
+      
 
       return {
         all: data.all._all,
