@@ -29,7 +29,7 @@ interface IReportStartupRepository {
     fk_unity?: number,
     machine?: string
   ): Promise<IListAllStartupsDTO[]>;
-  findAllByStatus(skip?: number, take?: number, status?: number): Promise<any>;
+  findAllByStatus(skip?: number, take?: number, status?: number, unity?: number): Promise<any>;
   findAllFilterByCount(start_time: Date, end_time: Date): Promise<any>;
   findReportStartupById(startup_id: string): Promise<IReportStartupByIdDTO>;
   fillReportStartup({

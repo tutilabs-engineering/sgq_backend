@@ -12,6 +12,7 @@ class ListStartupCountByStatusController {
       skip: Number(skip),
       take: Number(take),
       status: Number(status),
+      user: request.user
     });
     return response.status(200).json(list);
   }

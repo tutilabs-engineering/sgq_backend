@@ -5,6 +5,13 @@ interface IRequest {
   skip: number;
   take: number;
   status: number;
+  user?:{
+    id: string,
+    unity?:{
+      id: number,
+      name: string
+    }
+  },
 }
 @injectable()
 class ListStartupCountByStatusUseCase {
@@ -12,12 +19,16 @@ class ListStartupCountByStatusUseCase {
     @inject("ReportStartupsInPrisma")
     private reportStartupsInPrisma: IReportStartupRepository,
   ) {}
-  async execute({ skip, take, status }: IRequest) {
+  async execute({ skip, take, status, user }: IRequest) {
+    
     const data = await this.reportStartupsInPrisma.findAllByStatus(
       skip,
       take,
       status,
+      user.unity.id
     );
+
+    
 
     const listAllStartups = data.allStartups;
 
