@@ -2,6 +2,7 @@ import { ChangeStatusVariableController } from "@modules/productAnalysis/useCase
 import { CreateVariableController } from "@modules/productAnalysis/useCases/createVariable/CreateVariableController";
 import { DeleteVariableController } from "@modules/productAnalysis/useCases/deleteVariable/DeleteVariableController";
 import { ListVariablesByProductController } from "@modules/productAnalysis/useCases/listVariablesByProduct/ListVariablesByProductController";
+import { UpdateVariableImageController } from "@modules/productAnalysis/useCases/updateVariableImage/UpdateVariableImageController";
 import { Router } from "express";
 import multer from "multer";
 import { EnsureAuthenticated } from "@shared/middlewares/ensureAuthenticate";
@@ -13,6 +14,7 @@ const createVariableController = new CreateVariableController();
 const listVariablesByProductController = new ListVariablesByProductController();
 const deleteVariableController = new DeleteVariableController();
 const changeStatusVariableController = new ChangeStatusVariableController();
+const updateVariableImageController = new UpdateVariableImageController();
 const upload = multer(uploadFile.getConfig);
 
 // variableRoutes.use(EnsureAuthenticated);
@@ -20,6 +22,11 @@ variableRoutes.post(
   "/",
   upload.single("file"),
   createVariableController.handle,
+);
+variableRoutes.put(
+  "/upload-image/:id",
+  upload.single("file"),
+  updateVariableImageController.handle,
 );
 variableRoutes.get("/:code_product", listVariablesByProductController.handle);
 variableRoutes.delete("/:id", deleteVariableController.handle);

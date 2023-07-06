@@ -108,6 +108,17 @@ class VariablesRepositoryInPrisma implements IVariablesRepository {
       },
     });
   }
+
+  async updateVariableImage(id: string, filename: string): Promise<void> {
+    console.log(id, filename);
+
+    await prismaAgent.productVariable.update({
+      where: { id },
+      data: {
+        file: filename,
+      },
+    });
+  }
 }
 
 export { VariablesRepositoryInPrisma };

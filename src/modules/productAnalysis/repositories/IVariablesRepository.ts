@@ -15,6 +15,7 @@ interface IVariablesRepository {
   findByVariablesAlreadyExists(
     variables: IFindVariablesDTO[],
   ): Promise<Variable[]>;
+  updateVariableImage(id: string, filename: string): Promise<void>;
 }
 
 export { IVariablesRepository };
