@@ -23,7 +23,7 @@ variableRoutes.post(
   upload.single("file"),
   createVariableController.handle,
 );
-variableRoutes.put(
+variableRoutes.patch(
   "/upload-image/:id",
   upload.single("file"),
   updateVariableImageController.handle,
