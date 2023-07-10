@@ -29,7 +29,9 @@ class FillReportStartupController {
       files,
     }).then(async ()=>{
       await findReportStartupByIdUseCase.execute(fk_startup).then(async (res)=>{
-        await executeCreatePiq(res, authHeader)
+        if(res.status.id == 1 || res.status.id == 3){
+          await executeCreatePiq(res, authHeader)
+        }
       })
     })
 
