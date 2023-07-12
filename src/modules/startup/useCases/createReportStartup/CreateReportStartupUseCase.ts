@@ -99,11 +99,14 @@ class CreateReportStartupUseCase {
       code_product,
     });
 
-    await CloseStartupValidation({
+    const startupCloseValidation = await CloseStartupValidation({
       code_machine: machine,
       code_mold: product_mold,
     });
-
+    // A ultima Startup precisa ser preenchida
+    if (startupCloseValidation && startupCloseValidation.status && !startupCloseValidation.needToClose) {
+      throw new AppError(startupCloseValidation.message);
+    }
     const needToCreateANewMachine = await NeedToCreateNewMachine(machine);
     const needToCreateANewMold = await NeedToCreateNewMold(product_mold);
 
