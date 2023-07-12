@@ -180,6 +180,7 @@ model Mold {
   id          String   @id @default(uuid())
   description String
   created_at  DateTime @default(now())
+  is_family   Boolean  @default(false)
 
   @@map("molds")
 }
