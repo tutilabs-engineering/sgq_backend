@@ -34,14 +34,6 @@ class CreateVariableUseCase {
     min,
     file,
   }: IRequest): Promise<void> {
-    console.log({
-      cod_product,
-      description,
-      cota,
-      max,
-      min,
-      file,
-    });
     
     let fk_product_ana = "notFound";
     const {

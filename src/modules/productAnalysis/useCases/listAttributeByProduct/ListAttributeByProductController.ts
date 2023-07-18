@@ -5,8 +5,6 @@ import { ListAttributeByProductUseCase } from "./ListAttributeByProductUseCase";
 class ListAttributeByProductController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { code_product } = request.params;
-    console.log(code_product);
-    console.log("oiii");
     const listAttributeByProductUseCase = container.resolve(
       ListAttributeByProductUseCase,
     );
