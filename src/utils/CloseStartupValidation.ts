@@ -25,31 +25,33 @@ export async function CloseStartupValidation({
   const startups = await reportStartupsInPrisma.findStartupsByMachine(
     code_machine,
   );
-  const validationResponse = startups.map(async (startup) => {
-    if (startup.open) {
-      if (!startup.filled) {
-        return {
-          status: true,
-          message: "A ultima Startup precisa ser preenchida.",
-          needToClose: false,
-          data: startup.id,
-        };
-      }
-      // if (metrologyFilled) {
-      // eslint-disable-next-line eqeqeq
-      const mold = await moldsRepositoryInPrisma.findMoldByDescription(code_mold)
-      if (code_mold == startup.op.product_mold && !mold.is_family) {
-        await reportStartupsInPrisma.closeReportStartup(
-          startup.id,
-        );
-      } else if (code_mold != startup.op.product_mold) {
-        await reportStartupsInPrisma.closeReportStartup(
-          startup.id,
-        );
-      }
+
+  const validationResponse = startups.find((startup)=>{
+    if(startup.open && !startup.filled){
+        return startup
+    }else{
+      return undefined
     }
-  }
-  );
-  return validationResponse[0];
+  })
+  if(validationResponse){  
+  return {
+    status: true,
+    message: "A ultima Startup precisa ser preenchida.",
+    needToClose: false,
+  };
+ }
+ 
+  startups.map(async (startup)=>{
+    const mold = await moldsRepositoryInPrisma.findMoldByDescription(code_mold)
+    if (code_mold == startup.op.product_mold && !mold.is_family) {
+      await reportStartupsInPrisma.closeReportStartup(
+        startup.id,
+      );
+    } else if (code_mold != startup.op.product_mold) {
+      await reportStartupsInPrisma.closeReportStartup(
+        startup.id,
+        );
+      }
+    })
 
 }
