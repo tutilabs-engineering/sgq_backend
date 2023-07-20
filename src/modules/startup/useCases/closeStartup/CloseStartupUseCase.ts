@@ -8,6 +8,7 @@ class CloseStartupByOpUseCase {
 
     async execute(data: IOpsToCloseData[]){
         data.forEach(async (data)=>{
+            Object.assign(data,{op: data.op.split('/')[0]})
             try {
                 await this.reportStartupsInPrisma.closeReportsStartupByOp(data)
             } catch (error) {
