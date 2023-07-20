@@ -20,8 +20,23 @@ import { prisma } from "@prisma/client";
 import { prismaAgent } from "../../../../shared/database/prismaAgent";
 import { IReportStartupRepository } from "../IReportStartupRepository";
 import { StructureStartupListInPrisma } from "./structureReturn/StructureStartupListInPrisma";
+import { ICloseReportStartup } from "@utils/CloseStartupValidation";
+import { IOpsToCloseData } from "@modules/startup/dtos/ICloseStartupDTO";
 
 class ReportStartupsInPrisma implements IReportStartupRepository {
+
+  async closeReportsStartupByOp({op,stop_code}: IOpsToCloseData):Promise<void>{
+    await prismaAgent.reportStartup.updateMany({
+      data:{
+        open: false,
+        fk_stop_code: stop_code
+      },
+      where: {
+        fk_op: Number(op)
+      },
+    })
+  }
+
   async insertDefaultQuestionsDisapproved(
     default_questions_disapproved: IDefaultQuestionsDisapprovedDTO[],
   ): Promise<void> {

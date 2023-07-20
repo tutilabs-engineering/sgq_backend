@@ -11,6 +11,7 @@ import { ProductRoutes } from "./productAnalysis/product.routes";
 import { sapProductRoutes } from "./productAnalysis/sapproduct.routes";
 import { variableRoutes } from "./productAnalysis/variables.routes";
 import { startupsRoutes } from "./startup/startups.routes";
+import { closeStartupsRoutes } from "./closeStartup/closeStartup.routes";
 
 const router = Router();
 router.use(authenticateRoutes);
@@ -25,5 +26,5 @@ router.use("/product/sap", sapProductRoutes);
 router.use("/product-internal", ProductRoutes);
 router.use("/reportStartup", startupsRoutes);
 router.use("/dashboard", dashboardRoutes);
-
+router.use("/closeStartup",closeStartupsRoutes)
 export { router };

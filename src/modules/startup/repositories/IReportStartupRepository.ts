@@ -14,8 +14,10 @@ import { ITakeProductCodeDTO } from "../dtos/ITakeProductCodeDTO";
 import { ReportStartup } from "../entities/ReportStartup";
 import { ReportStartupFill } from "../entities/ReportStartupFill";
 import { ReportStartupFillState } from "../entities/ReportStartupFillState";
+import { IOpsToCloseData } from "../dtos/ICloseStartupDTO";
 
 interface IReportStartupRepository {
+  closeReportsStartupByOp(data: IOpsToCloseData):Promise<void>
   create(
     data: ICreateStartupDTO,
     metrology: IMetrologyDTO[],

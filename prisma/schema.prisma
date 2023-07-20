@@ -105,10 +105,18 @@ model StatusStartup {
   @@map("status_startup")
 }
 
+model stopCode {
+  id            String          @id
+  description   String
+  reportStartup ReportStartup[]
+}
+
 model ReportStartup {
   id                            String                        @id @default(uuid())
   code_startup                  Int                           @default(autoincrement())
   fk_op                         Int
+  fk_stop_code                  String?
+  stop_code                     stopCode?                     @relation(fields: [fk_stop_code], references: [id])
   open                          Boolean                       @default(true)
   fk_user_create                String
   fk_user_filled                String?
