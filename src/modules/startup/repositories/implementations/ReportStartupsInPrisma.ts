@@ -151,6 +151,12 @@ class ReportStartupsInPrisma implements IReportStartupRepository {
     const reportStartup = await prismaAgent.reportStartup.findFirst({
       where: { id: startup_id },
       include: {
+        stop_code:{
+          select:  {
+            id: true,
+            description: true,
+          }
+        },
         report_startup_fill: {
           include: {
             default_questions_responses: true,

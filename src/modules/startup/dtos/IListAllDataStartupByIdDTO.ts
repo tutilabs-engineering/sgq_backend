@@ -9,6 +9,10 @@ interface IListAllDataStartupByIdDTO {
   nqa: number;
   level: string;
   piq: string;
+  stop_code?: {
+    id: string,
+    description: string
+  },
   open: boolean;
   fk_user_create: string;
   fk_user_filled: string;
@@ -110,6 +114,10 @@ interface IListReportStartupByIdFormatted {
   nqa: number;
   level: string;
   piq: string;
+  stop_code?: {
+    id: string,
+    description: string,
+  }
   specific_questions_in_product?: {
     id?: string;
     question: string;

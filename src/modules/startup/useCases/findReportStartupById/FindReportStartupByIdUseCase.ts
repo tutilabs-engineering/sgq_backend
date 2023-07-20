@@ -70,6 +70,7 @@ class FindReportStartupByIdUseCase {
         piq: reportStartup.piq,
         nqa: reportStartup.nqa,
         level: reportStartup.level,
+        stop_code: reportStartup.stop_code,
         status: {
           id: reportStartup.status.id,
           description: reportStartup.status.description,
@@ -127,6 +128,7 @@ class FindReportStartupByIdUseCase {
       piq: reportStartup.piq,
       nqa: reportStartup.nqa,
       level: reportStartup.level,
+      stop_code: reportStartup.stop_code,
       status: {
         id: reportStartup.status.id,
         description: reportStartup.status.description,
