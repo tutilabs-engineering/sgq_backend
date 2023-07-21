@@ -1,5 +1,6 @@
 import { ICreateVariableDTO } from "../dtos/ICreateVariableDTO";
 import { IFindVariablesDTO } from "../dtos/IFindVariablesDTO";
+import { IUpdateVariableDTO } from "../dtos/IUpdateVariableDTO";
 import { Variable } from "../entities/Variable";
 
 interface IVariablesRepository {
@@ -12,6 +13,7 @@ interface IVariablesRepository {
   updateStatus(id: string, state: boolean): Promise<void>;
   findByVariable(id: string): Promise<Variable>;
   deleteVariable(id: string): Promise<void>;
+  updateVariable(data: IUpdateVariableDTO): Promise<void>;
   findByVariablesAlreadyExists(
     variables: IFindVariablesDTO[],
   ): Promise<Variable[]>;

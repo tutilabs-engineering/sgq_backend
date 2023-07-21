@@ -3,6 +3,7 @@ import { IFindVariablesDTO } from "@modules/productAnalysis/dtos/IFindVariablesD
 import { Variable } from "@modules/productAnalysis/entities/Variable";
 import { prismaAgent } from "@shared/database/prismaAgent";
 import { IVariablesRepository } from "../IVariablesRepository";
+import { IUpdateVariableDTO } from "@modules/productAnalysis/dtos/IUpdateVariableDTO";
 
 class VariablesRepositoryInPrisma implements IVariablesRepository {
   async findByVariablesAlreadyExists(
@@ -52,6 +53,17 @@ class VariablesRepositoryInPrisma implements IVariablesRepository {
     });
   }
 
+  async updateVariable({ id, file }: IUpdateVariableDTO): Promise<void> {
+    await prismaAgent.productVariable.update({
+      data: {
+        file
+      },
+      where: {
+        id
+      }
+    })
+  }
+  
   async listVariablesInProduct(code: string): Promise<Variable[]> {
     const variables = await prismaAgent.productVariable.findMany({
       where: {

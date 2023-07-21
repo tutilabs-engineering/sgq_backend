@@ -6,6 +6,7 @@ import { Router } from "express";
 import multer from "multer";
 import { EnsureAuthenticated } from "@shared/middlewares/ensureAuthenticate";
 import { UploadFile } from "@shared/middlewares/MulterFileMiddleware";
+import { UpdateVariableController } from "@modules/productAnalysis/useCases/updateVariable/UpdateVariableController";
 
 const uploadFile = new UploadFile();
 const variableRoutes = Router();
@@ -13,6 +14,7 @@ const createVariableController = new CreateVariableController();
 const listVariablesByProductController = new ListVariablesByProductController();
 const deleteVariableController = new DeleteVariableController();
 const changeStatusVariableController = new ChangeStatusVariableController();
+const updateVariableController = new UpdateVariableController();
 const upload = multer(uploadFile.getConfig);
 
 // variableRoutes.use(EnsureAuthenticated);
@@ -24,5 +26,5 @@ variableRoutes.post(
 variableRoutes.get("/:code_product", listVariablesByProductController.handle);
 variableRoutes.delete("/:id", deleteVariableController.handle);
 variableRoutes.patch("/status", changeStatusVariableController.handle);
-
+variableRoutes.put("/:id", upload.single("file"),updateVariableController.handle)
 export { variableRoutes };
