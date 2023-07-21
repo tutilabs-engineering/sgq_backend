@@ -13,7 +13,7 @@ class CreateReportStartupController {
         code_client,
         code_product,
         desc_product,
-        product_mold,
+        mold,
         machine,
         day,
         start_time,
@@ -29,7 +29,7 @@ class CreateReportStartupController {
     const createReportStartupUseCase = container.resolve(
       CreateReportStartupUseCase,
     );
-
+      
     const startupCreated = await createReportStartupUseCase.execute({
       code_op,
       user_id,
@@ -38,7 +38,7 @@ class CreateReportStartupController {
         code_client,
         code_product,
         desc_product,
-        product_mold,
+        mold,
         machine,
         quantity,
         day,

@@ -3,10 +3,11 @@ import { prismaAgent } from "@shared/database/prismaAgent";
 import { IMoldsRepository } from "../IMoldsRepository";
 
 export class MoldsRepositoryInPrisma implements IMoldsRepository {
-  async createMold(description: string): Promise<void> {
+  async createMold(description: string, is_family: boolean): Promise<void> {
     await prismaAgent.mold.create({
       data: {
         description,
+        is_family
       },
     });
   }

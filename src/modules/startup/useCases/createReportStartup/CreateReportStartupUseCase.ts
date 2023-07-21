@@ -48,7 +48,7 @@ class CreateReportStartupUseCase {
       code_client,
       code_product,
       desc_product,
-      product_mold,
+      mold,
       machine,
       day,
       start_time,
@@ -62,7 +62,7 @@ class CreateReportStartupUseCase {
     components,
   }: ICreateStartupDTO): Promise<IReturnFormattedOnCreateStartup> {
     const { CreateStartupValidations } = StartupValidations();
-
+    
     const newReportStartup = {
       code_op,
       user_id,
@@ -72,7 +72,7 @@ class CreateReportStartupUseCase {
         code_product,
         desc_product,
         machine,
-        product_mold,
+        mold,
         quantity: quantity.toString(),
         day,
         start_time,
@@ -88,7 +88,6 @@ class CreateReportStartupUseCase {
       user,
 
     };
-
     const validation = await CreateStartupValidations(newReportStartup);
     if (!validation.status) {
       throw new AppError(validation.message, validation.statusCode);
@@ -101,14 +100,14 @@ class CreateReportStartupUseCase {
 
     const startupCloseValidation = await CloseStartupValidation({
       code_machine: machine,
-      code_mold: product_mold,
+      code_mold: mold.product_mold,
     });
     // A ultima Startup precisa ser preenchida
     if (startupCloseValidation && startupCloseValidation.status && !startupCloseValidation.needToClose) {
       throw new AppError(startupCloseValidation.message);
     }
     const needToCreateANewMachine = await NeedToCreateNewMachine(machine);
-    const needToCreateANewMold = await NeedToCreateNewMold(product_mold);
+    const needToCreateANewMold = await NeedToCreateNewMold(mold.product_mold);
 
     const startupCreated = await this.reportStartupsInPrisma.create(
       newReportStartup,
@@ -120,7 +119,7 @@ class CreateReportStartupUseCase {
     }
 
     if (needToCreateANewMold) {
-      await this.moldsRepositoryInPrisma.createMold(product_mold);
+      await this.moldsRepositoryInPrisma.createMold(mold.product_mold,mold.is_family);
     }
 
     const formattedData: IReturnFormattedOnCreateStartup = {

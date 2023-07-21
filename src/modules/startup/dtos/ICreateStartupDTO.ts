@@ -4,7 +4,10 @@ interface IHeader {
   code_product: string;
   desc_product: string;
   machine: string;
-  product_mold: string;
+  mold: {
+    product_mold: string,
+    is_family: boolean
+  },
   quantity: string;
   day?: Date;
   start_time?: Date;

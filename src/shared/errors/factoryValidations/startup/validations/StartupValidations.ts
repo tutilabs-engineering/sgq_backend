@@ -28,7 +28,7 @@ function StartupValidations() {
       code_product,
       desc_product,
       machine,
-      product_mold,
+      mold,
       day,
       start_time,
       quantity,
@@ -58,7 +58,7 @@ function StartupValidations() {
     const codeProductIsEmpty = await IsEmpty(code_product);
     const descProductIsEmpty = await IsEmpty(desc_product);
     const machineIsEmpty = await IsEmpty(machine);
-    const productMoldIsEmpty = await IsEmpty(product_mold);
+    const productMoldIsEmpty = await IsEmpty(mold.product_mold);
     const dayIsEmpty = await IsEmpty(String(day));
     const startTimeIsEmpty = await IsEmpty(String(start_time));
     const cavityIsEmpty = await IsEmpty(cavity);
