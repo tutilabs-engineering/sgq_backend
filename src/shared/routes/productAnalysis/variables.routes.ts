@@ -4,11 +4,12 @@ import { DeleteVariableController } from "@modules/productAnalysis/useCases/dele
 import { ListVariablesByProductController } from "@modules/productAnalysis/useCases/listVariablesByProduct/ListVariablesByProductController";
 import { Router } from "express";
 import multer from "multer";
+import path from "path"; 
 import { EnsureAuthenticated } from "@shared/middlewares/ensureAuthenticate";
 import { UploadFile } from "@shared/middlewares/MulterFileMiddleware";
 import { UpdateVariableController } from "@modules/productAnalysis/useCases/updateVariable/UpdateVariableController";
 
-const uploadFile = new UploadFile();
+const uploadFile = new UploadFile(path.resolve(process.cwd(), 'uploads','variables'));
 const variableRoutes = Router();
 const createVariableController = new CreateVariableController();
 const listVariablesByProductController = new ListVariablesByProductController();

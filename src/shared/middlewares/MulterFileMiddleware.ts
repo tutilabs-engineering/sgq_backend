@@ -3,11 +3,13 @@ import { Request } from "express";
 import fs from "fs";
 import mime from "mime-types";
 import multer from "multer"; // Importaremos para realizar o upload
-import path from "path"; // Ajudara no aminho para guardar imagems
 
 class UploadFile {
- 
- private URL = path.resolve(process.cwd(), 'uploads','variables');
+
+ private URL : string;
+ constructor(pathToFile: string){
+  this.URL = pathToFile
+ }
 
   private storage(): multer.StorageEngine {
     return multer.diskStorage({
