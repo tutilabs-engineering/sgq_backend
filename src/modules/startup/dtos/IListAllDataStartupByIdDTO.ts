@@ -117,7 +117,11 @@ interface IListReportStartupByIdFormatted {
   stop_code?: {
     id: string,
     description: string,
-  }
+  },
+  pointToPoint?:{
+    quantity: number,
+    file: string
+  },
   specific_questions_in_product?: {
     id?: string;
     question: string;

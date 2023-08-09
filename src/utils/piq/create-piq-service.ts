@@ -1,5 +1,4 @@
 import { IListReportStartupByIdFormatted } from "@modules/startup/dtos/IListAllDataStartupByIdDTO";
-import axios from "axios";
 import httpPIQ from "@shared/infra/api/piq/services/create-piq";
 
 async function executeCreatePiq(data: IListReportStartupByIdFormatted, token: string): Promise<void> {
@@ -24,6 +23,8 @@ async function executeCreatePiq(data: IListReportStartupByIdFormatted, token: st
         description: data.userWhoCreate.role.description,
       },
     },
+    pointToPointQuantity: data?.pointToPoint?.quantity,
+    pointToPointFile: data?.pointToPoint?.file,
     attributeQuestionJSON: data.report_startup_fill.specific_questions_responses.specific_questions,
     variablesQuestionJSON: data.metrology_items,
     status: 1,

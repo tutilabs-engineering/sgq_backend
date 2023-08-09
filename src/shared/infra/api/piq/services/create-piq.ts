@@ -1,6 +1,6 @@
 import { httpPIQ } from "../piq_config"
 
-interface CreatePIQ {
+export interface CreatePIQ {
   id: string,
   number_startup: number,
   number_op: number,
@@ -15,14 +15,14 @@ interface CreatePIQ {
   status: number,
   nqa: number,
   PIQ: string,
-  level: string
+  level: string,
+  pointToPointQuantity?: number
+  pointToPointFile?: string
 }
 
 export default {
 
   createPIQ: async (data: CreatePIQ, token: string) => {
-    console.log({token});
-    
     await httpPIQ.post('/startup', {
       id: data.id,
       number_startup: data.number_startup,
@@ -36,6 +36,8 @@ export default {
       attributeQuestionJSON: data.attributeQuestionJSON,
       variablesQuestionJSON: data.variablesQuestionJSON,
       status: data.status,
+      pointToPointFile: data.pointToPointFile,
+      pointToPointQuantity: data.pointToPointQuantity,
       nqa: data.nqa,
       PIQ: data.PIQ,
       level: data.level

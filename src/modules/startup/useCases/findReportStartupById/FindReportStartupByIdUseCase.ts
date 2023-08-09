@@ -1,4 +1,6 @@
 import { IAttributeRepository } from "@modules/productAnalysis/repositories/IAttributeRepository";
+import { IPointToPointRepository } from "@modules/productAnalysis/repositories/IPointToPointRepository";
+import { IProductRepository } from "@modules/productAnalysis/repositories/IProductRepository";
 import { IListReportStartupByIdFormatted } from "@modules/startup/dtos/IListAllDataStartupByIdDTO";
 import { IReportStartupRepository } from "@modules/startup/repositories/IReportStartupRepository";
 import { inject, injectable } from "tsyringe";
@@ -10,10 +12,20 @@ class FindReportStartupByIdUseCase {
     private reportStartupsInPrisma: IReportStartupRepository,
     @inject("AttributeRepositoryInPrisma")
     private attributeRepositoryInPrisma: IAttributeRepository,
+    @inject("ProductRepositoryInPrisma")
+    private productRepositoryInPrisma: IProductRepository,
+    @inject("PointToPointRepositoryInPrisma")
+    private pointToPointRepositoryInPrisma: IPointToPointRepository
   ) { }
   async execute(startup_id: string): Promise<IListReportStartupByIdFormatted> {
     const reportStartup =
       await this.reportStartupsInPrisma.findAllDataStartupById(startup_id);
+
+    const product = await this.productRepositoryInPrisma.findByProduct(reportStartup.op.code_product)
+    let pointToPoint = null
+    if(product){
+      pointToPoint = await this.pointToPointRepositoryInPrisma.findByProductId(product.id)
+    }
 
     const reportStartupFill = reportStartup.report_startup_fill[0];
     const { op } = reportStartup;
@@ -71,6 +83,10 @@ class FindReportStartupByIdUseCase {
         nqa: reportStartup.nqa,
         level: reportStartup.level,
         stop_code: reportStartup.stop_code,
+        pointToPoint: pointToPoint ? {
+          file: pointToPoint.file,
+          quantity: pointToPoint.quantity
+        } : null,
         status: {
           id: reportStartup.status.id,
           description: reportStartup.status.description,
@@ -129,6 +145,10 @@ class FindReportStartupByIdUseCase {
       nqa: reportStartup.nqa,
       level: reportStartup.level,
       stop_code: reportStartup.stop_code,
+      pointToPoint: pointToPoint ? {
+        file: pointToPoint.file,
+        quantity: pointToPoint.quantity
+      } : null,
       status: {
         id: reportStartup.status.id,
         description: reportStartup.status.description,
