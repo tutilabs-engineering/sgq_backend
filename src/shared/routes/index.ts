@@ -12,6 +12,7 @@ import { sapProductRoutes } from "./productAnalysis/sapproduct.routes";
 import { variableRoutes } from "./productAnalysis/variables.routes";
 import { startupsRoutes } from "./startup/startups.routes";
 import { closeStartupsRoutes } from "./closeStartup/closeStartup.routes";
+import { pointToPointRouter } from "./productAnalysis/pointToPoint.routes";
 
 const router = Router();
 router.use(authenticateRoutes);
@@ -27,4 +28,6 @@ router.use("/product-internal", ProductRoutes);
 router.use("/reportStartup", startupsRoutes);
 router.use("/dashboard", dashboardRoutes);
 router.use("/closeStartup",closeStartupsRoutes)
+router.use("/pointToPoint",pointToPointRouter)
+
 export { router };

@@ -17,24 +17,26 @@ model Unity {
 }
 
 model User {
-  id                  String             @id @default(uuid())
-  name                String
-  email               String
-  register            String             @unique
-  cpf                 String             @unique
-  is_enabled          Boolean            @default(true)
-  password            String
-  fk_role             Int
-  fk_unity            Int
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
-  fk_office_hour      Int
-  office_hour         OfficeHour         @relation(fields: [fk_office_hour], references: [id], onDelete: Cascade)
-  role                Role               @relation(fields: [fk_role], references: [id])
-  unity               Unity              @relation(fields: [fk_unity], references: [id])
-  metrologyUser       MetrologyHistory[]
-  reportStartupCreate ReportStartup[]    @relation("user_that_create")
-  reportStartupFill   ReportStartup[]    @relation("user_that_fill")
+  id                        String                @id @default(uuid())
+  name                      String
+  email                     String
+  register                  String                @unique
+  cpf                       String                @unique
+  is_enabled                Boolean               @default(true)
+  password                  String
+  fk_role                   Int
+  fk_unity                  Int
+  createdAt                 DateTime              @default(now())
+  updatedAt                 DateTime              @updatedAt
+  fk_office_hour            Int
+  office_hour               OfficeHour            @relation(fields: [fk_office_hour], references: [id], onDelete: Cascade)
+  role                      Role                  @relation(fields: [fk_role], references: [id])
+  unity                     Unity                 @relation(fields: [fk_unity], references: [id])
+  metrologyUser             MetrologyHistory[]
+  reportStartupCreate       ReportStartup[]       @relation("user_that_create")
+  reportStartupFill         ReportStartup[]       @relation("user_that_fill")
+  productPointToPointCreate ProductPointToPoint[] @relation("user_that_created")
+  productPointToPointUpdate ProductPointToPoint[] @relation("user_that_updated")
 
   @@map("user")
 }
@@ -248,15 +250,16 @@ model DefaultQuestionsDisapproved {
 }
 
 model ProductAnalysis {
-  id               String             @id @default(uuid())
-  cod_product      String
-  desc_product     String
-  cod_client       String
-  desc_client      String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  productAttribute ProductAttribute[]
-  productVariable  ProductVariable[]
+  id                  String               @id @default(uuid())
+  cod_product         String
+  desc_product        String
+  cod_client          String
+  desc_client         String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  productAttribute    ProductAttribute[]
+  productVariable     ProductVariable[]
+  productPointToPoint ProductPointToPoint?
 
   @@map("productAnalysis")
 }
@@ -289,4 +292,20 @@ model ProductVariable {
   metrology      Metrology[]
 
   @@map("productVariable")
+}
+
+model ProductPointToPoint {
+  id             String          @id @default(uuid())
+  quantity       Int
+  file           String
+  fk_product_ana String          @unique
+  product_ana    ProductAnalysis @relation(fields: [fk_product_ana], references: [id])
+  createdAt      DateTime        @default(now())
+  fk_user_create String
+  updatedAt      DateTime?       
+  fk_user_update String?
+  userThatCreate User            @relation("user_that_created", fields: [fk_user_create], references: [id])
+  userThatUpdate User?           @relation("user_that_updated", fields: [fk_user_update], references: [id])
+
+  @@map("productPointToPoint")
 }
