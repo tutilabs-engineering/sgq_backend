@@ -64,12 +64,7 @@ function StartupValidations() {
     const cavityIsEmpty = await IsEmpty(cavity);
     const cycleIsEmpty = await IsEmpty(cycle);
     const componentsIsEmpty = await IsEmpty(String(components));
-    if(mold.product_mold == "MD"){
-      return {
-        status: false,
-        message: "Molde é obrigatório",
-      };
-    }
+
     if (verifyLastStartup && verifyLastStartup.open) {
       return {
         status: false,

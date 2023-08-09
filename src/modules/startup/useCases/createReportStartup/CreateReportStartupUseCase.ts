@@ -92,7 +92,13 @@ class CreateReportStartupUseCase {
     if (!validation.status) {
       throw new AppError(validation.message, validation.statusCode);
     }
-
+    
+    if(mold.product_mold.toUpperCase().startsWith("MD")){
+        mold.product_mold = mold.product_mold.toUpperCase()
+    }else{
+      mold.product_mold = "MD" + mold.product_mold
+    }
+    
     const formattedDataMetrology = await FormatDataMetrologyProvider({
       cavity: Number(cavity),
       code_product,
