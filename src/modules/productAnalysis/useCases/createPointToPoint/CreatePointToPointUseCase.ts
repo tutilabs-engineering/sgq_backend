@@ -56,15 +56,16 @@ class CreatePointToPointUseCase {
           }
         
         const product = await this.productRepositoryInPrisma.findByProduct(data.code_product)
-        if(product){
-            Object.assign(data, {fk_product_ana: product.id});
+        if (product) {
+            const productPointToPoint = await this.pointToPointRepository.findByProductId(product.id)
+            if (productPointToPoint) {
+                throw new AppError("Já existe ponto a ponto criado para este produto")
+            }
+            Object.assign(data, { fk_product_ana: product.id });
+        } else {
+            Object.assign(data, { fk_product_ana: "undefined" });
         }
 
-        const productPointToPoint = await this.pointToPointRepository.findByProductId(product.id)
-
-        if(productPointToPoint){
-            throw new AppError("Já existe ponto a ponto criado para este produto")
-        }
         const createdAt = dayjs().format("YYYY-MM-DDTHH:mm:ss-00:00")
         Object.assign(data, {createdAt,desc_client,desc_product,cod_client})
         
