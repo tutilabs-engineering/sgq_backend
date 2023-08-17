@@ -24,7 +24,7 @@ class ListDashBoardByFilterUseCase {
   }: IListAllDataFilter): Promise<any> {
     let hourEnd = "";
     let hourStart = "";
-    let dataQuery = ""
+    let dataQuery = "";
     switch (workShift) {
       case 1:
         hourStart = "06:00:00";
@@ -39,7 +39,8 @@ class ListDashBoardByFilterUseCase {
       case 3:
         hourStart = "22:00:00";
         hourEnd = "23:59:00";
-        dataQuery = "or cast(rs.start_time as time) BETWEEN '00:00:00' and '05:59:00'"
+        dataQuery =
+          "or cast(rs.start_time as time) BETWEEN '00:00:00' and '05:59:00'";
 
         break;
 
@@ -51,26 +52,31 @@ class ListDashBoardByFilterUseCase {
 
     const dayEnd = dayjs(day).add(6, "day").format("YYYY-MM-DD");
 
-    const data =
-      await this.dashboardRepositoryInPrisma.listAllDataFilterByStartup({
-        machine,
-        code_product,
-        code_client,
-        day,
-        dayEnd,
-        hourEnd,
-        hourStart,
-        dataQuery
-      });
+    const data = [
+      ...Object.values(
+        await this.dashboardRepositoryInPrisma.listAllDataFilterByStartup({
+          machine,
+          code_product,
+          code_client,
+          day,
+          dayEnd,
+          hourEnd,
+          hourStart,
+          dataQuery,
+        }),
+      ),
+    ];
 
-
-    const dataMetrology =
-      await this.dashboardRepositoryInPrisma.listAllDataFilterByMetrology({
-        day,
-        dayEnd,
-        hourEnd,
-        hourStart,
-      });
+    const dataMetrology = [
+      ...Object.values(
+        await this.dashboardRepositoryInPrisma.listAllDataFilterByMetrology({
+          day,
+          dayEnd,
+          hourEnd,
+          hourStart,
+        }),
+      ),
+    ];
 
     const period = [];
     let indexDate = dayjs(day).format("YYYY-MM-DD");

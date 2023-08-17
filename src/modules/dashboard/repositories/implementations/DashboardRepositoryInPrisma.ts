@@ -49,9 +49,11 @@ class DashboardRepositoryInPrisma implements IDashboardRepository {
     dayEnd,
     hourStart,
     hourEnd,
-    dataQuery = ''
+    dataQuery = "",
   }: IListAllDataFilter): Promise<any> {
-    const data = await prismaAgent.$queryRawUnsafe(`
+    const data = JSON.parse(
+      JSON.stringify(
+        await prismaAgent.$queryRawUnsafe(`
     select count(rs.code_startup) as QuantityStartup,
     cast (avg(rs.final_time - rs.start_time)  AS varchar(255)) as time,
     to_char(rs.start_time,'yyyy-mm-dd 00:00:00') as start_time  from report_startup rs
@@ -59,7 +61,10 @@ class DashboardRepositoryInPrisma implements IDashboardRepository {
     where rs.filled = true and op.machine like '%${machine}%' and op.code_product like '%${code_product}%' and op.code_client like '%${code_client}%' and rs.start_time >= '${day}' and rs.start_time <= '${dayEnd}'
     and cast(rs.start_time as time) BETWEEN '${hourStart}' and '${hourEnd}' 
     ${dataQuery}
-    group by to_char(rs.start_time,'yyyy-mm-dd 00:00:00')`);
+    group by to_char(rs.start_time,'yyyy-mm-dd 00:00:00')`),
+        (key, value) => (typeof value === "bigint" ? Number(value) : value),
+      ),
+    );
 
     return data;
   }
@@ -70,8 +75,10 @@ class DashboardRepositoryInPrisma implements IDashboardRepository {
     hourStart,
     hourEnd,
   }: IListAllDataFilter): Promise<any> {
-    const data = await prismaAgent.$queryRawUnsafe(
-      ` 
+    const data = JSON.parse(
+      JSON.stringify(
+        await prismaAgent.$queryRawUnsafe(
+          ` 
     select count(DISTINCT me.fk_startup) as quantityMetrology,
     cast(avg(mh."endDate" - mh."startDate")  AS varchar(255)) as time,
     to_char(mh."startDate",'yyyy-mm-dd 00:00:00') as DATE from metrology me
@@ -80,6 +87,9 @@ class DashboardRepositoryInPrisma implements IDashboardRepository {
     and cast(mh."startDate" as time) BETWEEN '${hourStart}' and '${hourEnd}' 
     group by to_char(mh."startDate",'yyyy-mm-dd 00:00:00');
     `,
+        ),
+        (key, value) => (typeof value === "bigint" ? Number(value) : value),
+      ),
     );
 
     return data;
