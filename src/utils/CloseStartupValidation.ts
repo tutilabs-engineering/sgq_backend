@@ -43,7 +43,7 @@ export async function CloseStartupValidation({
  
   startups.map(async (startup)=>{
     const mold = await moldsRepositoryInPrisma.findMoldByDescription(code_mold)
-    if (code_mold == startup.op.product_mold && !mold.is_family) {
+    if (code_mold == startup.op.product_mold && mold && !mold.is_family) {
       await reportStartupsInPrisma.closeReportStartup(
         startup.id,
       );
