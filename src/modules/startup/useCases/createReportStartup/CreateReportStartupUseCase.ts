@@ -103,6 +103,8 @@ class CreateReportStartupUseCase {
       cavity: Number(cavity),
       code_product,
     });
+    const needToCreateANewMachine = await NeedToCreateNewMachine(machine);
+    const needToCreateANewMold = await NeedToCreateNewMold(mold.product_mold);
 
     const startupCloseValidation = await CloseStartupValidation({
       code_machine: machine,
@@ -112,8 +114,6 @@ class CreateReportStartupUseCase {
     if (startupCloseValidation && startupCloseValidation.status && !startupCloseValidation.needToClose) {
       throw new AppError(startupCloseValidation.message);
     }
-    const needToCreateANewMachine = await NeedToCreateNewMachine(machine);
-    const needToCreateANewMold = await NeedToCreateNewMold(mold.product_mold);
 
     const startupCreated = await this.reportStartupsInPrisma.create(
       newReportStartup,
