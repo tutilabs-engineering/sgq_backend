@@ -11,6 +11,7 @@ import { NeedToCreateNewMold } from "@utils/NewMoldValidation";
 import { inject, injectable } from "tsyringe";
 import { AppError } from "@shared/errors/AppError";
 import { StartupValidations } from "@shared/errors/factoryValidations/startup/validations/StartupValidations";
+import { CreateCard, createCard } from "@shared/infra/api/qualiboard/services/create-card";
 
 interface IReturnFormattedOnCreateStartup {
   id: string;
@@ -136,6 +137,9 @@ class CreateReportStartupUseCase {
       createdAt: startupCreated.createdAt,
       updatedAt: startupCreated.updatedAt,
     };
+
+    const card: CreateCard = {startupId: startupCreated.id, status: startupCreated.fk_status, machine: {code: machine.trim() }, product: {code: newReportStartup.header.code_product} }
+    createCard(card)
 
     return formattedData;
   }

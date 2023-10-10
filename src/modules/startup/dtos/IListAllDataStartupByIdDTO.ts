@@ -146,6 +146,7 @@ interface IListReportStartupByIdFormatted {
     default_questions_responses: {
       id: string;
       default_questions: {
+        title: string,
         description: string;
         file: string;
         fk_specific_question: string;
@@ -157,6 +158,7 @@ interface IListReportStartupByIdFormatted {
     specific_questions_responses: {
       id: string;
       specific_questions: {
+        question: string;
         description: string;
         file: string;
         fk_specific_question: string;
