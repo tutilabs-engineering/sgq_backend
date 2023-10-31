@@ -12,6 +12,7 @@ export interface CreateCard {
     repproval?: CreateRepproval[]
     machine: { code: string }
     product: { code: string }
+    unity: number
 }
 
 export async function createCard(data: CreateCard){

@@ -138,7 +138,7 @@ class CreateReportStartupUseCase {
       updatedAt: startupCreated.updatedAt,
     };
 
-    const card: CreateCard = {startupId: startupCreated.id, status: startupCreated.fk_status, machine: {code: machine.trim() }, product: {code: newReportStartup.header.code_product} }
+    const card: CreateCard = {startupId: startupCreated.id, status: startupCreated.fk_status, machine: {code: machine.trim() }, product: {code: newReportStartup.header.code_product}, unity: startupCreated.fk_unity  }
     createCard(card)
 
     return formattedData;
