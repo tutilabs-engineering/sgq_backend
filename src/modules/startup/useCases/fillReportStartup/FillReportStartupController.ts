@@ -45,8 +45,7 @@ class FillReportStartupController {
             repproval.push({description: specific_question.question,status: Number(specific_question.status),comment: specific_question.description, imagePath: specific_question.file})
           }
         })
-        console.log(repproval)
-        const card: CreateCard = {startupId: fk_startup, status: res.status.id, machine: {code: res.op.machine.trim() }, product: {code: res.op.code_product},repproval}
+        const card: CreateCard = {startupId: fk_startup, status: res.status.id, machine: {code: res.op.machine.trim() }, product: {code: res.op.code_product},repproval, unity: request.user.unity.id}
         createCard(card)
     
       })
