@@ -60,11 +60,14 @@ class FindMetrologyByStartupUseCase {
           };
         }
       });
+
       metrology_items.push({
         variable,
         items: listMetrologyByVariable,
       });
     });
+
+    metrology_items.sort((a, b) => a.variable.localeCompare(b.variable));
 
     return { header, metrology_items };
   }

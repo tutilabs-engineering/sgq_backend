@@ -56,14 +56,14 @@ class VariablesRepositoryInPrisma implements IVariablesRepository {
   async updateVariable({ id, file }: IUpdateVariableDTO): Promise<void> {
     await prismaAgent.productVariable.update({
       data: {
-        file
+        file,
       },
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
-  
+
   async listVariablesInProduct(code: string): Promise<Variable[]> {
     const variables = await prismaAgent.productVariable.findMany({
       where: {
@@ -73,7 +73,7 @@ class VariablesRepositoryInPrisma implements IVariablesRepository {
         is_enabled: true,
       },
       orderBy: {
-        createdAt: "asc",
+        description: "asc",
       },
     });
 
