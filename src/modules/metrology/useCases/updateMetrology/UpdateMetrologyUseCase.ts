@@ -76,6 +76,11 @@ class UpdateMetrologyUseCase {
           //   element.value <= metrology.variable.max &&
           //   element.value >= metrology.variable.min
           // ) {
+
+          if (typeof element.value !== "number" || element.value < 0) {
+            element.value = 0;
+          }
+
           this.metrologyRepositoryInPrisma.updateMetrology(
             element.value,
             element.id,
