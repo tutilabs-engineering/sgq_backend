@@ -15,16 +15,20 @@ class FindReportStartupByIdUseCase {
     @inject("ProductRepositoryInPrisma")
     private productRepositoryInPrisma: IProductRepository,
     @inject("PointToPointRepositoryInPrisma")
-    private pointToPointRepositoryInPrisma: IPointToPointRepository
-  ) { }
+    private pointToPointRepositoryInPrisma: IPointToPointRepository,
+  ) {}
   async execute(startup_id: string): Promise<IListReportStartupByIdFormatted> {
     const reportStartup =
       await this.reportStartupsInPrisma.findAllDataStartupById(startup_id);
 
-    const product = await this.productRepositoryInPrisma.findByProduct(reportStartup.op.code_product)
-    let pointToPoint = null
-    if(product){
-      pointToPoint = await this.pointToPointRepositoryInPrisma.findByProductId(product.id)
+    const product = await this.productRepositoryInPrisma.findByProduct(
+      reportStartup.op.code_product,
+    );
+    let pointToPoint = null;
+    if (product) {
+      pointToPoint = await this.pointToPointRepositoryInPrisma.findByProductId(
+        product.id,
+      );
     }
 
     const reportStartupFill = reportStartup.report_startup_fill[0];
@@ -65,11 +69,14 @@ class FindReportStartupByIdUseCase {
           };
         }
       });
+
       metrology_items.push({
         variable,
         items: listMetrologyByVariable,
       });
     });
+
+    metrology_items.sort((a, b) => a.variable.localeCompare(b.variable));
 
     // Se as o status do preenchimento for falso ele retorna apenas informações basicas do startup
     if (!reportStartupFill) {
@@ -83,10 +90,12 @@ class FindReportStartupByIdUseCase {
         nqa: reportStartup.nqa,
         level: reportStartup.level,
         stop_code: reportStartup.stop_code,
-        pointToPoint: pointToPoint ? {
-          file: pointToPoint.file,
-          quantity: pointToPoint.quantity
-        } : null,
+        pointToPoint: pointToPoint
+          ? {
+              file: pointToPoint.file,
+              quantity: pointToPoint.quantity,
+            }
+          : null,
         status: {
           id: reportStartup.status.id,
           description: reportStartup.status.description,
@@ -145,10 +154,12 @@ class FindReportStartupByIdUseCase {
       nqa: reportStartup.nqa,
       level: reportStartup.level,
       stop_code: reportStartup.stop_code,
-      pointToPoint: pointToPoint ? {
-        file: pointToPoint.file,
-        quantity: pointToPoint.quantity
-      } : null,
+      pointToPoint: pointToPoint
+        ? {
+            file: pointToPoint.file,
+            quantity: pointToPoint.quantity,
+          }
+        : null,
       status: {
         id: reportStartup.status.id,
         description: reportStartup.status.description,
